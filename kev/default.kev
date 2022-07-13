@@ -6,8 +6,11 @@
 포맷 > format
 입력받아줘 > input
 입력받아 > input
+증감반복해 > for
 반복해줘 > while
 반복해 > while
+이걸로 > :
+이걸 > in
 빠져나오자 > break
 빠져나와줘 > break
 증가해줘 > += 1
