@@ -30,6 +30,10 @@ while(변수_나 < 5): #while 문
     break #break문
 
 
+for 연산변수 in [1, 2, 3, 4, 5]:
+    print("연산변수 값 : {}".format(연산변수))
+
+
 def 더해버리자  (가_변수,  나_변수): #함수 선언
     return 가_변수 + 나_변수 #값 반환
 
