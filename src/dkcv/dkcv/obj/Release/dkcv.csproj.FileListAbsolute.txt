@@ -1,0 +1,15 @@
+D:\do_kev Project\dkcv\dkcv\dkcv\bin\Release\dkcv.exe.config
+D:\do_kev Project\dkcv\dkcv\dkcv\bin\Release\dkcv.exe.manifest
+D:\do_kev Project\dkcv\dkcv\dkcv\bin\Release\dkcv.application
+D:\do_kev Project\dkcv\dkcv\dkcv\bin\Release\dkcv.exe
+D:\do_kev Project\dkcv\dkcv\dkcv\bin\Release\dkcv.pdb
+D:\do_kev Project\dkcv\dkcv\dkcv\obj\Release\dkcv.csproj.AssemblyReference.cache
+D:\do_kev Project\dkcv\dkcv\dkcv\obj\Release\dkcv.csproj.SuggestedBindingRedirects.cache
+D:\do_kev Project\dkcv\dkcv\dkcv\obj\Release\dkcv.Form1.resources
+D:\do_kev Project\dkcv\dkcv\dkcv\obj\Release\dkcv.Properties.Resources.resources
+D:\do_kev Project\dkcv\dkcv\dkcv\obj\Release\dkcv.csproj.GenerateResource.cache
+D:\do_kev Project\dkcv\dkcv\dkcv\obj\Release\dkcv.csproj.CoreCompileInputs.cache
+D:\do_kev Project\dkcv\dkcv\dkcv\obj\Release\dkcv.exe.manifest
+D:\do_kev Project\dkcv\dkcv\dkcv\obj\Release\dkcv.application
+D:\do_kev Project\dkcv\dkcv\dkcv\obj\Release\dkcv.exe
+D:\do_kev Project\dkcv\dkcv\dkcv\obj\Release\dkcv.pdb
