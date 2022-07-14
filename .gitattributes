@@ -1,5 +1,4 @@
 src/main/resources/**/** linguist-vendored
 
 *.Stata linguist-detectable=false
-*.python linguist-detectable=false
-*.cshap linguist-detectable=true
+*.Python linguist-detectable=false
