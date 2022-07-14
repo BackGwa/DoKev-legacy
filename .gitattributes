@@ -1,4 +1,4 @@
 src/main/resources/**/** linguist-vendored
 
-**/*.Stata linguist-vendored
-**/*.Python linguist-vendored
+**/*.stata linguist-vendored
+**/*.python linguist-vendored
