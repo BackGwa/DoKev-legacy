@@ -5,7 +5,6 @@
 형식 > format
 포맷 > format
 입력받아줘 > input
-입력받아 > input
 증감반복해 > for
 반복해줘 > while
 반복해 > while
@@ -22,7 +21,7 @@
 널로 > null
 빈공간으로 > null
 절댓값 > abs
-문자계산 > eval
+수식 > eval
 16진수 > hex
 8진수 > oct
 문자길이 > len
@@ -41,6 +40,8 @@
 약속하자 > def
 약속해 > def
 약속 > def
+출력 > print
+입력 > input
 함수는 >  
 가 필요해 > :
 이 필요해 > :
