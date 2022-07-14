@@ -1,4 +1,4 @@
 src/main/resources/**/** linguist-vendored
 
-*.Stata linguist-detectable=false
-*.Python linguist-detectable=false
+**/*.Stata linguist-vendored
+**/*.Python linguist-vendored
