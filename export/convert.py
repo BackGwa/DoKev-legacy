@@ -3,8 +3,10 @@
 # Dokev 220714.01부터 @  통하여 예외처리  진행합니다.
 
 
-print("안녕, 세상아!") #print
+필요한 라이브러리 = random 
 
+print("안녕, 세상아!") #print
+print("{}".format(random의 randomint(1, 100)))
 
 변수_가 = input("입력해줘! >> ") #변수 선언 & input
 변수_가 = int(변수_가)  #자료형 변환
