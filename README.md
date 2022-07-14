@@ -1,11 +1,11 @@
 &nbsp;
-# <b><center>PROJECT Dokev</center>
+# <b>PROJECT Dokev
 
 &nbsp;
 
 ![dokev](./img/dokev.png)
-## <b><center>Kev야 프로그래밍do 한글로 배우자!</center>
-### <center>한국어로 쉽게 코딩하는 "프로젝트 Dokev" 입니다.</center>
+## <b>Kev야 프로그래밍do 한글로 배우자!
+### 한국어로 쉽게 코딩하는 "프로젝트 Dokev" 입니다.
 &nbsp;
 
 #
@@ -124,7 +124,12 @@
 *** 
 &nbsp;
 ## **패치노트**
-* 최신 업데이트 : 220714.05
+* 최신 업데이트 : 220714.06
+```
+버전 : 220714.06
+
+* 라이브러리가 작동하지 않던 버그를 수정했습니다.
+```
 ```
 버전 : 220714.05
 
