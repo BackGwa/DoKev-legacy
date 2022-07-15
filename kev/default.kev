@@ -2,10 +2,12 @@
 말해줘 > print
 보여줘 > print
 출력해줘 > print
+출력 > print
 문자형식 > format
 형식 > format
 포맷 > format
 입력받아줘 > input
+입력받아 > input
 증감반복해 > for
 반복해줘 > while
 반복해 > while
@@ -14,6 +16,7 @@
 빠져나오자 > break
 빠져나와줘 > break
 증가해줘 > += 1
+증감해줘 > += 1
 감소해줘 > -= 1
 정수형으로 > int
 실수형으로 > float

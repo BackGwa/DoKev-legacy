@@ -1,4 +1,7 @@
+랜덤 > random
 랜덤정수 > randint
 랜덤실수 > uniform
 랜덤범위정수 > randrange
-랜덤 > random
+여럿값선택 > sample
+선택 > choice
+섞기 > shuffle
