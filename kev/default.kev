@@ -18,6 +18,7 @@
 정수형으로 > int
 실수형으로 > float
 문자열로 > str
+문자로 > chr
 불로 > bool
 널로 > null
 빈공간으로 > null
@@ -66,6 +67,7 @@
 정수 > int
 실수 > float
 문자열 > str
+문자 > chr
 불 > bool
 널 > null
 빈공간 > null
