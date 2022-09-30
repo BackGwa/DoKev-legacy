@@ -13,7 +13,6 @@ def STRING(codeValue, codeline):
                     SyntaxError.err(codeline,codeValue,'STR')
                     return -1
 
-        
     else:
         return 0
 

@@ -1,3 +1,4 @@
+from tkinter import E
 import parsing
 import SyntaxError
 
@@ -10,6 +11,8 @@ for line in lineArray:
     linevalue += 1
     result = parsing.code(line, linevalue)
     
-if(result != None and result < 0):
-    SyntaxError.returnErr(result)
-    
+if(result != None):
+    if(result < 0):
+        SyntaxError.returnErr(result, 0)    
+else:
+    SyntaxError.returnErr(result, 1)
