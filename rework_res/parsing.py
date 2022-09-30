@@ -2,15 +2,26 @@ import parsingValue as parsing
 
 def code(line, linevalue):
     
-    RETURN_VALUE = parsing.STRING(line, linevalue)
+    EDITlinevalue = line
+    print(EDITlinevalue)
     
-    if(RETURN_VALUE == 0):
-        RETURN_VALUE = parsing.COMMENT(line, linevalue)
+    RETURN_VALUE = None
     
-    if(RETURN_VALUE == 0):
-        RETURN_VALUE = parsing.PRINT(line, linevalue)
+    if(RETURN_VALUE == None):
+        RETURN_VALUE = parsing.STRING(EDITlinevalue, linevalue)
     
-    if(RETURN_VALUE == 0):
-        RETURN_VALUE = parsing.INPUT(line, linevalue)
+    if(RETURN_VALUE == None):
+        COMMENT = parsing.COMMENT(EDITlinevalue, linevalue)
+        if (COMMENT != None):
+            EDITlinevalue = COMMENT
+            RETURN_VALUE == None
+        else:
+            RETURN_VALUE == None
+    
+    if(RETURN_VALUE == None):
+        RETURN_VALUE = parsing.PRINT(EDITlinevalue, linevalue)
+    
+    if(RETURN_VALUE == None):
+        RETURN_VALUE = parsing.INPUT(EDITlinevalue, linevalue)
     
     return RETURN_VALUE
