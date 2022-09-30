@@ -14,7 +14,10 @@ def Print(codeValue):
         pars = codeValue.split('"')
         print("STRING")
     else:
-        print("NONE STRING")
+        print("NON-STRING")
         return None
+    
+    for nwa in pars:
+        print(nwa)
 
     return pars
