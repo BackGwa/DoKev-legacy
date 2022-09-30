@@ -7,10 +7,10 @@ def Print(codeValue):
     print(codeValue)
     pars = []
     
-    if(codeValue in "'"):
+    if("'" in codeValue):
         pars = codeValue.split("'")
         print("STRING")
-    elif(codeValue in '"'):
+    elif('"' in codeValue):
         pars = codeValue.split('"')
         print("STRING")
     else:
