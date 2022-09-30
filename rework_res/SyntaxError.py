@@ -24,7 +24,6 @@ def warn(line, Nowline, warnmsg, codelen, warnlen):
             lenline = lenline + '^'
         else:
             lenline = lenline + '-'
-            print(lenline)
         
         lenloop += 1
     
