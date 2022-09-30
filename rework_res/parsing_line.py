@@ -8,7 +8,7 @@ def Print(codeValue):
     
     if('(' in codeValue):
     
-        if('()' in codeValue):
+        if(')' in codeValue):
     
             if("'" in codeValue):
                 pars = codeValue.split("'")
