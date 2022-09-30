@@ -15,5 +15,4 @@ linevalue = 0
 for line in lineArray:
     
     linevalue += 1
-    
     pars.parsing(line, linevalue)
