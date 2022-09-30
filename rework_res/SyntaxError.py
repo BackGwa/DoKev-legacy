@@ -12,11 +12,11 @@ def warn(line, Nowline, warnmsg, codelen, warnlen):
     elif(warnmsg == 'VOT'):
         warnReturn = "이러한 방식의 형변환을 거치게되면 값의 일부가 손실될 수 있습니다."
     elif(warnmsg == 'STR'):
-        warnReturn = """"를 사용하여 문자열을 여닫지마세요. 현재까지는 큰 문제를 가져다주지 않지만 추후 문제가 발생할 수 있습니다."""
+        warnReturn = """"를 사용하여 문자열을 여닫지마세요. 추후 문제가 발생할 수 있습니다."""
     else:
         warnReturn = warnmsg
     
-    msg = f'[{line}번째 줄]\n========================================\n{warnReturn}\n>> {Nowline}'
+    msg = f'[{line}번째 줄]\n========================================\n{warnReturn}\n\n>> {Nowline}'
     
     while(codelen >= lenloop):
         
