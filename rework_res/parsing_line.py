@@ -15,10 +15,10 @@ def Print(codeValue, codeline):
     if('(' in codeValue):
         if(')' in codeValue):
     
-            if(not "('" in codeValue or "')" in codeValue):
+            if(not("('" in codeValue or "')" in codeValue)):
                 SyntaxError.err(codeline,codeValue,'GRMR')
                 return None
-            elif(not "')" in codeValue or '")' in codeValue):
+            elif(not("')" in codeValue or '")' in codeValue)):
                 SyntaxError.err(codeline,codeValue,'GRMR')
                 return None
 
