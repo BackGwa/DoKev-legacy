@@ -1,8 +1,10 @@
-import SyntaxError
-import parsing_line as pars
+import parsingValue as parsing
 
-# parsing  
-def parsing(line, linevalue):
+def code(line, linevalue):
     
-    value = pars.Print(line, linevalue)
-    return value
+    RETURN_VALUE = parsing.PRINT(line, linevalue)
+    
+    if(RETURN_VALUE == None):
+        RETURN_VALUE = parsing.INPUT(line, linevalue)
+    
+    return RETURN_VALUE
