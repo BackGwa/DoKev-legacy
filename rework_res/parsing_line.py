@@ -13,4 +13,4 @@ def Print(codeValue):
     else:
         return None
 
-    print(pars)
+    return pars

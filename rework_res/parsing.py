@@ -1,12 +1,19 @@
 import SyntaxError
 import parsing_line as pars
 
-lineValue = 0
+linevalue = 0
 
 # parsing  
 def parsing(lineArray):
     
-    lineValue += 1
+    value = ''
     
     for Nowline in lineArray:
-        pars.Print(Nowline)
+        
+        value = pars.Print(Nowline)
+        if(value == None):
+            print('')
+        else:
+            break:
+        
+    return value
