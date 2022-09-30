@@ -13,7 +13,7 @@ def STRING(codeValue, codeline):
             return -1
         else:
             if('"' in codeValue):
-                SyntaxError.warn(codeline,codeValue,'STR')
+                SyntaxError.warn(codeline,codeValue,'STR', len(codeValue), codeValue.find('"'))
                 stringType = '"'
             else:
                 stringType = "'"

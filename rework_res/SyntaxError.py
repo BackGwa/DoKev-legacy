@@ -1,7 +1,9 @@
 # warning syntaxError
-def warn(line, Nowline, warnmsg):
+def warn(line, Nowline, warnmsg, codelen, warnlen):
     
     warnReturn = ''
+    lenline = ''
+    lenloop = 0
     
     if(warnmsg == 'GRMR'):
         warnReturn = "문법에 문제가 발생했지만, 코드 실행에는 큰 문제를 가져다주지 않습니다."
@@ -16,8 +18,18 @@ def warn(line, Nowline, warnmsg):
     
     msg = f'[{line}번째 줄]\n========================================\n{warnReturn}\n>> {Nowline}'
     
+    while(codelen >= lenloop):
+        
+        if(lenloop == warnlen):
+            lenline = lenline + '^'
+        else:
+            lenline = lenline + '-'
+            print(lenline)
+        
+        lenloop += 1
     
-    print('\033[33m' + f'\n{msg}\n' + '\033[0m')
+    print('\033[33m' + f'\n{msg}' + '\033[0m')
+    print('\033[33m' + f'   {lenline}\n' + '\033[0m')
     
     return msg
 
