@@ -50,6 +50,7 @@ def Print(codeValue, codeline):
             
         if('말해줘' in word):
             printif = True
+            pars[EOFText] = pars[EOFText].replace(' ', '')
             pars[EOFText] = pars[EOFText].replace('말해줘', '')
         
     if(putif):
