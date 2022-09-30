@@ -1,14 +1,28 @@
 import SyntaxError
 
+# string
+def STRING(codeValue, codeline):
+
+    if("'" in codeValue or '"' in codeValue):
+        if('"' in codeValue and "'" in codeValue):
+            return None
+            
+        if(not('(' in codeValue and ')' in codeValue)):
+            SyntaxError.err(codeline,codeValue,'TXT')
+            return 1
+        
+    else:
+        return None
+
 # comment parsing
 def COMMENT(codeValue, codeline):
-    if('#' in codeValue):
-        codeValue.split('#', 1)
-
+    return None
+    
 # print parsing
 def PRINT(codeValue, codeline):
-    None
+    return None
+
 
 # input parsing
 def INPUT(codeValue, codeline):
-    None
+    return None
