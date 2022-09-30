@@ -4,20 +4,25 @@ import SyntaxError
 # print parsing
 def Print(codeValue):
     
-    print(codeValue)
     pars = []
     
     if("'" in codeValue):
         pars = codeValue.split("'")
-        print("STRING")
+        
     elif('"' in codeValue):
         pars = codeValue.split('"')
-        print("STRING")
+        SyntaxError.warn(0,word,'TXT')
+        
     else:
-        print("NON-STRING")
         return None
-    
-    for nwa in pars:
-        print(nwa)
+
+    for word in pars:
+        if(word in '('):
+            if(word in ')'):
+                print('PASS')
+            else:
+                SyntaxError.err(0,word,'GRMR')
+        else:
+            SyntaxError.warn(0,word,'TXT')
 
     return pars
