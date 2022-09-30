@@ -1,4 +1,5 @@
 import parsing
+import SyntaxError
 
 CodePath = 'exam.dkv'
 code = open(CodePath, 'r', encoding = 'utf-8')
@@ -7,4 +8,8 @@ linevalue = 0
 
 for line in lineArray:
     linevalue += 1
-    parsing.code(line, linevalue)
+    result = parsing.code(line, linevalue)
+    
+if(result < 0):
+    SyntaxError.returnErr(result)
+    

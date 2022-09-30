@@ -9,7 +9,7 @@ def STRING(codeValue, codeline):
             
         if(not('(' in codeValue and ')' in codeValue)):
             SyntaxError.err(codeline,codeValue,'TXT')
-            return 1
+            return -1
         
     else:
         return None
