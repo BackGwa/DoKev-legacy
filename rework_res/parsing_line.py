@@ -22,9 +22,11 @@ def Print(codeValue, codeline):
                 
         else:
             SyntaxError.err(codeline,codeValue,'GRMR')
+            return None
         
     else:
             SyntaxError.err(codeline,codeValue,'GRMR')
+            return None
         
     for word in pars:
         wordcount += 1
@@ -44,8 +46,9 @@ def Print(codeValue, codeline):
             return None
     else:
         SyntaxError.err(codeline,codeValue,'GRMR')
+        return None
         
-    print(pars)    
+    print(pars)
     
     print(ReturnCode)
 
