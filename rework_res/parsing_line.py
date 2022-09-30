@@ -4,6 +4,7 @@ import SyntaxError
 # print parsing
 def Print(codeValue):
     
+    print(codeValue)
     pars = []
     
     if(codeValue in "'"):

@@ -10,11 +10,13 @@ def parsing(lineArray):
     
     for Nowline in lineArray:
         
+        print(Nowline)
+        
         value = pars.Print(Nowline)
+        
         if(value == None):
             print('FAIL')
         else:
             print('PASS')
-            break
         
     return value
