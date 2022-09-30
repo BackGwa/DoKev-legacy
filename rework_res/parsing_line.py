@@ -6,12 +6,19 @@ def Print(codeValue):
     
     pars = []
     
-    if("'" in codeValue):
-        pars = codeValue.split("'")
-        
-    elif('"' in codeValue):
-        pars = codeValue.split('"')
-        SyntaxError.warn(0,word,'TXT')
+    if('(' in codeValue):
+    
+        if('()' in codeValue):
+    
+            if("'" in codeValue):
+                pars = codeValue.split("'")
+            
+            elif('"' in codeValue):
+                pars = codeValue.split('"')
+                SyntaxError.warn(0,word,'TXT')
+                
+        else:
+            SyntaxError.err(0,word,'GRMR')
         
     else:
         return None
