@@ -5,9 +5,11 @@ def STRING(codeValue, codeline):
 
     if("'" in codeValue or '"' in codeValue):
         if(not('(' in codeValue and ')' in codeValue)):
-            if(not('("' in codeValue and '")' in codeValue)) or (not("('" in codeValue and "')" in codeValue)):
-                SyntaxError.err(codeline,codeValue,'TXT')
-                return -1
+            SyntaxError.err(codeline,codeValue,'TXT')
+            return -1
+        else:
+            if('"' in codeValue):
+                SyntaxError.warn(codeline,codeValue,'STR')
             
             if('"' in codeValue and "'" in codeValue):
                 SyntaxError.err(codeline,codeValue,'STR')

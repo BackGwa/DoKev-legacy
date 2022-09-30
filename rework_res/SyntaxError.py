@@ -10,7 +10,7 @@ def warn(line, Nowline, warnmsg):
     elif(warnmsg == 'VOT'):
         warnReturn = "이러한 방식의 형변환을 거치게되면 값의 일부가 손실될 수 있습니다."
     elif(warnmsg == 'STR'):
-        warnReturn = """텍스트를 여닫을 때 '과 "을 혼용하여 사용하지마세요."""
+        warnReturn = """"를 사용하여 문자열을 여닫지마세요. 큰 문제를 가져다주지 않지만\n다소, 많은 경고가 제공될 수 있습니다."""
     else:
         warnReturn = warnmsg
     
@@ -29,7 +29,7 @@ def err(line, Nowline, errmsg):
     if(errmsg == 'GRMR'):
         errReturn = "사용할 수 없는 문법이거나 존재하지 않는 함수입니다."
     elif(errmsg == 'STR'):
-        errReturn = "문자열이 완벽하게 여닫히지 못했습니다. ('문자열')... 와 같이 작성해주세요."
+        errReturn = "문자열이 정상적으로 여닫히지 못했습니다. ('문자열')... 와 같이 작성해주세요."
     elif(errmsg == 'TXT'):
         errReturn = "문자열이 괄호로 닫히지 못했습니다. ('문자열')... 와 같이 작성해주세요."
     else:
