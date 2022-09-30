@@ -43,8 +43,8 @@ def err(line, Nowline, errmsg):
 
 def returnErr(returnValue, type):
     
-    if(type == 1):
-        print('\033[31m' + '\n<프로그램이 아무 것도 반환하지 않았습니다!> \n' + '\033[0m')
+    if(type == 0):
+        print('\n< 프로그램이 정상적으로 마무리 되었습니다! >\n')
     else: 
-        print('\033[31m' + f'\n<프로그램이 정상적으로 마무리되지 못했습니다! |   코드 : ({returnValue})> \n' + '\033[0m')
+        print('\033[31m' + f'\n< 프로그램이 정상적으로 마무리되지 못했습니다! |   코드 : ({returnValue}) > \n' + '\033[0m')
     return 0

@@ -15,6 +15,6 @@ for line in lineArray:
     
 if(result != None):
     if(result < 0):
-        SyntaxError.returnErr(result, 0)    
+        SyntaxError.returnErr(result, 1)    
 else:
-    SyntaxError.returnErr(result, 1)
+    SyntaxError.returnErr(result, 0)
