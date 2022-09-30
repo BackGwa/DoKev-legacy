@@ -8,10 +8,10 @@ def STRING(codeValue, codeline):
             if(not('("' in codeValue and '")' in codeValue)) or (not("('" in codeValue and "')" in codeValue)):
                 SyntaxError.err(codeline,codeValue,'TXT')
                 return -1
-            else:    
-                if('"' in codeValue and "'" in codeValue):
-                    SyntaxError.err(codeline,codeValue,'STR')
-                    return -1
+            
+            if('"' in codeValue and "'" in codeValue):
+                SyntaxError.err(codeline,codeValue,'STR')
+                return -1
 
     else:
         return 0
