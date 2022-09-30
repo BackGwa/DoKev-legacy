@@ -1,9 +1,8 @@
 import SyntaxError
 import parsing_line as pars
 
-linevalue = 0
-
 # parsing  
-def parsing(line):
-    value = pars.Print(line)
+def parsing(line, linevalue):
+    
+    value = pars.Print(line, linevalue)
     return value

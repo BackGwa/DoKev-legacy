@@ -10,5 +10,10 @@ lineArray = code.readlines()
 #    line = input('CODE >> ')
 #    pars.parsing(line)
 
+linevalue = 0
+
 for line in lineArray:
-    pars.parsing(line)
+    
+    linevalue += 1
+    
+    pars.parsing(line, linevalue)
