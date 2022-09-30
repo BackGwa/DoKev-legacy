@@ -33,9 +33,11 @@ def warn(line, Nowline, warnmsg, codelen, warnlen):
     return msg
 
 # syntaxError
-def err(line, Nowline, errmsg):
+def err(line, Nowline, errmsg, codelen, errlen):
     
     errReturn = ''
+    lenline = ''
+    lenloop = 0
     
     if(errmsg == 'GRMR'):
         errReturn = "사용할 수 없는 문법이거나 존재하지 않는 함수입니다."
@@ -48,7 +50,17 @@ def err(line, Nowline, errmsg):
     
     msg = f'[{line}번째 줄]\n========================================\n{errReturn}\n>>  {Nowline}'
     
-    print('\033[31m' + f'{msg}\n' + '\033[0m')
+    while(codelen >= lenloop):
+        
+        if(lenloop == errlen):
+            lenline = lenline + '^'
+        else:
+            lenline = lenline + '-'
+        
+        lenloop += 1
+    
+    print('\033[31m' + f'\n{msg}' + '\033[0m')
+    print('\033[31m' + f'   {lenline}\n' + '\033[0m')
     
     return msg
 

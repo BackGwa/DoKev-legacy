@@ -9,7 +9,12 @@ def STRING(codeValue, codeline):
 
     if("'" in codeValue or '"' in codeValue):
         if(not('(' in codeValue and ')' in codeValue)):
-            SyntaxError.err(codeline,codeValue,'TXT')
+            if(not('(' in codeValue)):
+                SyntaxError.err(codeline,codeValue,'TXT', len(codeValue), codeValue.find('('))
+            elif(not(')' in codeValue)):
+                SyntaxError.err(codeline,codeValue,'TXT', len(codeValue), codeValue.find(')'))
+            else:
+                SyntaxError.err(codeline,codeValue,'TXT', len(codeValue), -1)
             return -1
         else:
             if('"' in codeValue):
@@ -19,7 +24,7 @@ def STRING(codeValue, codeline):
                 stringType = "'"
             
             if('"' in codeValue and "'" in codeValue):
-                SyntaxError.err(codeline,codeValue,'STR')
+                SyntaxError.err(codeline,codeValue,'STR', len(codeValue), codeValue.find('"'))
                 return -1
         
     else:
