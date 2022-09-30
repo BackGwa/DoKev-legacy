@@ -29,7 +29,7 @@ def err(line, Nowline, errmsg):
     if(errmsg == 'GRMR'):
         errReturn = "사용할 수 없는 문법이거나 존재하지 않는 함수입니다."
     elif(errmsg == 'STR'):
-        errReturn = "문자열이 정상적으로 여닫히지 못했습니다. ('문자열')... 와 같이 작성해주세요."
+        errReturn = """"과 '을 혼용하여 사용하는 것은 허용되지 않습니다!"""
     elif(errmsg == 'TXT'):
         errReturn = "문자열이 괄호로 닫히지 못했습니다. ('문자열')... 와 같이 작성해주세요."
     else:
