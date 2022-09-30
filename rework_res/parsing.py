@@ -12,8 +12,9 @@ def parsing(lineArray):
         
         value = pars.Print(Nowline)
         if(value == None):
-            print('')
+            print('FAIL')
         else:
-            break:
+            print('PASS')
+            break
         
     return value
