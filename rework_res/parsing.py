@@ -1,5 +1,7 @@
 import SyntaxError
-import parsing_line
+import parsing_line as pars
+
+lineValue = 0
 
 # parsing  
 def parsing(lineArray):
@@ -7,5 +9,4 @@ def parsing(lineArray):
     lineValue += 1
     
     for Nowline in lineArray:
-        
-        print('')
+        pars.Print(Nowline)
