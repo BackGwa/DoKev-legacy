@@ -10,6 +10,6 @@ for line in lineArray:
     linevalue += 1
     result = parsing.code(line, linevalue)
     
-if(result < 0):
+if(result != None and result < 0):
     SyntaxError.returnErr(result)
     

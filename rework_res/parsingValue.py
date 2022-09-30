@@ -4,25 +4,28 @@ import SyntaxError
 def STRING(codeValue, codeline):
 
     if("'" in codeValue or '"' in codeValue):
-        if('"' in codeValue and "'" in codeValue):
-            return None
-            
         if(not('(' in codeValue and ')' in codeValue)):
-            SyntaxError.err(codeline,codeValue,'TXT')
-            return -1
+            if(not('("' in codeValue and '")' in codeValue)) or (not("('" in codeValue and "')" in codeValue)):
+                SyntaxError.err(codeline,codeValue,'TXT')
+                return -1
+            else:    
+                if('"' in codeValue and "'" in codeValue):
+                    SyntaxError.err(codeline,codeValue,'STR')
+                    return -1
+
         
     else:
-        return None
+        return 0
 
 # comment parsing
 def COMMENT(codeValue, codeline):
-    return None
+    return 0
     
 # print parsing
 def PRINT(codeValue, codeline):
-    return None
+    return 0
 
 
 # input parsing
 def INPUT(codeValue, codeline):
-    return None
+    return 0

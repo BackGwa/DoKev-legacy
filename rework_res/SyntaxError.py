@@ -28,10 +28,8 @@ def err(line, Nowline, errmsg):
     
     if(errmsg == 'GRMR'):
         errReturn = "사용할 수 없는 문법이거나 존재하지 않는 함수입니다."
-    elif(errmsg == 'STRN'):
-        errReturn = "문자열을 인식하는데 문제가 발생했습니다."
     elif(errmsg == 'STR'):
-        errReturn = """텍스트가 완벽하게 여닫히지 못했습니다!"""
+        errReturn = "문자열이 완벽하게 여닫히지 못했습니다. ('문자열')... 와 같이 작성해주세요."
     elif(errmsg == 'TXT'):
         errReturn = "문자열이 괄호로 닫히지 못했습니다. ('문자열')... 와 같이 작성해주세요."
     else:
@@ -45,3 +43,4 @@ def err(line, Nowline, errmsg):
 
 def returnErr(returnValue):
     print('\033[31m' + f'\n<프로그램이 정상적으로 마무리되지 못했습니다! |   코드 : ({returnValue})> \n' + '\033[0m')
+    return 1
