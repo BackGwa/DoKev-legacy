@@ -6,4 +6,5 @@ CodePath = 'exam.dkv'
 code = open(CodePath, 'r', encoding = 'utf-8')
 lineArray = code.readlines()
 
-pars.parsing(lineArray)
+for line in lineArray:
+    pars.parsing(line)
