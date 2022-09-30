@@ -14,7 +14,8 @@ def warn(line, Nowline, warnmsg):
     else:
         warnReturn = warnmsg
     
-    msg = f'[{line}번 라인]\n{warnReturn}\n>> {Nowline}'
+    msg = f'[{line}번째 줄]\n========================================\n{warnReturn}\n>>    {Nowline}'
+    
     
     print('\033[33m' + f'\n{msg}\n' + '\033[0m')
     
@@ -32,12 +33,12 @@ def err(line, Nowline, errmsg):
     elif(errmsg == 'STR'):
         errReturn = """텍스트가 완벽하게 여닫히지 못했습니다!"""
     elif(errmsg == 'TXT'):
-        errReturn = "문자열이 괄호로 닫히지 못했습니다.\n('문자열')... 와 같이 작성해주세요."
+        errReturn = "문자열이 괄호로 닫히지 못했습니다. ('문자열')... 와 같이 작성해주세요."
     else:
         errReturn = errmsg
     
-    msg = f'[{line}번 라인]\n{errReturn}\n>> {Nowline}'
+    msg = f'[{line}번째 줄]\n========================================\n{errReturn}\n>>    {Nowline}'
     
-    print('\033[31m' + f'\n{msg}\n' + '\033[0m')
+    print('\033[31m' + f'{msg}\n' + '\033[0m')
     
     return msg
