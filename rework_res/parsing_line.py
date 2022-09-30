@@ -15,11 +15,19 @@ def Print(codeValue, codeline):
     if('(' in codeValue):
         if(')' in codeValue):
     
-            if("'" in codeValue):
-                pars = codeValue.split("'")
-            
-            elif('"' in codeValue):
-                pars = codeValue.split('"')
+            if(not "('" in codeValue or "')" in codeValue):
+                SyntaxError.err(codeline,codeValue,'GRMR')
+                return None
+            elif(not "')" in codeValue or '")' in codeValue):
+                SyntaxError.err(codeline,codeValue,'GRMR')
+                return None
+
+            else:
+                if("'" in codeValue):
+                    pars = codeValue.split("'")
+                
+                elif('"' in codeValue):
+                    pars = codeValue.split('"')
                 
         else:
             SyntaxError.err(codeline,codeValue,'GRMR')
