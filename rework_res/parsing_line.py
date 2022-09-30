@@ -1,4 +1,3 @@
-import code
 import SyntaxError
 
 # print parsing
@@ -10,6 +9,8 @@ def Print(codeValue, codeline):
     putif = False
     printif = False
     ReturnCode = ''
+    ReturnText = ''
+    EOFText = 0
     
     if('(' in codeValue):
         if(')' in codeValue):
@@ -25,7 +26,7 @@ def Print(codeValue, codeline):
             return None
         
     else:
-        if('말해줘' in codeValue or '보여줘' in codeValue):
+        if('말해줘' in codeValue):
             SyntaxError.err(codeline,codeValue,'STRN')
             return None
         else:
@@ -35,12 +36,17 @@ def Print(codeValue, codeline):
         wordcount += 1
         if('라' in word or '라고' in word):
             putif = True
-        if('말해줘' in word or '보여줘' in word):
+            EOFText = wordcount - 1
+            pars[EOFText] = pars[EOFText].replace('라', '')
+            pars[EOFText] = pars[EOFText].replace('고', '')
+            
+        if('말해줘' in word):
             printif = True
+            pars[EOFText] = pars[EOFText].replace('말해줘', '')
         
     if(putif):
         if(printif):
-            ReturnCode = 'print' + '(' + pars[1] + ')'
+            ReturnCode = ('print'+ ''.join(pars))
         else:
             return None
     else:
