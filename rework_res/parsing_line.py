@@ -15,10 +15,10 @@ def Print(codeValue):
             
             elif('"' in codeValue):
                 pars = codeValue.split('"')
-                SyntaxError.warn(0,word,'TXT')
+                SyntaxError.warn(0,codeValue,'TXT')
                 
         else:
-            SyntaxError.err(0,word,'GRMR')
+            SyntaxError.err(0,codeValue,'GRMR')
         
     else:
         return None
