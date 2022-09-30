@@ -8,11 +8,11 @@ lineArray = code.readlines()
 
 def Print(codeValue):
     codeValue.split("'")
+    
 
 def parsing():
     for Nowline in lineArray:
-        if(Print(Nowline)):
-            print('PASS')
+        print('')
 
 def warn(line, Nowline, warnmsg):
     
