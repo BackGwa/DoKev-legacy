@@ -1,12 +1,14 @@
 
 <br>
 
-<!-- ![dokev](./img/dokev.png) -->
+<!-- ![dokev](./img/dokev.png)
 
 ## <p align="center"><b>2023년 3월 1일 'DoKev'가 새단장되어 돌아옵니다!</b></p>
 ##### <p align="center">현재보다 더욱 완성도 있는 모습으로 달라진 DoKev를 기대해주세요!</p>
 
 <br>
+
+-->
 
 <hr>
 
