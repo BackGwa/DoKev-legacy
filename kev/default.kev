@@ -17,6 +17,9 @@
 저걸로 > :
 이걸 > in
 저걸 > in
+그리고 > and
+또는 > or
+또한 > or
 빠져나오자 > break
 빠져나와줘 > break
 빠져 > break
@@ -83,9 +86,6 @@
 거꾸로 > not
 반대 > not
 아니 >  
-그리고 > and
-또는 > or
-또한 > or
 정수 > int
 실수 > float
 문자열 > str
