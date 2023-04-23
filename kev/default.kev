@@ -1,5 +1,7 @@
 필요한 라이브러리는 > import
 라이브러리 > import
+대문자로 > upper
+소문자로 > lower
 말해줘 > print
 보여줘 > print
 출력해줘 > print
@@ -99,8 +101,6 @@
 반환해 > return
 돌려줘 > return
 던져줘 > return
-대문자로 > upper
-소문자로 > lower
 모으기 > append
 합치기 > append
 붙이기 > append
