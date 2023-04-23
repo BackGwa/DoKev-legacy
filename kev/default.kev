@@ -13,6 +13,8 @@
 증감반복해 > for
 반복해줘 > while
 반복해 > while
+범위값 > range
+범위 > range
 이걸로 > :
 저걸로 > :
 이걸 > in
@@ -97,6 +99,12 @@
 반환해 > return
 돌려줘 > return
 던져줘 > return
+대문자로 > upper
+소문자로 > lower
+모으기 > append
+합치기 > append
+붙이기 > append
+맺음값 > end
 이라면 > :
 라면 > :
 면 > :
