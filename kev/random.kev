@@ -4,6 +4,7 @@
 난수실수 > uniform
 랜덤범위정수 > randrange
 난수범위정수 > randrange
+범위정수 > randrange
 여럿값선택 > sample
 선택 > choice
 섞기 > shuffle
