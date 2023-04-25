@@ -1,7 +1,7 @@
 
 <br>
 
-<p align="center"><img src="./img/dokev.png" width='700'></p>
+<p align="center"><img src="./img/banner.png" width='700'></p>
 
 ## <p align="center"><b>깨비</b>야! 프로그래밍<b>도</b> 한글로 배우자!</p>
 ##### <p align="center">한국어로 쉽게 코딩하는 "Dokev" 입니다.</p>
@@ -19,7 +19,16 @@
 
 
 ## **패치노트**
-* 최신 업데이트 : 4.25.1
+* 최신 업데이트 : 4.26.0
+
+```
+버전 : 4.26.0
+* 이제부터 32비트 운영체제에서도 DoKev를 사용할 수 있습니다!
+* 이제부터 windows on ARM이 정식 지원됩니다.
+* 이제부터 macOS에서 DoKev가 정식 지원됩니다.
+* .NET Framework 기반의 기존 컴파일러를 .NET Core로 대체하였습니다.
+* 컴파일러 성능이 대폭 개선되었습니다.
+```
 
 ```
 버전 : 4.25.1
