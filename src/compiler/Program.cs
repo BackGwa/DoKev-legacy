@@ -146,11 +146,11 @@ namespace dkcv
                 if(ARCH == Architecture.X64 || ARCH == Architecture.X86)
                 {
                     if(OS == "WIN32NT") py = py + "Python\\x86\\Windows\\python.exe";
-                    else if(OS == "MacOSX") py = py + "Python\\x86\\macOS\\python.exe";
+                    else if(OS == "MacOSX") py = py + "Python\\x86\\macOS\\python.sh";
                     else py = py + "Python\\x86\\Windows\\python.exe";
                 } else if(ARCH == Architecture.Arm64) {
                     if (OS == "WIN32NT") py = py + "Python\\ARM\\Windows\\python.exe";
-                    else if (OS == "MacOSX") py = py + "Python\\ARM\\macOS\\python.exe";
+                    else if (OS == "MacOSX") py = py + "Python\\ARM\\macOS\\python.sh";
                     else py = py + "Python\\ARM\\Windows\\python.exe";
                 } else
                 {
