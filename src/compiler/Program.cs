@@ -68,7 +68,7 @@ namespace dkcv
                             fiv = variableB[i];
                             if (fiv != null)
                             {
-                                foreach (string vbsline in System.IO.File.ReadLines("kev\\exhand.kev"))
+                                foreach (string vbsline in System.IO.File.ReadLines("kev/exhand.kev"))
                                 {
                                     string[] stringSeparators = new string[] { " > " };
                                     string[] changeValue = vbsline.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
@@ -87,7 +87,7 @@ namespace dkcv
 
                     if (osBool)
                     {
-                        foreach (string vbsline in System.IO.File.ReadLines("kev\\os.kev"))
+                        foreach (string vbsline in System.IO.File.ReadLines("kev/os.kev"))
                         {
                             string[] stringSeparators = new string[] { " > " };
                             string[] changeValue = vbsline.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
@@ -97,7 +97,7 @@ namespace dkcv
 
                     if (randomBool)
                     {
-                        foreach (string vbsline in System.IO.File.ReadLines("kev\\random.kev"))
+                        foreach (string vbsline in System.IO.File.ReadLines("kev/random.kev"))
                         {
                             string[] stringSeparators = new string[] { " > " };
                             string[] changeValue = vbsline.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
@@ -105,7 +105,7 @@ namespace dkcv
                         }
                     }
 
-                    foreach (string vbsline in System.IO.File.ReadLines("kev\\default.kev"))
+                    foreach (string vbsline in System.IO.File.ReadLines("kev/default.kev"))
                     {
                         string[] stringSeparators = new string[] { " > " };
                         string[] changeValue = vbsline.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
@@ -130,7 +130,7 @@ namespace dkcv
                 }
 
                 StreamWriter writer;
-                writer = File.CreateText("export\\convert.py");
+                writer = File.CreateText("export/convert.py");
 
                 foreach (string itemA in wline)
                 {
@@ -146,17 +146,20 @@ namespace dkcv
                 if(ARCH == Architecture.X64 || ARCH == Architecture.X86)
                 {
                     if(OS == "WIN32NT") py = py + "Python\\x86\\Windows\\python.exe";
-                    else if(OS == "MacOSX") py = py + "Python\\x86\\macOS\\python.sh";
+                    else if(OS == "MacOSX") py = py + "Python/macOS/bin/python3.11-intel64";
                     else py = py + "Python\\x86\\Windows\\python.exe";
                 } else if(ARCH == Architecture.Arm64) {
                     if (OS == "WIN32NT") py = py + "Python\\ARM\\Windows\\python.exe";
-                    else if (OS == "MacOSX") py = py + "Python\\ARM\\macOS\\python.sh";
+                    else if (OS == "MacOSX") py = py + "Python/macOS/bin/python3.11";
                     else py = py + "Python\\ARM\\Windows\\python.exe";
                 } else
                 {
                     py = py + "Python\\x86\\Windows\\python.exe";
                 }
-                pathdo = pathdo + "export\\convert.py";
+
+                Console.WriteLine(py);
+
+                pathdo = pathdo + "export/convert.py";
 
                 psi.FileName = @py;
                 psi.Arguments = "\"" + pathdo + "\"" + " -d";
@@ -200,7 +203,11 @@ namespace dkcv
 
             FileInfo dofilePath = new FileInfo("convert.dkv");
             if (dofilePath.Exists) Converter();
-            else return;
+            else
+            {
+                Console.WriteLine("파일을 찾을 수 없어 종료합니다.");
+                return;
+            }
 
         }
     }
