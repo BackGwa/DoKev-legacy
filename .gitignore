@@ -1,5 +1,2 @@
 
 .DS_Store
-src/compiler/.vs
-src/compiler/bin
-src/compiler/obj
