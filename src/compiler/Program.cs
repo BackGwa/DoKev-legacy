@@ -1,7 +1,8 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using System.IO;
-using System.Diagnostics;
+﻿using System.Diagnostics;
+using IronPython.Runtime;
+using IronPython.Modules;
+using IronPython.Hosting;
+using IronPython.Compiler;
 
 namespace dkcv
 {
@@ -141,29 +142,13 @@ namespace dkcv
 
                 ProcessStartInfo psi = new ProcessStartInfo();
                 string pathdo = System.AppContext.BaseDirectory;
-                string py = System.AppContext.BaseDirectory;
-
-                if(ARCH == Architecture.X64 || ARCH == Architecture.X86)
-                {
-                    if(OS == "WIN32NT") py = py + "Python\\x86\\Windows\\python.exe";
-                    else if(OS == "MacOSX") py = py + "Python/macOS/bin/python3.11-intel64";
-                    else py = py + "Python\\x86\\Windows\\python.exe";
-                } else if(ARCH == Architecture.Arm64) {
-                    if (OS == "WIN32NT") py = py + "Python\\ARM\\Windows\\python.exe";
-                    else if (OS == "MacOSX") py = py + "Python/macOS/bin/python3.11";
-                    else py = py + "Python\\ARM\\Windows\\python.exe";
-                } else
-                {
-                    py = py + "Python\\x86\\Windows\\python.exe";
-                }
-
-                Console.WriteLine(py);
 
                 pathdo = pathdo + "export/convert.py";
+                var engine = Python.CreateEngine();
+                var source = engine.CreateScriptSourceFromFile(pathdo);
+                var scope = engine.CreateScope();
+                source.Execute(scope);
 
-                psi.FileName = @py;
-                psi.Arguments = "\"" + pathdo + "\"" + " -d";
-                Process.Start(psi);
                 Console.ReadLine();
             }
 
