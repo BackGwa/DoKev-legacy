@@ -1,4 +1,4 @@
 
 .DS_Store
-.\src\compiler\bin
-.\src\compiler\obj
+src/compiler/bin/
+src/compiler/obj/
