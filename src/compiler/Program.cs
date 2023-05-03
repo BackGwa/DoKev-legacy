@@ -68,7 +68,7 @@ namespace dkcv
                             fiv = variableB[i];
                             if (fiv != null)
                             {
-                                foreach (string vbsline in System.IO.File.ReadLines("kev\\exhand.kev"))
+                                foreach (string vbsline in System.IO.File.ReadLines("kev/exhand.kev"))
                                 {
                                     string[] stringSeparators = new string[] { " > " };
                                     string[] changeValue = vbsline.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
@@ -87,7 +87,7 @@ namespace dkcv
 
                     if (osBool)
                     {
-                        foreach (string vbsline in System.IO.File.ReadLines("kev\\os.kev"))
+                        foreach (string vbsline in System.IO.File.ReadLines("kev/os.kev"))
                         {
                             string[] stringSeparators = new string[] { " > " };
                             string[] changeValue = vbsline.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
@@ -97,7 +97,7 @@ namespace dkcv
 
                     if (randomBool)
                     {
-                        foreach (string vbsline in System.IO.File.ReadLines("kev\\random.kev"))
+                        foreach (string vbsline in System.IO.File.ReadLines("kev/random.kev"))
                         {
                             string[] stringSeparators = new string[] { " > " };
                             string[] changeValue = vbsline.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
@@ -105,7 +105,7 @@ namespace dkcv
                         }
                     }
 
-                    foreach (string vbsline in System.IO.File.ReadLines("kev\\default.kev"))
+                    foreach (string vbsline in System.IO.File.ReadLines("kev/default.kev"))
                     {
                         string[] stringSeparators = new string[] { " > " };
                         string[] changeValue = vbsline.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
@@ -130,7 +130,7 @@ namespace dkcv
                 }
 
                 StreamWriter writer;
-                writer = File.CreateText("export\\convert.py");
+                writer = File.CreateText("export/convert.py");
 
                 foreach (string itemA in wline)
                 {
@@ -145,7 +145,10 @@ namespace dkcv
 
                 if (OS == "Unix")
                 {
-                    Process.Start("python3 -d export/convert.py");
+                    Process module = new Process();
+                    module.StartInfo.FileName = "python3";
+                    module.StartInfo.Arguments = "-d export/convert.py";
+                    module.Start();
                 }
                 else
                 {
@@ -199,9 +202,78 @@ namespace dkcv
                 }
             }
 
-            FileInfo dofilePath = new FileInfo("convert.dkv");
-            if (dofilePath.Exists) Converter();
-            else return;
+
+            /* CreateLine :: 구분자 기호를 카운트 횟수만큼 출력합니다. */
+            void CreateLine(int count) {
+                for(int i = 1; i <= count; i++) Console.Write("_");
+                Console.Write("\n\n");
+            }
+
+
+            /* setColor :: 콘솔의 색상을 유형에 따라 변경합니다. */
+            void setColor(string type) {
+                switch (type) {
+                    case "default":
+                        Console.ResetColor(); break;
+                    case "success":
+                        Console.ForegroundColor = ConsoleColor.Green; break;
+                    case "warning":
+                        Console.ForegroundColor = ConsoleColor.Yellow; break;
+                    case "fatal":
+                        Console.ForegroundColor = ConsoleColor.Red; break;
+                }
+            }
+
+
+            /* log :: 빌드 정보나 결과를 한 줄로 출력합니다. */
+            void log(string text, string details, string type = "default", bool createline = false) {
+                Console.Write($"{text} :: ");
+                setColor(type);
+                Console.Write($"{details}\n");
+                Console.ResetColor();
+                if(createline) CreateLine(50);
+            }
+
+
+            /* log_t :: 빌드 정보나 결과를 탭하여 출력합니다. */
+            void log_t(string text, string details, string type = "default", bool createline = false) {
+                Console.WriteLine($"{text} :");
+                setColor(type);
+                Console.WriteLine($"\t{details}\n");
+                Console.ResetColor();
+                if(createline) CreateLine(50);
+            }
+
+
+            /* 컴파일러 화면 구성 */
+            Console.Clear();
+
+            /* baseDirectory에 빌드 툴의 절대 경로 선언 */
+            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            log_t("빌드 툴 절대 경로", baseDirectory);
+
+            /* 현재 날짜와 시간을 now, time에 선언 */
+            DateTime now = DateTime.Now;
+            string time = now.ToString("tt hh:mm:ss");
+
+            /* convert.dkv 파일 여부 확인 */
+            string filePath = Path.Combine(baseDirectory, "convert.dkv");
+
+            if (File.Exists(filePath)) {
+                log_t("빌드 대상 파일 확인", "빌드 대상 파일이 존재합니다.", "success", true);
+                log("빌드를 시작하였습니다", $"{time}", "default", true);
+                Converter();
+            } else {
+                log_t("빌드 대상 파일 확인", "빌드 대상 파일이 존재하지 않습니다.", "fatal");
+                return;
+            }
+
+
+
+
+
+
+
 
         }
     }
