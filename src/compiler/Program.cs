@@ -174,9 +174,14 @@ namespace DoKevEngine {
                     log($"[{NowTime()}]", "빌드 파일이 성공적으로 작성되었습니다.", "success", true);
 
                     log($"[{NowTime()}]", "디버깅을 시작합니다.", "default", true);
-                    Runner();
                 } catch {
                     log($"[{NowTime()}]", "빌드 파일을 작성하는데에 문제가 생겼습니다!", "fatal");
+                }
+                try {
+                    Runner();
+                    log($"\n[{NowTime()}]", "디버깅이 종료되었습니다.", "success");
+                } catch {
+                    log($"\n[{NowTime()}]", "디버깅을 시작하는데 문제가 생겼습니다!", "fatal");
                 }
             }
 
@@ -219,7 +224,7 @@ namespace DoKevEngine {
                 module.StartInfo.Arguments = $"-d {baseDirectory}/export/convert.py";
                 module.Start();
 
-                Console.ReadLine();
+                Console.ReadKey();
             }
 
 
