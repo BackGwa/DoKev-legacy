@@ -143,19 +143,25 @@ namespace dkcv
                 string pathdo = System.AppContext.BaseDirectory;
                 string py = System.AppContext.BaseDirectory;
 
-                if(ARCH == Architecture.X64 || ARCH == Architecture.X86)
+                if (OS == "Unix")
                 {
-                    py = py + "Python\\x86\\Windows\\python.exe";
-                } else if(ARCH == Architecture.Arm64) {
-                    py = py + "Python\\ARM\\Windows\\python.exe";;
-                } else {
-                    py = py + "Python\\x86\\Windows\\python.exe";
+                    Process.Start("python3 -d export/convert.py");
                 }
-                pathdo = pathdo + "export\\convert.py";
-
-                psi.FileName = @py;
-                psi.Arguments = "\"" + pathdo + "\"" + " -d";
-                Process.Start(psi);
+                else
+                {
+                    if (ARCH == Architecture.Arm64)
+                    {
+                        py = py + "Python\\ARM\\Windows\\python.exe";
+                    }
+                    else
+                    {
+                        py = py + "Python\\x86\\Windows\\python.exe";
+                    }
+                    pathdo = pathdo + "export\\convert.py";
+                    psi.FileName = @py;
+                    psi.Arguments = "\"" + pathdo + "\"" + " -d";
+                    Process.Start(psi);
+                }
                 Console.ReadLine();
             }
 
