@@ -23,8 +23,8 @@ namespace DoKevEngine {
 
 
             string[] wline = new string[1];
-            string[] variableB = new string[0];
-            int ExceptSize = 0, fileindex = 0;
+            string[] ExceptList = new string[0];
+            int ExceptNum = 0, fileindex = 0;
             bool converting = false;
             bool randomBool = false, osBool = false;
 
@@ -33,10 +33,10 @@ namespace DoKevEngine {
                 int counter = 0;
                 string[] stringArray = new string[0];
 
-                ExceptSize = 0;
+                ExceptNum = 0;
                 converting = false;
                 Array.Clear(wline, 0, wline.Length);
-                Array.Clear(variableB, 0, variableB.Length);
+                Array.Clear(ExceptList, 0, ExceptList.Length);
 
                 foreach (string line in System.IO.File.ReadLines($"{baseDirectory}/convert.dkv")) {
                     Array.Resize(ref stringArray, stringArray.Length + 1);
@@ -56,34 +56,34 @@ namespace DoKevEngine {
                     checking_bool = line.Contains("@\"");
                     string encoder = "", Ecdr = "";
 
-                    Array.Clear(variableB, 0, variableB.Length);
+                    Array.Clear(ExceptList, 0, ExceptList.Length);
                     converting = false;
 
                     if (checking_bool) {
-                        Array.Clear(variableB, 0, variableB.Length);
-                        ExceptSize = 0;
+                        Array.Clear(ExceptList, 0, ExceptList.Length);
+                        ExceptNum = 0;
                         converting = true;
-                        encoder = checking(line);
+                        encoder = StringException(line);
                         Ecdr = encoder;
 
-                        for (int i = 0; i < variableB.Length; i++) {
+                        for (int i = 0; i < ExceptList.Length; i++) {
                             string fiv = "";
-                            fiv = variableB[i];
+                            fiv = ExceptList[i];
                             if (fiv != null) {
                                 foreach (string vbsline in System.IO.File.ReadLines($"{baseDirectory}/kev/exhand.kev")) {
                                     string[] stringSeparators = new string[] { " > " };
                                     string[] changeValue = vbsline.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
                                     if (fiv.Contains(changeValue[0])) {
-                                        variableB[i] = fiv.Replace(changeValue[0], changeValue[1]);
+                                        ExceptList[i] = fiv.Replace(changeValue[0], changeValue[1]);
                                     }
-                                    fiv = variableB[i];
+                                    fiv = ExceptList[i];
                                 }
                             }
                         }
                     }
                     else Ecdr = line;
 
-                    ExceptSize = 0;
+                    ExceptNum = 0;
 
                     if (osBool) {
                         foreach (string vbsline in System.IO.File.ReadLines($"{baseDirectory}/kev/os.kev")) {
@@ -108,8 +108,8 @@ namespace DoKevEngine {
                     }
 
                     if (converting) {
-                        for (int i = 0; i < variableB.Length; i++) {
-                            Ecdr = Ecdr.Replace("{>" + i + "<}", "\"" + variableB[i] + "\"");
+                        for (int i = 0; i < ExceptList.Length; i++) {
+                            Ecdr = Ecdr.Replace("{>" + i + "<}", "\"" + ExceptList[i] + "\"");
                             Ecdr = Ecdr.Replace("@", "");
                         }
                     }
@@ -147,35 +147,33 @@ namespace DoKevEngine {
             }
 
 
-            string checking(string sourceString) {
+            string StringException(string sourceString) {
 
-                string[] returnAiv = new string[48];
-                string aiv = " ", right = " ", non_change = sourceString;
+                string[] ExceptReturn = new string[16];
+                string ExceptValue = " ", AfterString = " ", ifRemaining = sourceString;
 
                 string[] stringSeparators = new string[] { "@\"" };
-                returnAiv = sourceString.Split(stringSeparators, StringSplitOptions.None);
-                Array.Resize(ref returnAiv, returnAiv.Length + 1);
+                ExceptReturn = sourceString.Split(stringSeparators, StringSplitOptions.None);
+                Array.Resize(ref ExceptReturn, ExceptReturn.Length + 1);
 
-                stringSeparators = new string[] { "\"" };
-                right = returnAiv[1];
+                AfterString = ExceptReturn[1];
+                ExceptReturn = AfterString.Split("\"", StringSplitOptions.None);
+                ExceptValue = ExceptReturn[0];
 
-                returnAiv = right.Split(stringSeparators, StringSplitOptions.None);
+                Array.Resize(ref ExceptList, ExceptList.Length + 1);
+                ExceptList[ExceptNum] = ExceptValue;
 
-                aiv = returnAiv[0];
+                ifRemaining = ifRemaining.Replace("@\"" + ExceptValue + "\"", "{>" + ExceptNum + "<}");
 
-                Array.Resize(ref variableB, variableB.Length + 1);
-                variableB[ExceptSize] = aiv;
+                ExceptNum += 1;
 
-                non_change = non_change.Replace("@\"" + aiv + "\"", "{>" + ExceptSize + "<}");
-
-                ExceptSize += 1;
-
-                if (non_change.Contains("@\"")) {
-                    return checking(non_change);
+                if (ifRemaining.Contains("@\"")) {
+                    return StringException(ifRemaining);
                 } else {
-                    return non_change;
+                    return ifRemaining;
                 }
             }
+
 
             /* CreateLine :: 구분자 기호를 카운트 횟수만큼 출력합니다. */
             void CreateLine(int count) {
