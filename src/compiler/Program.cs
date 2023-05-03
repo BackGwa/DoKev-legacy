@@ -145,11 +145,11 @@ namespace dkcv
                     module.Start();
                 } else {
                     if (ARCH == Architecture.Arm64) {
-                        py = py + "Python\\ARM\\Windows\\python.exe";
+                        py = py + "Python/ARM/Windows/python.exe";
                     } else {
-                        py = py + "Python\\x86\\Windows\\python.exe";
+                        py = py + "Python/x86/Windows/python.exe";
                     }
-                    pathdo = pathdo + "export\\convert.py";
+                    pathdo = pathdo + "export/convert.py";
                     psi.FileName = @py;
                     psi.Arguments = "\"" + pathdo + "\"" + " -d";
                     Process.Start(psi);
