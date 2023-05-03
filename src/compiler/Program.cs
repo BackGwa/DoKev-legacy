@@ -1,5 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 using System.Diagnostics;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace DoKevEngine {
 
@@ -12,10 +13,6 @@ namespace DoKevEngine {
             /* baseDirectory에 빌드 툴의 절대 경로 선언 */
             string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
             log_t("빌드 툴 절대 경로", baseDirectory);
-
-            /* 현재 날짜와 시간을 now, time에 선언 */
-            DateTime now = DateTime.Now;
-            string time = now.ToString("tt hh:mm:ss");
 
             /* 시스템 아키텍쳐와 운영체제 정보 선언 */
             var ARCH = System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture;
@@ -32,13 +29,15 @@ namespace DoKevEngine {
 
 
             /* convert.dkv 유효성 확인 */
+            log("빌드 대상 파일 확인", "");
+
             if (File.Exists(filePath)) {
-                log_t("빌드 대상 파일 확인", "빌드 대상 파일이 존재합니다.", "success", true);
-                log("빌드를 시작하였습니다", $"{time}", "default", true);
+                write_t("빌드 대상 파일이 존재합니다.", "success", true);
+                log($"[{NowTime()}]", "빌드를 시작하였습니다\n");
                 Converter();
             }
             else {
-                log_t("빌드 대상 파일 확인", "빌드 대상 파일이 존재하지 않습니다.", "fatal");
+                write_t("빌드 대상 파일이 존재하지 않습니다.", "fatal");
                 return;
             }
 
@@ -46,15 +45,23 @@ namespace DoKevEngine {
             /* Converter :: convert.dkv 파일을 Python 코드로 빌드합니다. */
             void Converter() {
 
+                log($"[{NowTime()}]", "빌드 작업을 위해 초기화하고 있습니다.");
+
                 int counter = 0;
                 string[] stringArray = new string[0];
+                bool checking_bool = false;
 
                 ExceptNum = 0;
                 converting = false;
                 Array.Clear(wline, 0, wline.Length);
                 Array.Clear(ExceptList, 0, ExceptList.Length);
 
+                log($"[{NowTime()}]", "초기화 작업이 마무리 되었습니다.\n", "success");
+                log($"[{NowTime()}]", "라이브러리 검사를 준비하고 있습니다.");
+
                 foreach (string line in System.IO.File.ReadLines($"{baseDirectory}/convert.dkv")) {
+                    log($"[{NowTime()}]", $"검사 중... [{counter}/{stringArray.Length}]");
+
                     Array.Resize(ref stringArray, stringArray.Length + 1);
                     stringArray[counter] = line;
 
@@ -64,42 +71,57 @@ namespace DoKevEngine {
                     counter++;
                 }
 
-                bool checking_bool = false;
+                log($"[{NowTime()}]", "라이브러리 검사가 마무리 되었습니다.\n", "success");
+                log($"[{NowTime()}]", "빌드 작업을 준비하고 있습니다.");
 
                 foreach (string line in stringArray) {
+
                     checking_bool = line.Contains("@\"");
                     string encoder = "", Ecdr = "";
 
                     Array.Clear(ExceptList, 0, ExceptList.Length);
                     converting = false;
 
+                    if (line != "") log($"\n[{NowTime()}]", $"변환 대기 -> {line.Replace("    ", "")}");
+
                     if (checking_bool) {
+                        log($"[{NowTime()}]", "예외처리가 필요한 문자열을 발견하였습니다.");
+
                         Array.Clear(ExceptList, 0, ExceptList.Length);
                         ExceptNum = 0;
                         converting = true;
-                        encoder = StringException(line);
-                        Ecdr = encoder;
 
-                        for (int i = 0; i < ExceptList.Length; i++) {
-                            string fiv = ExceptList[i];
+                        try {
+                            encoder = StringException(line);
+                            Ecdr = encoder;
 
-                            if (fiv != null) {
-                                foreach (string vbsline in System.IO.File.ReadLines($"{baseDirectory}/kev/exhand.kev")) {
-                                    string[] stringSeparators = new string[] { " > " };
-                                    string[] changeValue = vbsline.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
+                            log($"[{NowTime()}]", "문자열 리터널을 변환하고 있습니다.");
+                            for (int i = 0; i < ExceptList.Length; i++) {
+                                string fiv = ExceptList[i];
 
-                                    if (fiv.Contains(changeValue[0])) ExceptList[i] = fiv.Replace(changeValue[0], changeValue[1]);
+                                if (fiv != null) {
+                                    foreach (string vbsline in System.IO.File.ReadLines($"{baseDirectory}/kev/exhand.kev")) {
+                                        string[] stringSeparators = new string[] { " > " };
+                                        string[] changeValue = vbsline.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
 
-                                    fiv = ExceptList[i];
+                                        if (fiv.Contains(changeValue[0])) ExceptList[i] = fiv.Replace(changeValue[0], changeValue[1]);
+
+                                        fiv = ExceptList[i];
+                                    }
                                 }
                             }
+                        } catch {
+                            Ecdr = line;
+                            log($"[{NowTime()}]", "작업을 진행하던 중 문제가 발생했습니다.", "fatal");
                         }
+
                     }
                     else Ecdr = line;
 
                     ExceptNum = 0;
 
                     if (osBool) {
+                        if (line != "") log($"[{NowTime()}]", "'os.kev' 규칙에 따라 변환 작업 중");
                         foreach (string vbsline in System.IO.File.ReadLines($"{baseDirectory}/kev/os.kev")) {
                             string[] stringSeparators = new string[] { " > " };
                             string[] changeValue = vbsline.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
@@ -108,6 +130,7 @@ namespace DoKevEngine {
                     }
 
                     if (randomBool) {
+                        if (line != "") log($"[{NowTime()}]", "'random.kev' 규칙에 따라 변환 작업 중");
                         foreach (string vbsline in System.IO.File.ReadLines($"{baseDirectory}/kev/random.kev")) {
                             string[] stringSeparators = new string[] { " > " };
                             string[] changeValue = vbsline.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
@@ -115,6 +138,7 @@ namespace DoKevEngine {
                         }
                     }
 
+                    if (line != "") log($"[{NowTime()}]", "'default.kev' 규칙에 따라 변환 작업 중");
                     foreach (string vbsline in System.IO.File.ReadLines($"{baseDirectory}/kev/default.kev")) {
                         string[] stringSeparators = new string[] { " > " };
                         string[] changeValue = vbsline.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
@@ -122,6 +146,7 @@ namespace DoKevEngine {
                     }
 
                     if (converting) {
+                        log($"[{NowTime()}]", "문자열을 복원하고 있습니다.");
                         for (int i = 0; i < ExceptList.Length; i++) {
                             Ecdr = Ecdr.Replace("{>" + i + "<}", "\"" + ExceptList[i] + "\"");
                             Ecdr = Ecdr.Replace("@", "");
@@ -131,18 +156,28 @@ namespace DoKevEngine {
                     converting = false;
                     fileindex += 1;
 
+                    if (Ecdr != "") log($"[{NowTime()}]", $"변환 결과 -> {Ecdr.Replace("    ", "")}");
+
                     wline[wline.Length - 1] = Ecdr;
                     Array.Resize(ref wline, wline.Length + 1);
 
                 }
 
+                log($"\n[{NowTime()}]", "빌드가 마무리되었습니다.", "success", true);
+
+                log($"[{NowTime()}]", "빌드 파일을 작성을 준비하고 있습니다.");
                 StreamWriter writer;
-                writer = File.CreateText($"{baseDirectory}/export/convert.py");
+                try {
+                    writer = File.CreateText($"{baseDirectory}/export/convert.py");
+                    foreach (string itemA in wline) writer.WriteLine(itemA);
+                    writer.Close();
+                    log($"[{NowTime()}]", "빌드 파일이 성공적으로 작성되었습니다.", "success", true);
 
-                foreach (string itemA in wline) writer.WriteLine(itemA);
-
-                writer.Close();
-                Runner();
+                    log($"[{NowTime()}]", "디버깅을 시작합니다.", "default", true);
+                    Runner();
+                } catch {
+                    log($"[{NowTime()}]", "빌드 파일을 작성하는데에 문제가 생겼습니다!", "fatal");
+                }
             }
 
 
@@ -212,7 +247,7 @@ namespace DoKevEngine {
 
             /* log :: 빌드 정보나 결과를 한 줄로 출력합니다. */
             void log(string text, string details, string type = "default", bool createline = false) {
-                Console.Write($"{text} :: ");
+                Console.Write($"{text} : ");
                 setColor(type);
                 Console.Write($"{details}\n");
                 Console.ResetColor();
@@ -228,6 +263,23 @@ namespace DoKevEngine {
                 Console.ResetColor();
                 if (createline) CreateLine(50);
             }
+
+
+            /* write_t :: 내용을 탭하여 출력합니다. */
+            void write_t(string details, string type = "default", bool createline = false) {
+                setColor(type);
+                Console.WriteLine($"\t{details}\n");
+                Console.ResetColor();
+                if (createline) CreateLine(50);
+            }
+
+
+            /* NowTime :: 현재 시간에 대한 정밀한 값을 반환합니다. */
+            string NowTime() {
+                DateTime now = DateTime.Now;
+                return now.ToString("HH:mm:ss.fff");
+            }
+
 
         } /* Main Function */
 
