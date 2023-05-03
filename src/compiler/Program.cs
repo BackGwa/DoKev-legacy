@@ -28,15 +28,16 @@ namespace dkcv
 
             string[] wline = new string[1];
             string[] variableB = new string[0];
-            int indexF = 0, fileindex = 0;
-            bool converting = false, randomBool = false, osBool = false;
+            int ExceptSize = 0, fileindex = 0;
+            bool converting = false;
+            bool randomBool = false, osBool = false;
 
             void Converter() {
 
                 int counter = 0;
                 string[] stringArray = new string[0];
 
-                indexF = 0;
+                ExceptSize = 0;
                 converting = false;
                 Array.Clear(wline, 0, wline.Length);
                 Array.Clear(variableB, 0, variableB.Length);
@@ -64,7 +65,7 @@ namespace dkcv
 
                     if (checking_bool) {
                         Array.Clear(variableB, 0, variableB.Length);
-                        indexF = 0;
+                        ExceptSize = 0;
                         converting = true;
                         encoder = checking(line);
                         Ecdr = encoder;
@@ -86,7 +87,7 @@ namespace dkcv
                     }
                     else Ecdr = line;
 
-                    indexF = 0;
+                    ExceptSize = 0;
 
                     if (osBool) {
                         foreach (string vbsline in System.IO.File.ReadLines($"{baseDirectory}/kev/os.kev")) {
@@ -157,7 +158,7 @@ namespace dkcv
                 Console.ReadLine();
             }
 
-
+            
             string checking(string sourceString) {
 
                 string[] returnAiv = new string[48];
@@ -175,11 +176,11 @@ namespace dkcv
                 aiv = returnAiv[0];
 
                 Array.Resize(ref variableB, variableB.Length + 1);
-                variableB[indexF] = aiv;
+                variableB[ExceptSize] = aiv;
 
-                non_change = non_change.Replace("@\"" + aiv + "\"", "{>" + indexF + "<}");
+                non_change = non_change.Replace("@\"" + aiv + "\"", "{>" + ExceptSize + "<}");
 
-                indexF += 1;
+                ExceptSize += 1;
 
                 if (non_change.Contains("@\"")) {
                     return checking(non_change);
