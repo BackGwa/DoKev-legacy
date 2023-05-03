@@ -8,6 +8,7 @@
     <StartupObject>DoKevEngine.Program</StartupObject>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <SignAssembly>False</SignAssembly>
+    <RootNamespace>DoKevEngine</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
