@@ -256,9 +256,10 @@ namespace dkcv
             DateTime now = DateTime.Now;
             string time = now.ToString("tt hh:mm:ss");
 
-            /* convert.dkv 파일 여부 확인 */
+            /* convert.dkv 유효성 확인을 위한 경로 선언 */
             string filePath = Path.Combine(baseDirectory, "convert.dkv");
 
+            /* convert.dkv 유효성 확인 */
             if (File.Exists(filePath)) {
                 log_t("빌드 대상 파일 확인", "빌드 대상 파일이 존재합니다.", "success", true);
                 log("빌드를 시작하였습니다", $"{time}", "default", true);
