@@ -139,22 +139,20 @@ namespace dkcv
                 string pathdo = System.AppContext.BaseDirectory;
                 string py = System.AppContext.BaseDirectory;
 
+                Process module = new Process();
+
                 if (OS == "Unix") {
-                    Process module = new Process();
                     module.StartInfo.FileName = "python3";
-                    module.StartInfo.Arguments = $"-d {baseDirectory}/export/convert.py";
-                    module.Start();
                 } else {
                     if (ARCH == Architecture.Arm64) {
-                        py = py + "Python/ARM/Windows/python.exe";
+                        module.StartInfo.FileName = $"-d {baseDirectory}/Python/ARM/python.exe";
                     } else {
-                        py = py + "Python/x86/Windows/python.exe";
+                        module.StartInfo.FileName = $"-d {baseDirectory}/Python/x86/python.exe";
                     }
-                    pathdo = pathdo + "export/convert.py";
-                    psi.FileName = @py;
-                    psi.Arguments = "\"" + pathdo + "\"" + " -d";
-                    Process.Start(psi);
                 }
+
+                module.StartInfo.Arguments = $"-d {baseDirectory}/export/convert.py";
+                module.Start();
                 Console.ReadLine();
             }
 
