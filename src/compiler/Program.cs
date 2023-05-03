@@ -133,10 +133,6 @@ namespace dkcv
 
                 writer.Close();
 
-                ProcessStartInfo psi = new ProcessStartInfo();
-                string pathdo = System.AppContext.BaseDirectory;
-                string py = System.AppContext.BaseDirectory;
-
                 Process module = new Process();
 
                 if (OS == "Unix") {
