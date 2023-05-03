@@ -18,8 +18,7 @@ namespace dkcv
             int indexF = 0, fileindex = 0;
             bool converting = false, randomBool = false, osBool = false;
 
-            void Converter()
-            {
+            void Converter() {
 
                 int counter = 0;
                 string[] stringArray = new string[0];
@@ -29,16 +28,13 @@ namespace dkcv
                 Array.Clear(wline, 0, wline.Length);
                 Array.Clear(variableB, 0, variableB.Length);
 
-                foreach (string line in System.IO.File.ReadLines("convert.dkv"))
-                {
+                foreach (string line in System.IO.File.ReadLines("convert.dkv")) {
                     Array.Resize(ref stringArray, stringArray.Length + 1);
                     stringArray[counter] = line;
-                    if (line.Contains("필요한 라이브러리는") && line.Contains("random"))
-                    {
+                    if (line.Contains("필요한 라이브러리는") && line.Contains("random")) {
                         randomBool = true;
                     }
-                    if (line.Contains("필요한 라이브러리는") && line.Contains("os"))
-                    {
+                    if (line.Contains("필요한 라이브러리는") && line.Contains("os")) {
                         osBool = true;
                     }
                     counter++;
@@ -46,34 +42,28 @@ namespace dkcv
 
                 bool checking_bool = false;
 
-                foreach (string line in stringArray)
-                {
+                foreach (string line in stringArray) {
                     checking_bool = line.Contains("@\"");
                     string encoder = "", Ecdr = "";
 
                     Array.Clear(variableB, 0, variableB.Length);
                     converting = false;
 
-                    if (checking_bool)
-                    {
+                    if (checking_bool) {
                         Array.Clear(variableB, 0, variableB.Length);
                         indexF = 0;
                         converting = true;
                         encoder = checking(line);
                         Ecdr = encoder;
 
-                        for (int i = 0; i < variableB.Length; i++)
-                        {
+                        for (int i = 0; i < variableB.Length; i++) {
                             string fiv = "";
                             fiv = variableB[i];
-                            if (fiv != null)
-                            {
-                                foreach (string vbsline in System.IO.File.ReadLines("kev/exhand.kev"))
-                                {
+                            if (fiv != null) {
+                                foreach (string vbsline in System.IO.File.ReadLines("kev/exhand.kev")) {
                                     string[] stringSeparators = new string[] { " > " };
                                     string[] changeValue = vbsline.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
-                                    if (fiv.Contains(changeValue[0]))
-                                    {
+                                    if (fiv.Contains(changeValue[0])) {
                                         variableB[i] = fiv.Replace(changeValue[0], changeValue[1]);
                                     }
                                     fiv = variableB[i];
@@ -85,37 +75,30 @@ namespace dkcv
 
                     indexF = 0;
 
-                    if (osBool)
-                    {
-                        foreach (string vbsline in System.IO.File.ReadLines("kev/os.kev"))
-                        {
+                    if (osBool) {
+                        foreach (string vbsline in System.IO.File.ReadLines("kev/os.kev")) {
                             string[] stringSeparators = new string[] { " > " };
                             string[] changeValue = vbsline.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
                             Ecdr = Ecdr.Replace(changeValue[0], changeValue[1]);
                         }
                     }
 
-                    if (randomBool)
-                    {
-                        foreach (string vbsline in System.IO.File.ReadLines("kev/random.kev"))
-                        {
+                    if (randomBool) {
+                        foreach (string vbsline in System.IO.File.ReadLines("kev/random.kev")) {
                             string[] stringSeparators = new string[] { " > " };
                             string[] changeValue = vbsline.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
                             Ecdr = Ecdr.Replace(changeValue[0], changeValue[1]);
                         }
                     }
 
-                    foreach (string vbsline in System.IO.File.ReadLines("kev/default.kev"))
-                    {
+                    foreach (string vbsline in System.IO.File.ReadLines("kev/default.kev")) {
                         string[] stringSeparators = new string[] { " > " };
                         string[] changeValue = vbsline.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
                         Ecdr = Ecdr.Replace(changeValue[0], changeValue[1]);
                     }
 
-                    if (converting)
-                    {
-                        for (int i = 0; i < variableB.Length; i++)
-                        {
+                    if (converting) {
+                        for (int i = 0; i < variableB.Length; i++) {
                             Ecdr = Ecdr.Replace("^IX" + i + "^", "\"" + variableB[i] + "\"");
                             Ecdr = Ecdr.Replace("@", "");
                         }
@@ -132,8 +115,7 @@ namespace dkcv
                 StreamWriter writer;
                 writer = File.CreateText("export/convert.py");
 
-                foreach (string itemA in wline)
-                {
+                foreach (string itemA in wline) {
                     writer.WriteLine(itemA);
                 }
 
@@ -143,21 +125,15 @@ namespace dkcv
                 string pathdo = System.AppContext.BaseDirectory;
                 string py = System.AppContext.BaseDirectory;
 
-                if (OS == "Unix")
-                {
+                if (OS == "Unix") {
                     Process module = new Process();
                     module.StartInfo.FileName = "python3";
                     module.StartInfo.Arguments = "-d export/convert.py";
                     module.Start();
-                }
-                else
-                {
-                    if (ARCH == Architecture.Arm64)
-                    {
+                } else {
+                    if (ARCH == Architecture.Arm64) {
                         py = py + "Python\\ARM\\Windows\\python.exe";
-                    }
-                    else
-                    {
+                    } else {
                         py = py + "Python\\x86\\Windows\\python.exe";
                     }
                     pathdo = pathdo + "export\\convert.py";
@@ -168,8 +144,7 @@ namespace dkcv
                 Console.ReadLine();
             }
 
-            string checking(string sourceString)
-            {
+            string checking(string sourceString) {
 
                 string[] returnAiv = new string[48];
                 string aiv = " ", right = " ", non_change = sourceString;
@@ -192,12 +167,9 @@ namespace dkcv
 
                 indexF += 1;
 
-                if (non_change.Contains("@\""))
-                {
+                if (non_change.Contains("@\"")) {
                     return checking(non_change);
-                }
-                else
-                {
+                } else {
                     return non_change;
                 }
             }
