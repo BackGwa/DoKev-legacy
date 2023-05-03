@@ -134,23 +134,22 @@ namespace dkcv
                 writer.Close();
 
                 Process module = new Process();
-
+                string pythonPath;
                 if (OS == "Unix") {
-                    module.StartInfo.FileName = "python3";
-                } else {
-                    if (ARCH == Architecture.Arm64) {
-                        module.StartInfo.FileName = $"-d {baseDirectory}/Python/ARM/python.exe";
-                    } else {
-                        module.StartInfo.FileName = $"-d {baseDirectory}/Python/x86/python.exe";
-                    }
+                    pythonPath = "python3";
                 }
-
+                else {
+                    pythonPath = $"-d {baseDirectory}/Python/{(ARCH == Architecture.Arm64 ? "ARM" : "x86")}/python.exe";
+                }
+                module.StartInfo.FileName = pythonPath;
                 module.StartInfo.Arguments = $"-d {baseDirectory}/export/convert.py";
                 module.Start();
+
                 Console.ReadLine();
+
             }
 
-            
+
             string checking(string sourceString) {
 
                 string[] returnAiv = new string[48];
