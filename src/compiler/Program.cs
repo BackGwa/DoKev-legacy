@@ -21,13 +21,29 @@ namespace DoKevEngine {
             var ARCH = System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture;
             var OS = System.Environment.OSVersion.Platform.ToString();
 
-
             string[] wline = new string[1];
             string[] ExceptList = new string[0];
             int ExceptNum = 0, fileindex = 0;
             bool converting = false;
             bool randomBool = false, osBool = false;
 
+            /* convert.dkv 유효성 확인을 위한 경로 선언 */
+            string filePath = Path.Combine(baseDirectory, "convert.dkv");
+
+
+            /* convert.dkv 유효성 확인 */
+            if (File.Exists(filePath)) {
+                log_t("빌드 대상 파일 확인", "빌드 대상 파일이 존재합니다.", "success", true);
+                log("빌드를 시작하였습니다", $"{time}", "default", true);
+                Converter();
+            }
+            else {
+                log_t("빌드 대상 파일 확인", "빌드 대상 파일이 존재하지 않습니다.", "fatal");
+                return;
+            }
+
+
+            /* Converter :: convert.dkv 파일을 Python 코드로 빌드합니다. */
             void Converter() {
 
                 int counter = 0;
@@ -41,12 +57,10 @@ namespace DoKevEngine {
                 foreach (string line in System.IO.File.ReadLines($"{baseDirectory}/convert.dkv")) {
                     Array.Resize(ref stringArray, stringArray.Length + 1);
                     stringArray[counter] = line;
-                    if (line.Contains("필요한 라이브러리는") && line.Contains("random")) {
-                        randomBool = true;
-                    }
-                    if (line.Contains("필요한 라이브러리는") && line.Contains("os")) {
-                        osBool = true;
-                    }
+
+                    if (line.Contains("필요한 라이브러리는") && line.Contains("random")) randomBool = true;
+                    if (line.Contains("필요한 라이브러리는") && line.Contains("os"))     osBool = true;
+
                     counter++;
                 }
 
@@ -67,15 +81,15 @@ namespace DoKevEngine {
                         Ecdr = encoder;
 
                         for (int i = 0; i < ExceptList.Length; i++) {
-                            string fiv = "";
-                            fiv = ExceptList[i];
+                            string fiv = ExceptList[i];
+
                             if (fiv != null) {
                                 foreach (string vbsline in System.IO.File.ReadLines($"{baseDirectory}/kev/exhand.kev")) {
                                     string[] stringSeparators = new string[] { " > " };
                                     string[] changeValue = vbsline.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
-                                    if (fiv.Contains(changeValue[0])) {
-                                        ExceptList[i] = fiv.Replace(changeValue[0], changeValue[1]);
-                                    }
+
+                                    if (fiv.Contains(changeValue[0])) ExceptList[i] = fiv.Replace(changeValue[0], changeValue[1]);
+
                                     fiv = ExceptList[i];
                                 }
                             }
@@ -125,28 +139,14 @@ namespace DoKevEngine {
                 StreamWriter writer;
                 writer = File.CreateText($"{baseDirectory}/export/convert.py");
 
-                foreach (string itemA in wline) {
-                    writer.WriteLine(itemA);
-                }
+                foreach (string itemA in wline) writer.WriteLine(itemA);
 
                 writer.Close();
-
-                Process module = new Process();
-                string pythonPath;
-                if (OS == "Unix") {
-                    pythonPath = "python3";
-                } else {
-                    pythonPath = $"-d {baseDirectory}/Python/{(ARCH == Architecture.Arm64 ? "ARM" : "x86")}/python.exe";
-                }
-                module.StartInfo.FileName = pythonPath;
-                module.StartInfo.Arguments = $"-d {baseDirectory}/export/convert.py";
-                module.Start();
-
-                Console.ReadLine();
-
+                Runner();
             }
 
 
+            /* StringException :: 한글 문자열 예외처리를 분석하고 처리합니다. */
             string StringException(string sourceString) {
 
                 string[] ExceptReturn = new string[16];
@@ -167,11 +167,24 @@ namespace DoKevEngine {
 
                 ExceptNum += 1;
 
-                if (ifRemaining.Contains("@\"")) {
-                    return StringException(ifRemaining);
-                } else {
-                    return ifRemaining;
-                }
+                if (ifRemaining.Contains("@\"")) return StringException(ifRemaining);
+                else return ifRemaining;
+            }
+
+
+            /* Runner :: 빌드된 Python 파일을 환경에 맞게 실행합니다. */
+            void Runner() {
+                Process module = new Process();
+                string PythonPath;
+
+                if      (OS == "Unix") PythonPath = "python3";
+                else    PythonPath = $"-d {baseDirectory}/Python/{(ARCH == Architecture.Arm64 ? "ARM" : "x86")}/python.exe";
+
+                module.StartInfo.FileName   = PythonPath;
+                module.StartInfo.Arguments  = $"-d {baseDirectory}/export/convert.py";
+                module.Start();
+
+                Console.ReadLine();
             }
 
 
@@ -214,20 +227,6 @@ namespace DoKevEngine {
                 Console.WriteLine($"\t{details}\n");
                 Console.ResetColor();
                 if (createline) CreateLine(50);
-            }
-
-
-            /* convert.dkv 유효성 확인을 위한 경로 선언 */
-            string filePath = Path.Combine(baseDirectory, "convert.dkv");
-
-            /* convert.dkv 유효성 확인 */
-            if (File.Exists(filePath)) {
-                log_t("빌드 대상 파일 확인", "빌드 대상 파일이 존재합니다.", "success", true);
-                log("빌드를 시작하였습니다", $"{time}", "default", true);
-                Converter();
-            } else {
-                log_t("빌드 대상 파일 확인", "빌드 대상 파일이 존재하지 않습니다.", "fatal");
-                return;
             }
 
         } /* Main Function */
