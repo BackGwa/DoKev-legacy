@@ -183,6 +183,7 @@ namespace DoKevEngine {
                 } catch {
                     log($"\n[{NowTime()}]", "디버깅을 시작하는데 문제가 생겼습니다!", "fatal");
                 }
+                Console.ReadKey();
             }
 
 
@@ -223,8 +224,6 @@ namespace DoKevEngine {
                 module.StartInfo.FileName = PythonPath;
                 module.StartInfo.Arguments = $"-d {baseDirectory}/export/convert.py";
                 module.Start();
-
-                Console.ReadKey();
             }
 
 
