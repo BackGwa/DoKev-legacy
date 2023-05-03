@@ -10,8 +10,21 @@ namespace dkcv
         static void Main(string[] args)
         {
 
+            /* 컴파일러 화면 구성 */
+            Console.Clear();
+
+            /* baseDirectory에 빌드 툴의 절대 경로 선언 */
+            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            log_t("빌드 툴 절대 경로", baseDirectory);
+
+            /* 현재 날짜와 시간을 now, time에 선언 */
+            DateTime now = DateTime.Now;
+            string time = now.ToString("tt hh:mm:ss");
+
+            /* 시스템 아키텍쳐와 운영체제 정보 선언 */
             var ARCH = System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture;
             var OS = System.Environment.OSVersion.Platform.ToString();
+
 
             string[] wline = new string[1];
             string[] variableB = new string[0];
@@ -28,7 +41,7 @@ namespace dkcv
                 Array.Clear(wline, 0, wline.Length);
                 Array.Clear(variableB, 0, variableB.Length);
 
-                foreach (string line in System.IO.File.ReadLines("convert.dkv")) {
+                foreach (string line in System.IO.File.ReadLines($"{baseDirectory}/convert.dkv")) {
                     Array.Resize(ref stringArray, stringArray.Length + 1);
                     stringArray[counter] = line;
                     if (line.Contains("필요한 라이브러리는") && line.Contains("random")) {
@@ -60,7 +73,7 @@ namespace dkcv
                             string fiv = "";
                             fiv = variableB[i];
                             if (fiv != null) {
-                                foreach (string vbsline in System.IO.File.ReadLines("kev/exhand.kev")) {
+                                foreach (string vbsline in System.IO.File.ReadLines($"{baseDirectory}/kev/exhand.kev")) {
                                     string[] stringSeparators = new string[] { " > " };
                                     string[] changeValue = vbsline.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
                                     if (fiv.Contains(changeValue[0])) {
@@ -76,7 +89,7 @@ namespace dkcv
                     indexF = 0;
 
                     if (osBool) {
-                        foreach (string vbsline in System.IO.File.ReadLines("kev/os.kev")) {
+                        foreach (string vbsline in System.IO.File.ReadLines($"{baseDirectory}/kev/os.kev")) {
                             string[] stringSeparators = new string[] { " > " };
                             string[] changeValue = vbsline.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
                             Ecdr = Ecdr.Replace(changeValue[0], changeValue[1]);
@@ -84,14 +97,14 @@ namespace dkcv
                     }
 
                     if (randomBool) {
-                        foreach (string vbsline in System.IO.File.ReadLines("kev/random.kev")) {
+                        foreach (string vbsline in System.IO.File.ReadLines($"{baseDirectory}/kev/random.kev")) {
                             string[] stringSeparators = new string[] { " > " };
                             string[] changeValue = vbsline.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
                             Ecdr = Ecdr.Replace(changeValue[0], changeValue[1]);
                         }
                     }
 
-                    foreach (string vbsline in System.IO.File.ReadLines("kev/default.kev")) {
+                    foreach (string vbsline in System.IO.File.ReadLines($"{baseDirectory}/kev/default.kev")) {
                         string[] stringSeparators = new string[] { " > " };
                         string[] changeValue = vbsline.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
                         Ecdr = Ecdr.Replace(changeValue[0], changeValue[1]);
@@ -99,7 +112,7 @@ namespace dkcv
 
                     if (converting) {
                         for (int i = 0; i < variableB.Length; i++) {
-                            Ecdr = Ecdr.Replace("^IX" + i + "^", "\"" + variableB[i] + "\"");
+                            Ecdr = Ecdr.Replace("{>" + i + "<}", "\"" + variableB[i] + "\"");
                             Ecdr = Ecdr.Replace("@", "");
                         }
                     }
@@ -113,7 +126,7 @@ namespace dkcv
                 }
 
                 StreamWriter writer;
-                writer = File.CreateText("export/convert.py");
+                writer = File.CreateText($"{baseDirectory}/export/convert.py");
 
                 foreach (string itemA in wline) {
                     writer.WriteLine(itemA);
@@ -128,7 +141,7 @@ namespace dkcv
                 if (OS == "Unix") {
                     Process module = new Process();
                     module.StartInfo.FileName = "python3";
-                    module.StartInfo.Arguments = "-d export/convert.py";
+                    module.StartInfo.Arguments = $"-d {baseDirectory}/export/convert.py";
                     module.Start();
                 } else {
                     if (ARCH == Architecture.Arm64) {
@@ -143,6 +156,7 @@ namespace dkcv
                 }
                 Console.ReadLine();
             }
+
 
             string checking(string sourceString) {
 
@@ -163,7 +177,7 @@ namespace dkcv
                 Array.Resize(ref variableB, variableB.Length + 1);
                 variableB[indexF] = aiv;
 
-                non_change = non_change.Replace("@\"" + aiv + "\"", "^IX" + indexF + "^");
+                non_change = non_change.Replace("@\"" + aiv + "\"", "{>" + indexF + "<}");
 
                 indexF += 1;
 
@@ -216,17 +230,6 @@ namespace dkcv
                 if(createline) CreateLine(50);
             }
 
-
-            /* 컴파일러 화면 구성 */
-            Console.Clear();
-
-            /* baseDirectory에 빌드 툴의 절대 경로 선언 */
-            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            log_t("빌드 툴 절대 경로", baseDirectory);
-
-            /* 현재 날짜와 시간을 now, time에 선언 */
-            DateTime now = DateTime.Now;
-            string time = now.ToString("tt hh:mm:ss");
 
             /* convert.dkv 유효성 확인을 위한 경로 선언 */
             string filePath = Path.Combine(baseDirectory, "convert.dkv");
