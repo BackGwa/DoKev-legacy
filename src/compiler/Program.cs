@@ -1,12 +1,10 @@
 ﻿using System.Runtime.InteropServices;
 using System.Diagnostics;
 
-namespace dkcv
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
+namespace DoKevEngine {
+
+    class Program {
+        static void Main(string[] args) {
 
             /* 컴파일러 화면 구성 */
             Console.Clear();
@@ -137,8 +135,7 @@ namespace dkcv
                 string pythonPath;
                 if (OS == "Unix") {
                     pythonPath = "python3";
-                }
-                else {
+                } else {
                     pythonPath = $"-d {baseDirectory}/Python/{(ARCH == Architecture.Arm64 ? "ARM" : "x86")}/python.exe";
                 }
                 module.StartInfo.FileName = pythonPath;
@@ -180,10 +177,9 @@ namespace dkcv
                 }
             }
 
-
             /* CreateLine :: 구분자 기호를 카운트 횟수만큼 출력합니다. */
             void CreateLine(int count) {
-                for(int i = 1; i <= count; i++) Console.Write("_");
+                for (int i = 1; i <= count; i++) Console.Write("_");
                 Console.Write("\n\n");
             }
 
@@ -209,7 +205,7 @@ namespace dkcv
                 setColor(type);
                 Console.Write($"{details}\n");
                 Console.ResetColor();
-                if(createline) CreateLine(50);
+                if (createline) CreateLine(50);
             }
 
 
@@ -219,7 +215,7 @@ namespace dkcv
                 setColor(type);
                 Console.WriteLine($"\t{details}\n");
                 Console.ResetColor();
-                if(createline) CreateLine(50);
+                if (createline) CreateLine(50);
             }
 
 
@@ -236,13 +232,8 @@ namespace dkcv
                 return;
             }
 
+        } /* Main Function */
 
+    } /* Program Class */
 
-
-
-
-
-
-        }
-    }
-}
+} /* DoKevEngine namespace */
