@@ -177,8 +177,8 @@ namespace DoKevEngine {
                 Process module = new Process();
                 string PythonPath;
 
-                if      (OS == "Unix") PythonPath = "python3";
-                else    PythonPath = $"-d {baseDirectory}/Python/{(ARCH == Architecture.Arm64 ? "ARM" : "x86")}/python.exe";
+                if (OS == "Unix")   PythonPath = "python3";
+                else                PythonPath = $"-d {baseDirectory}/Python/{(ARCH == Architecture.Arm64 ? "ARM" : "x86")}/python.exe";
 
                 module.StartInfo.FileName   = PythonPath;
                 module.StartInfo.Arguments  = $"-d {baseDirectory}/export/convert.py";
