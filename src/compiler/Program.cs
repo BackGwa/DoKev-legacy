@@ -10,16 +10,20 @@ namespace DoKevEngine {
             /* 컴파일러 화면 구성 */
             Console.Clear();
 
-            /* DoKev 버전 정보 표시 및 config 유효성 확인 */
+            /* ini 유효성 확인 및 선언 */
+            string version = "";
+            string language = "";
             try {
                 IniFile ini = new IniFile();
                 ini.Load($"{AppDomain.CurrentDomain.BaseDirectory}/config.ini");
-                string version = ini["builder"]["version"].ToString();
-                string language = ini["builder"]["language"].ToString();
+                version = ini["builder"]["version"].ToString();
+                language = ini["builder"]["language"].ToString();
 
-                log_t("빌드 툴 정보", version);
+                IniFile lang = new IniFile();
+                lang.Load($"{AppDomain.CurrentDomain.BaseDirectory}/lang/{language}.ini");
+                log_t(lang["text"]["builder-info"].ToString(), version);
             } catch {
-                log("유효성 오류", "config.ini 파일이 손상되었습니다.", "fatal");
+                log("Fatal Error", "An error occurred during initialization.", "fatal");
                 Console.ReadKey();
                 return;
             }
