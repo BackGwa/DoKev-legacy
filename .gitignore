@@ -3,3 +3,4 @@
 src/compiler/bin/
 src/compiler/obj/
 src/compiler/.vs
+*.log
