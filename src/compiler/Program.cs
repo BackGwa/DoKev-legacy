@@ -32,11 +32,13 @@ namespace DoKevEngine {
             /* 시스템 아키텍쳐와 운영체제 정보 선언 */
             var ARCH = System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture;
             var OS = System.Environment.OSVersion.Platform.ToString();
+
             log(Locale("info", "system"), $"{OS} ({ARCH})");
+            log(Locale("info", "lang"), language);
 
             /* baseDirectory에 빌드 툴의 절대 경로 선언 */
             string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            log_t($"\n{Locale("info", "path")}", baseDirectory);
+            log($"\n{Locale("info", "path")}", baseDirectory);
 
             /* 변환 과정에서 필요한 변수 선언 */
             bool converting = false;
@@ -50,20 +52,18 @@ namespace DoKevEngine {
             try {
                 filePath = Path.Combine(baseDirectory, "convert.dkv");
             } catch {
-                write_t(Locale("target", "error"), "fatal");
+                log(Locale("target", "error"), "fatal");
                 Console.ReadKey();
                 return;
             }
 
             /* convert.dkv 유효성 확인 */
-            log(Locale("target", "isvalid"), "");
-
             if (File.Exists(filePath)) {
-                write_t(Locale("target", "valid"), "success", true);
+                log(Locale("target", "isvalid"), Locale("target", "valid"), "success", true);
                 log(NowTime(), $"{Locale("build", "start")}\n");
                 Converter();
             } else {
-                write_t(Locale("target", "invalid"), "fatal");
+                log(Locale("target", "isvalid"), Locale("target", "invalid"), "fatal");
                 Console.ReadKey();
                 return;
             }
@@ -292,27 +292,6 @@ namespace DoKevEngine {
                 Console.Write($"{text} > ");
                 setColor(type);
                 Console.Write($"{details}\n");
-                Console.ResetColor();
-                if (createline) CreateLine(50);
-            }
-
-
-            /* log_t
-             * 빌드 정보나 결과를 탭하여 출력합니다. */
-            void log_t(string text, string details, string type = "default", bool createline = false) {
-                Console.WriteLine($"{text} >");
-                setColor(type);
-                Console.WriteLine($"\t{details}\n");
-                Console.ResetColor();
-                if (createline) CreateLine(50);
-            }
-
-
-            /* write_t
-             * 내용을 탭하여 출력합니다. */
-            void write_t(string details, string type = "default", bool createline = false) {
-                setColor(type);
-                Console.WriteLine($"\t{details}\n");
                 Console.ResetColor();
                 if (createline) CreateLine(50);
             }
