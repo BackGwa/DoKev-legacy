@@ -1,5 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 using System.Diagnostics;
+using System.Text;
 
 namespace DoKevEngine {
 
@@ -21,7 +22,7 @@ namespace DoKevEngine {
                 language = ini["builder"]["language"].ToString();
 
                 lang.Load($"{AppDomain.CurrentDomain.BaseDirectory}/lang/{language}.ini");
-                log($"{Locale("builder-info")}\t\t", version);
+                log(Locale("info", "builder"), version);
             } catch {
                 log("Fatal Error", "An error occurred during initialization.", "fatal");
                 Console.ReadKey();
@@ -31,11 +32,11 @@ namespace DoKevEngine {
             /* 시스템 아키텍쳐와 운영체제 정보 선언 */
             var ARCH = System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture;
             var OS = System.Environment.OSVersion.Platform.ToString();
-            log($"{Locale("system-info")}\t", $"{OS} ({ARCH})");
+            log(Locale("info", "system"), $"{OS} ({ARCH})");
 
             /* baseDirectory에 빌드 툴의 절대 경로 선언 */
             string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            log_t($"\n{Locale("buildtool-path")}", baseDirectory);
+            log_t($"\n{Locale("info", "path")}", baseDirectory);
 
             /* 변환 과정에서 필요한 변수 선언 */
             bool converting = false;
@@ -49,29 +50,30 @@ namespace DoKevEngine {
             try {
                 filePath = Path.Combine(baseDirectory, "convert.dkv");
             } catch {
-                write_t(Locale("file-invalid"), "fatal");
+                write_t(Locale("target", "error"), "fatal");
                 Console.ReadKey();
                 return;
             }
 
             /* convert.dkv 유효성 확인 */
-            log(Locale("targetfile-check"), "");
+            log(Locale("target", "isvalid"), "");
 
             if (File.Exists(filePath)) {
-                write_t($"{Locale("target-valid")}", "success", true);
-                log(NowTime(), $"{Locale("start-build")}\n");
+                write_t(Locale("target", "valid"), "success", true);
+                log(NowTime(), $"{Locale("build", "start")}\n");
                 Converter();
             } else {
-                write_t(Locale("target-invalid"), "fatal");
+                write_t(Locale("target", "invalid"), "fatal");
                 Console.ReadKey();
                 return;
             }
 
 
-            /* Converter :: convert.dkv 파일을 Python 코드로 빌드합니다. */
+            /* Converter
+             * convert.dkv 파일을 Python 코드로 빌드합니다. */
             void Converter() {
 
-                log(NowTime(), Locale("build-init"));
+                log(NowTime(), Locale("build", "initializing"));
 
                 int counter = 0;
                 string[] stringArray = new string[0];
@@ -82,11 +84,11 @@ namespace DoKevEngine {
                 Array.Clear(wline, 0, wline.Length);
                 Array.Clear(ExceptList, 0, ExceptList.Length);
 
-                log(NowTime(), $"{Locale("init-finish")}\n", "success");
-                log(NowTime(), Locale("libchk-load"));
+                log(NowTime(), $"{Locale("build", "initialized")}\n", "success");
+                log(NowTime(), Locale("lib", "ready"));
 
                 foreach (string line in System.IO.File.ReadLines($"{baseDirectory}/convert.dkv")) {
-                    log(NowTime(), $"{Locale("checking")} [{counter}/{stringArray.Length}]");
+                    log(NowTime(), $"{Locale("lib", "check")} : [{counter}/{stringArray.Length}]");
 
                     Array.Resize(ref stringArray, stringArray.Length + 1);
                     stringArray[counter] = line;
@@ -97,8 +99,7 @@ namespace DoKevEngine {
                     counter++;
                 }
 
-                log(NowTime(), $"{Locale("libchk-finish")}\n", "success");
-                log(NowTime(), Locale("builder-load"));
+                log(NowTime(), Locale("lib", "finish"), "success");
 
                 foreach (string line in stringArray) {
 
@@ -108,10 +109,10 @@ namespace DoKevEngine {
                     Array.Clear(ExceptList, 0, ExceptList.Length);
                     converting = false;
 
-                    if (line != "") log($"\n{NowTime()}", $"{Locale("convert-wait")} : {line.Replace("    ", "")}");
+                    if (line != "") log($"\n{NowTime()}", $"{Locale("convert", "wait")} : {line.Replace("    ", "")}");
 
                     if (checking_bool) {
-                        log(NowTime(), Locale("had-except"));
+                        log(NowTime(), Locale("except", "ishas"));
 
                         Array.Clear(ExceptList, 0, ExceptList.Length);
                         ExceptNum = 0;
@@ -121,7 +122,7 @@ namespace DoKevEngine {
                             encoder = StringException(line);
                             code = encoder;
 
-                            log(NowTime(), Locale("convert-literal"));
+                            log(NowTime(), Locale("convert", "literal"));
                             for (int i = 0; i < ExceptList.Length; i++) {
                                 string fiv = ExceptList[i];
 
@@ -138,7 +139,7 @@ namespace DoKevEngine {
                             }
                         } catch {
                             code = line;
-                            log(NowTime(), Locale("convert-error"), "fatal");
+                            log(NowTime(), Locale("convert", "error"), "fatal");
                         }
 
                     } else code = line;
@@ -146,7 +147,7 @@ namespace DoKevEngine {
                     ExceptNum = 0;
 
                     if (osBool) {
-                        if (line != "") log(NowTime(), $"'os.kev' {Locale("convert-rule")}");
+                        if (line != "") log(NowTime(), $"'os.kev' {Locale("convert", "rules")}");
                         foreach (string vbsline in System.IO.File.ReadLines($"{baseDirectory}/kev/os.kev")) {
                             string[] stringSeparators = new string[] { " > " };
                             string[] changeValue = vbsline.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
@@ -155,7 +156,7 @@ namespace DoKevEngine {
                     }
 
                     if (randomBool) {
-                        if (line != "") log(NowTime(), $"'random.kev' {Locale("convert-rule")}");
+                        if (line != "") log(NowTime(), $"'random.kev' {Locale("convert", "rules")}");
                         foreach (string vbsline in System.IO.File.ReadLines($"{baseDirectory}/kev/random.kev")) {
                             string[] stringSeparators = new string[] { " > " };
                             string[] changeValue = vbsline.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
@@ -163,7 +164,7 @@ namespace DoKevEngine {
                         }
                     }
 
-                    if (line != "") log(NowTime(), $"'default.kev' {Locale("convert-rule")}");
+                    if (line != "") log(NowTime(), $"'default.kev' {Locale("convert", "rules")}");
                     foreach (string vbsline in System.IO.File.ReadLines($"{baseDirectory}/kev/default.kev")) {
                         string[] stringSeparators = new string[] { " > " };
                         string[] changeValue = vbsline.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
@@ -171,7 +172,7 @@ namespace DoKevEngine {
                     }
 
                     if (converting) {
-                        log(NowTime(), Locale("recovery-string"));
+                        log(NowTime(), Locale("except", "recovery"));
                         for (int i = 0; i < ExceptList.Length; i++) {
                             code = code.Replace("{>" + i + "<}", "\"" + ExceptList[i] + "\"");
                             code = code.Replace("@", "");
@@ -181,44 +182,38 @@ namespace DoKevEngine {
                     converting = false;
                     fileindex += 1;
 
-                    if (code != "") log(NowTime(), $"{Locale("convert-result")} : {code.Replace("    ", "")}");
+                    if (code != "") log(NowTime(), $"{Locale("convert", "result")} : {code.Replace("    ", "")}");
 
                     wline[wline.Length - 1] = code;
                     Array.Resize(ref wline, wline.Length + 1);
 
                 }
 
-                log($"\n{NowTime()}", Locale("build-finish"), "success", true);
+                log($"\n{NowTime()}", Locale("build", "finish"), "success", true);
 
-                log(NowTime(), Locale("result-write-load"));
+                log(NowTime(), Locale("file", "ready"));
                 StreamWriter writer;
                 try {
                     writer = File.CreateText($"{baseDirectory}/export/convert.py");
                     foreach (string itemA in wline) writer.WriteLine(itemA);
                     writer.Close();
-                    log(NowTime(), Locale("result-write-finish"), "success", true);
-
-                    log(NowTime(), Locale("debugging-start"), "default", true);
+                    log(NowTime(), Locale("file", "finish"), "success", true);
                 } catch {
-                    log(NowTime(), Locale("result-write-error"), "fatal");
+                    log(NowTime(), Locale("file", "error"), "fatal");
                 }
                 try {
+                    log(NowTime(), Locale("debug", "start"), "default", true);
                     Runner();
                 } catch {
-                    log($"\n{NowTime()}", Locale("debugging-error"), "fatal");
+                    log($"\n{NowTime()}", Locale("debug", "error"), "fatal");
                 }
                 Console.ReadKey();
                 return;
             }
 
 
-            /* Locale :: 값에 따라 언어 설정에 맞는 텍스트를 반환합니다. */
-            string Locale(string value){
-                return lang["text"][value].ToString();
-            }
-
-
-            /* StringException :: 한글 문자열 예외처리를 분석하고 처리합니다. */
+            /* StringException
+             * 한글 문자열 예외처리를 분석하고 처리합니다. */
             string StringException(string sourceString) {
 
                 string[] ExceptReturn = new string[16];
@@ -242,9 +237,11 @@ namespace DoKevEngine {
                 if (ifRemaining.Contains("@\"")) return StringException(ifRemaining);
                 else return ifRemaining;
             }
+            
 
 
-            /* Runner :: 빌드된 Python 파일을 환경에 맞게 실행합니다. */
+            /* Runner
+             * 빌드된 Python 파일을 환경에 맞게 실행합니다. */
             void Runner() {
                 Process module = new Process();
                 string PythonPath;
@@ -258,14 +255,23 @@ namespace DoKevEngine {
             }
 
 
-            /* CreateLine :: 구분자 기호를 카운트 횟수만큼 출력합니다. */
+            /* Locale
+             * 값에 따라 언어 설정에 맞는 텍스트를 반환합니다. */
+            string Locale(string key, string value) {
+                return lang[key][value].ToString();
+            }
+
+
+            /* CreateLine
+             * 구분자 기호를 카운트 횟수만큼 출력합니다. */
             void CreateLine(int count) {
                 for (int i = 1; i <= count; i++) Console.Write("_");
                 Console.Write("\n\n");
             }
 
 
-            /* setColor :: 콘솔의 색상을 유형에 따라 변경합니다. */
+            /* setColor
+             * 콘솔의 색상을 유형에 따라 변경합니다. */
             void setColor(string type) {
                 switch (type) {
                     case "default":
@@ -280,7 +286,8 @@ namespace DoKevEngine {
             }
 
 
-            /* log :: 빌드 정보나 결과를 한 줄로 출력합니다. */
+            /* log
+             * 빌드 정보나 결과를 한 줄로 출력합니다. */
             void log(string text, string details, string type = "default", bool createline = false) {
                 Console.Write($"{text} > ");
                 setColor(type);
@@ -290,7 +297,8 @@ namespace DoKevEngine {
             }
 
 
-            /* log_t :: 빌드 정보나 결과를 탭하여 출력합니다. */
+            /* log_t
+             * 빌드 정보나 결과를 탭하여 출력합니다. */
             void log_t(string text, string details, string type = "default", bool createline = false) {
                 Console.WriteLine($"{text} >");
                 setColor(type);
@@ -300,7 +308,8 @@ namespace DoKevEngine {
             }
 
 
-            /* write_t :: 내용을 탭하여 출력합니다. */
+            /* write_t
+             * 내용을 탭하여 출력합니다. */
             void write_t(string details, string type = "default", bool createline = false) {
                 setColor(type);
                 Console.WriteLine($"\t{details}\n");
@@ -309,10 +318,11 @@ namespace DoKevEngine {
             }
 
 
-            /* NowTime :: 현재 시간에 대한 정밀한 값을 반환합니다. */
+            /* NowTime
+             * 현재 시간에 대한 정밀한 값을 반환합니다. */
             string NowTime() {
                 DateTime now = DateTime.Now;
-                return $"[{now.ToString("HH:mm:ss.fffff")}]";
+                return $"[{now.ToString("HH:mm:ss.fff")}]";
             }
 
 
