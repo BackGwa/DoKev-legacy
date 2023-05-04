@@ -103,7 +103,7 @@ namespace DoKevEngine {
                 foreach (string line in stringArray) {
 
                     checking_bool = line.Contains("@\"");
-                    string encoder = "", Ecdr = "";
+                    string encoder = "", code = "";
 
                     Array.Clear(ExceptList, 0, ExceptList.Length);
                     converting = false;
@@ -119,7 +119,7 @@ namespace DoKevEngine {
 
                         try {
                             encoder = StringException(line);
-                            Ecdr = encoder;
+                            code = encoder;
 
                             log($"[{NowTime()}]", Locale("convert-literal"));
                             for (int i = 0; i < ExceptList.Length; i++) {
@@ -137,11 +137,11 @@ namespace DoKevEngine {
                                 }
                             }
                         } catch {
-                            Ecdr = line;
+                            code = line;
                             log($"[{NowTime()}]", Locale("convert-error"), "fatal");
                         }
 
-                    } else Ecdr = line;
+                    } else code = line;
 
                     ExceptNum = 0;
 
@@ -150,7 +150,7 @@ namespace DoKevEngine {
                         foreach (string vbsline in System.IO.File.ReadLines($"{baseDirectory}/kev/os.kev")) {
                             string[] stringSeparators = new string[] { " > " };
                             string[] changeValue = vbsline.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
-                            Ecdr = Ecdr.Replace(changeValue[0], changeValue[1]);
+                            code = code.Replace(changeValue[0], changeValue[1]);
                         }
                     }
 
@@ -159,7 +159,7 @@ namespace DoKevEngine {
                         foreach (string vbsline in System.IO.File.ReadLines($"{baseDirectory}/kev/random.kev")) {
                             string[] stringSeparators = new string[] { " > " };
                             string[] changeValue = vbsline.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
-                            Ecdr = Ecdr.Replace(changeValue[0], changeValue[1]);
+                            code = code.Replace(changeValue[0], changeValue[1]);
                         }
                     }
 
@@ -167,23 +167,23 @@ namespace DoKevEngine {
                     foreach (string vbsline in System.IO.File.ReadLines($"{baseDirectory}/kev/default.kev")) {
                         string[] stringSeparators = new string[] { " > " };
                         string[] changeValue = vbsline.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
-                        Ecdr = Ecdr.Replace(changeValue[0], changeValue[1]);
+                        code = code.Replace(changeValue[0], changeValue[1]);
                     }
 
                     if (converting) {
                         log($"[{NowTime()}]", Locale("recovery-string"));
                         for (int i = 0; i < ExceptList.Length; i++) {
-                            Ecdr = Ecdr.Replace("{>" + i + "<}", "\"" + ExceptList[i] + "\"");
-                            Ecdr = Ecdr.Replace("@", "");
+                            code = code.Replace("{>" + i + "<}", "\"" + ExceptList[i] + "\"");
+                            code = code.Replace("@", "");
                         }
                     }
 
                     converting = false;
                     fileindex += 1;
 
-                    if (Ecdr != "") log($"[{NowTime()}]", $"{Locale("convert-result")} : {Ecdr.Replace("    ", "")}");
+                    if (code != "") log($"[{NowTime()}]", $"{Locale("convert-result")} : {code.Replace("    ", "")}");
 
-                    wline[wline.Length - 1] = Ecdr;
+                    wline[wline.Length - 1] = code;
                     Array.Resize(ref wline, wline.Length + 1);
 
                 }
@@ -316,8 +316,8 @@ namespace DoKevEngine {
             }
 
 
-        } /* Main Function */
+        }   /* Main Function */
 
-    } /* Program Class */
+    }       /* Program Class */
 
-} /* DoKevEngine namespace */
+}           /* DoKevEngine namespace */
