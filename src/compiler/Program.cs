@@ -88,20 +88,24 @@ namespace DoKevEngine {
                 log(NowTime(), Locale("lib", "ready"));
 
                 foreach (string line in System.IO.File.ReadLines($"{baseDirectory}/convert.dkv")) {
-                    log(NowTime(), $"{Locale("lib", "check")} : [{counter}/{stringArray.Length}]");
+                    if(line.Replace(" ", "") != "") {
+                        log(NowTime(), $"{Locale("lib", "check")} : [{counter}/{stringArray.Length}]");
 
-                    Array.Resize(ref stringArray, stringArray.Length + 1);
-                    stringArray[counter] = line;
+                        Array.Resize(ref stringArray, stringArray.Length + 1);
+                        stringArray[counter] = line;
 
-                    if (line.Contains("필요한 라이브러리는") && line.Contains("random")) randomBool = true;
-                    if (line.Contains("필요한 라이브러리는") && line.Contains("os"))     osBool = true;
+                        if (line.Contains("필요한 라이브러리는") && line.Contains("random")) randomBool = true;
+                        if (line.Contains("필요한 라이브러리는") && line.Contains("os")) osBool = true;
 
-                    counter++;
+                        counter++;
+                    }
                 }
 
                 log(NowTime(), Locale("lib", "finish"), "success");
 
                 foreach (string line in stringArray) {
+
+                    if (line.Replace(" ", "") == "") continue;
 
                     checking_bool = line.Contains("@\"");
                     string encoder = "", code = "";
@@ -109,7 +113,7 @@ namespace DoKevEngine {
                     Array.Clear(ExceptList, 0, ExceptList.Length);
                     converting = false;
 
-                    if (line != "") log($"\n{NowTime()}", $"{Locale("convert", "wait")} : {line.Replace("    ", "")}");
+                    log($"\n{NowTime()}", $"{Locale("convert", "wait")} : {line.Replace("    ", "")}");
 
                     if (checking_bool) {
                         log(NowTime(), Locale("except", "ishas"));
@@ -147,7 +151,7 @@ namespace DoKevEngine {
                     ExceptNum = 0;
 
                     if (osBool) {
-                        if (line != "") log(NowTime(), $"'os.kev' {Locale("convert", "rules")}");
+                        log(NowTime(), $"'os.kev' {Locale("convert", "rules")}");
                         foreach (string vbsline in System.IO.File.ReadLines($"{baseDirectory}/kev/os.kev")) {
                             string[] stringSeparators = new string[] { " > " };
                             string[] changeValue = vbsline.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
@@ -156,7 +160,7 @@ namespace DoKevEngine {
                     }
 
                     if (randomBool) {
-                        if (line != "") log(NowTime(), $"'random.kev' {Locale("convert", "rules")}");
+                        log(NowTime(), $"'random.kev' {Locale("convert", "rules")}");
                         foreach (string vbsline in System.IO.File.ReadLines($"{baseDirectory}/kev/random.kev")) {
                             string[] stringSeparators = new string[] { " > " };
                             string[] changeValue = vbsline.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
@@ -164,7 +168,7 @@ namespace DoKevEngine {
                         }
                     }
 
-                    if (line != "") log(NowTime(), $"'default.kev' {Locale("convert", "rules")}");
+                    log(NowTime(), $"'default.kev' {Locale("convert", "rules")}");
                     foreach (string vbsline in System.IO.File.ReadLines($"{baseDirectory}/kev/default.kev")) {
                         string[] stringSeparators = new string[] { " > " };
                         string[] changeValue = vbsline.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
@@ -182,7 +186,7 @@ namespace DoKevEngine {
                     converting = false;
                     fileindex += 1;
 
-                    if (code != "") log(NowTime(), $"{Locale("convert", "result")} : {code.Replace("    ", "")}");
+                    log(NowTime(), $"{Locale("convert", "result")} : {code.Replace("    ", "")}");
 
                     wline[wline.Length - 1] = code;
                     Array.Resize(ref wline, wline.Length + 1);
