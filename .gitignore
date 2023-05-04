@@ -4,3 +4,4 @@ src/compiler/bin/
 src/compiler/obj/
 src/compiler/.vs
 *.log
+src/compiler/Properties/PublishProfiles
