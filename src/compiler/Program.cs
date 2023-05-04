@@ -270,6 +270,7 @@ namespace DoKevEngine {
 
                 module.Start();
                 module.WaitForExit();
+                Console.ReadKey();
             }
 
 
