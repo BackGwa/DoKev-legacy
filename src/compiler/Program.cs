@@ -10,23 +10,45 @@ namespace DoKevEngine {
             /* 컴파일러 화면 구성 */
             Console.Clear();
 
-            /* baseDirectory에 빌드 툴의 절대 경로 선언 */
-            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            log_t("빌드 툴 절대 경로", baseDirectory);
+            /* DoKev 버전 정보 표시 및 config 유효성 확인 */
+            try {
+                IniFile ini = new IniFile();
+                ini.Load($"{AppDomain.CurrentDomain.BaseDirectory}/config.ini");
+                string version = ini["builder"]["version"].ToString();
+                string language = ini["builder"]["language"].ToString();
+
+                log_t("빌드 툴 정보", version);
+            } catch {
+                log("유효성 오류", "config.ini 파일이 손상되었습니다.", "fatal");
+                Console.ReadKey();
+                return;
+            }
 
             /* 시스템 아키텍쳐와 운영체제 정보 선언 */
             var ARCH = System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture;
             var OS = System.Environment.OSVersion.Platform.ToString();
+            log_t("빌드 시스템 정보", $"{OS} ({ARCH})");
 
+            /* baseDirectory에 빌드 툴의 절대 경로 선언 */
+            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            log_t("빌드 툴 절대 경로", baseDirectory);
+
+            /* 변환 과정에서 필요한 변수 선언 */
+            bool converting = false;
+            bool randomBool = false, osBool = false;
             string[] wline = new string[1];
             string[] ExceptList = new string[0];
             int ExceptNum = 0, fileindex = 0;
-            bool converting = false;
-            bool randomBool = false, osBool = false;
+            string filePath = "";
 
             /* convert.dkv 유효성 확인을 위한 경로 선언 */
-            string filePath = Path.Combine(baseDirectory, "convert.dkv");
-
+            try {
+                filePath = Path.Combine(baseDirectory, "convert.dkv");
+            } catch {
+                write_t("파일 유효성 확인 중 오류가 발생하였습니다.", "fatal");
+                Console.ReadKey();
+                return;
+            }
 
             /* convert.dkv 유효성 확인 */
             log("빌드 대상 파일 확인", "");
@@ -35,9 +57,9 @@ namespace DoKevEngine {
                 write_t("빌드 대상 파일이 존재합니다.", "success", true);
                 log($"[{NowTime()}]", "빌드를 시작하였습니다\n");
                 Converter();
-            }
-            else {
+            } else {
                 write_t("빌드 대상 파일이 존재하지 않습니다.", "fatal");
+                Console.ReadKey();
                 return;
             }
 
@@ -115,8 +137,7 @@ namespace DoKevEngine {
                             log($"[{NowTime()}]", "작업을 진행하던 중 문제가 발생했습니다.", "fatal");
                         }
 
-                    }
-                    else Ecdr = line;
+                    } else Ecdr = line;
 
                     ExceptNum = 0;
 
@@ -183,6 +204,7 @@ namespace DoKevEngine {
                     log($"\n[{NowTime()}]", "디버깅을 시작하는데 문제가 생겼습니다!", "fatal");
                 }
                 Console.ReadKey();
+                return;
             }
 
 
