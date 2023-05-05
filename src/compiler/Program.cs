@@ -20,17 +20,13 @@ namespace DoKevEngine {
             logger = File.CreateText($"{logdirectory}/{logtime.ToString("yyyy-MM-dd HH_mm_ss")}.log");
 
             /* ini 유효성 확인 및 선언 */
-            string version = "";
-            string language = "";
             IniFile ini = new IniFile();
             IniFile lang = new IniFile();
             try {
                 ini.Load($"{AppDomain.CurrentDomain.BaseDirectory}/config.ini");
-                version = ini["builder"]["version"].ToString();
-                language = ini["builder"]["language"].ToString();
+                lang.Load($"{AppDomain.CurrentDomain.BaseDirectory}/{cfg("folder", "language")}/{cfg("builder", "language")}.ini");
 
-                lang.Load($"{AppDomain.CurrentDomain.BaseDirectory}/lang/{language}.ini");
-                log(Locale("info", "builder"), version);
+                log(Locale("info", "builder"), cfg("builder", "version"));
             } catch {
                 log("Fatal Error", "An error occurred during initialization.", "fatal");
                 Console.ReadKey(); return;
@@ -41,11 +37,15 @@ namespace DoKevEngine {
             var OS = System.Environment.OSVersion.Platform.ToString();
 
             log(Locale("info", "system"), $"{OS} ({ARCH})");
-            log(Locale("info", "lang"), language);
+            log(Locale("info", "lang"), cfg("builder", "language"));
 
             /* baseDirectory에 빌드 툴의 절대 경로 선언 */
             string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
             log($"\n{Locale("info", "path")}", baseDirectory);
+
+            /* filename 설정 및 선언 */
+            string targetfile = cfg("filename", "target");
+            string exportfile = cfg("filename", "export");
 
             /* 변환 과정에서 필요한 변수 선언 */
             bool converting = false;
@@ -55,22 +55,22 @@ namespace DoKevEngine {
             int ExceptNum = 0, fileindex = 0;
             string filePath = "";
 
-            /* convert.dkv 유효성 확인을 위한 경로 선언 */
+            /* targetfile 유효성 확인을 위한 경로 선언 */
             try {
-                filePath = Path.Combine(baseDirectory, "convert.dkv");
+                filePath = Path.Combine(baseDirectory, targetfile);
             } catch {
                 log(Locale("target", "error"), "fatal");
                 Writelog("", true);
                 return;
             }
 
-            /* convert.dkv 유효성 확인 */
+            /* targetfile 유효성 확인 */
             if (File.Exists(filePath)) {
-                log(Locale("target", "isvalid"), Locale("target", "valid"), "success", true);
+                log(Locale("target", "isvalid"), $"{targetfile} {Locale("target", "valid")}", "success", true);
                 log(NowTime(), $"{Locale("build", "start")}\n");
                 Converter();
             } else {
-                log(Locale("target", "isvalid"), Locale("target", "invalid"), "fatal");
+                log(Locale("target", "isvalid"), $"{targetfile} {Locale("target", "invalid")}", "fatal");
                 Writelog("", true);
                 return;
             }
@@ -94,7 +94,7 @@ namespace DoKevEngine {
                 log(NowTime(), $"{Locale("build", "initialized")}\n", "success");
                 log(NowTime(), Locale("lib", "ready"));
 
-                foreach (string line in System.IO.File.ReadLines($"{baseDirectory}/convert.dkv")) {
+                foreach (string line in System.IO.File.ReadLines($"{baseDirectory}/{targetfile}")) {
                     if(line.Replace(" ", "") != "") {
                         log(NowTime(), $"[{counter}] : {Locale("lib", "check")}");
 
@@ -138,7 +138,7 @@ namespace DoKevEngine {
                                 string fiv = ExceptList[i];
 
                                 if (fiv != null) {
-                                    foreach (string vbsline in System.IO.File.ReadLines($"{baseDirectory}/kev/exhand.kev")) {
+                                    foreach (string vbsline in System.IO.File.ReadLines($"{baseDirectory}/{cfg("folder", "kev")}/exhand.kev")) {
                                         string[] changeValue = vbsline.Split(" > ", StringSplitOptions.RemoveEmptyEntries);
 
                                         if (fiv.Contains(changeValue[0])) ExceptList[i] = fiv.Replace(changeValue[0], changeValue[1]);
@@ -160,7 +160,7 @@ namespace DoKevEngine {
 
                     if (osBool) {
                         log(NowTime(), $"'os.kev' {Locale("convert", "rules")}");
-                        foreach (string vbsline in System.IO.File.ReadLines($"{baseDirectory}/kev/os.kev")) {
+                        foreach (string vbsline in System.IO.File.ReadLines($"{baseDirectory}/{cfg("folder", "kev")}/os.kev")) {
                             string[] changeValue = vbsline.Split(" > ", StringSplitOptions.RemoveEmptyEntries);
                             code = code.Replace(changeValue[0], changeValue[1]);
                         }
@@ -168,14 +168,14 @@ namespace DoKevEngine {
 
                     if (randomBool) {
                         log(NowTime(), $"'random.kev' {Locale("convert", "rules")}");
-                        foreach (string vbsline in System.IO.File.ReadLines($"{baseDirectory}/kev/random.kev")) {
+                        foreach (string vbsline in System.IO.File.ReadLines($"{baseDirectory}/{cfg("folder", "kev")}/random.kev")) {
                             string[] changeValue = vbsline.Split(" > ", StringSplitOptions.RemoveEmptyEntries);
                             code = code.Replace(changeValue[0], changeValue[1]);
                         }
                     }
 
                     log(NowTime(), $"'default.kev' {Locale("convert", "rules")}");
-                    foreach (string vbsline in System.IO.File.ReadLines($"{baseDirectory}/kev/default.kev")) {
+                    foreach (string vbsline in System.IO.File.ReadLines($"{baseDirectory}/{cfg("folder", "kev")}/default.kev")) {
                         string[] changeValue = vbsline.Split(" > ", StringSplitOptions.RemoveEmptyEntries);
                         code = code.Replace(changeValue[0], changeValue[1]);
                     }
@@ -203,7 +203,7 @@ namespace DoKevEngine {
                 log(NowTime(), Locale("file", "ready"));
                 StreamWriter writer;
                 try {
-                    writer = File.CreateText($"{baseDirectory}/export/convert.py");
+                    writer = File.CreateText($"{baseDirectory}/{cfg("folder", "export")}/{exportfile}");
                     foreach (string itemA in wline) writer.WriteLine(itemA);
                     writer.Close();
                     log(NowTime(), Locale("file", "finish"), "success", true);
@@ -227,7 +227,6 @@ namespace DoKevEngine {
             /* StringException
              * 한글 문자열 예외처리를 분석하고 처리합니다. */
             string StringException(string sourceString) {
-
                 string[] ExceptReturn = new string[16];
                 string ExceptValue = " ", AfterString = " ", ifRemaining = sourceString;
 
@@ -248,26 +247,26 @@ namespace DoKevEngine {
                 if (ifRemaining.Contains("@\"")) return StringException(ifRemaining);
                 else return ifRemaining;
             }
-            
+
 
             /* Runner
-             * 빌드된 Python 파일을 환경에 맞게 실행합니다. */
+             * 빌드된 파일을 설정 인터프리터 환경에 맞게 실행합니다. */
             void Runner() {
                 Process module = new Process();
-                string PythonPath;
 
-                if(Config("python", "custom") != "true") {
-                    if (OS == "Unix") PythonPath = "python3";
-                    else PythonPath = $"{baseDirectory}/Python/{(ARCH == Architecture.Arm64 ? "ARM" : "x86")}/python.exe";
+                if (cfg("interpreter", "custom") != "true") {
+                    if (OS == "Unix") module.StartInfo.FileName = "python3";
+                    else module.StartInfo.FileName = $"{baseDirectory}/Python/{(ARCH == Architecture.Arm64 ? "ARM" : "x86")}/python.exe";
+                    module.StartInfo.Arguments = $"-d {baseDirectory}/{cfg("folder", "export")}/{exportfile}";
                 } else {
-                    PythonPath = Config("python", "path");
+                    module.StartInfo.FileName = cfg("interpreter", "path");
+                    module.StartInfo.Arguments = $"{cfg("interpreter", "arguments")} {baseDirectory}/{cfg("folder", "export")}/{exportfile}";
                 }
 
-                module.StartInfo.FileName = PythonPath;
-                module.StartInfo.Arguments = $"-d {baseDirectory}/export/convert.py";
-
+                /* 로거 종료 및 닫기 */
                 Writelog("", true);
 
+                /* 인터프리터 실행 */
                 module.Start();
                 module.WaitForExit();
                 Console.ReadKey();
@@ -280,7 +279,10 @@ namespace DoKevEngine {
                 return lang[key][value].ToString();
             }
 
-            string Config(string key, string value) {
+
+            /* cfg
+             * config의 설정 값을 반환합니다. */
+            string cfg(string key, string value) {
                 return ini[key][value].ToString();
             }
 
@@ -336,6 +338,7 @@ namespace DoKevEngine {
                 DateTime now = DateTime.Now;
                 return $"[{now.ToString("HH:mm:ss.fff")}]";
             }
+
 
         }   /* Main Function */
 
