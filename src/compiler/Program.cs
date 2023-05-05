@@ -257,10 +257,10 @@ namespace DoKevEngine {
                 if (cfg("interpreter", "custom") != "true") {
                     if (OS == "Unix") module.StartInfo.FileName = "python3";
                     else module.StartInfo.FileName = $"{baseDirectory}/Python/{(ARCH == Architecture.Arm64 ? "ARM" : "x86")}/python.exe";
-                    module.StartInfo.Arguments = $"-d {baseDirectory}/{cfg("folder", "export")}/{exportfile}";
+                    module.StartInfo.Arguments = $"-d \"{baseDirectory}/{cfg("folder", "export")}/{exportfile}\"";
                 } else {
                     module.StartInfo.FileName = cfg("interpreter", "path");
-                    module.StartInfo.Arguments = $"{cfg("interpreter", "arguments")} {baseDirectory}/{cfg("folder", "export")}/{exportfile}";
+                    module.StartInfo.Arguments = $"{cfg("interpreter", "arguments")} \"{baseDirectory}/{cfg("folder", "export")}/{exportfile}\"";
                 }
 
                 /* 로거 종료 및 닫기 */
