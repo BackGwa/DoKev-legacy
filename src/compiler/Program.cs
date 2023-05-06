@@ -14,13 +14,21 @@ namespace DoKevEngine {
 
             /* 로거 선언 */
             string logdirectory = AppDomain.CurrentDomain.BaseDirectory + "/log";
+            bool logercreated = false;
+
             DirectoryInfo di = new DirectoryInfo(logdirectory);
-            if (!di.Exists) di.Create();
-
-            DateTime logtime = DateTime.Now;
-
             StreamWriter logger;
-            logger = File.CreateText($"{logdirectory}/{logtime.ToString("yyyy-MM-dd HH_mm_ss")}.log");
+            logger = null;
+
+            try {
+                if (!di.Exists) di.Create();
+                DateTime logtime = DateTime.Now;
+                logger = File.CreateText($"{logdirectory}/{logtime.ToString("yyyy-MM-dd HH_mm_ss")}.log");
+
+                logercreated = true;
+            } catch {
+                log($"Logger Usage Warning", $"Failed to create log folder.\n", "warning");
+            }
 
 
             /* ini 유효성 확인 및 선언 */
@@ -351,8 +359,10 @@ namespace DoKevEngine {
             /* Writelog
              * 로그 파일을 작성합니다. */
             void Writelog(string log, bool close = false) {
-                if (close) logger.Close();
-                else logger.WriteLine(log);
+                if (logercreated) {
+                    if (close) logger.Close();
+                    else logger.WriteLine(log);
+                }
             }
 
 
