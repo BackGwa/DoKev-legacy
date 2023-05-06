@@ -17,7 +17,7 @@ namespace DoKevEngine {
             bool logercreated = false;
 
             DirectoryInfo di = new DirectoryInfo(logdirectory);
-            StreamWriter logger;
+            StreamWriter? logger;
             logger = null;
 
             try {
@@ -234,6 +234,7 @@ namespace DoKevEngine {
 
                 log(NowTime(), Locale("file", "ready"));
                 StreamWriter writer;
+
                 try {
                     writer = File.CreateText($"{baseDirectory}/{cfg("folder", "export")}/{exportfile}");
                     foreach (string itemA in wline) writer.WriteLine(itemA);
@@ -244,6 +245,7 @@ namespace DoKevEngine {
                     Writelog("", true);
                     return;
                 }
+
                 try {
                     log(NowTime(), Locale("debug", "start"), "default", true);
                     Runner();
