@@ -53,7 +53,15 @@ namespace DoKevEngine {
             /* 빌드 파일 폴더 유무 확인 */
             string exportfolder = AppDomain.CurrentDomain.BaseDirectory + $"{cfg("folder", "export")}";
             DirectoryInfo ef = new DirectoryInfo(exportfolder);
-            if (!ef.Exists) ef.Create();
+            if (!ef.Exists) {
+                log($"\n{Locale("createfolder", "title")}", Locale("createfolder", "invalid"), "warning");
+                try {
+                    ef.Create();
+                    log($"{Locale("createfolder", "title")}", $"{Locale("createfolder", "create")}\n", "success");
+                } catch {
+                    log($"{Locale("createfolder", "title")}", $"{Locale("createfolder", "error")}\n", "fatal");
+                }
+            }
 
 
             /* filename 설정 및 선언 */
