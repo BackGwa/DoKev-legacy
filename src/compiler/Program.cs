@@ -11,13 +11,17 @@ namespace DoKevEngine {
             Console.Clear();
             Console.Title = "DoKev Runner";
 
+
             /* 로거 선언 */
             string logdirectory = AppDomain.CurrentDomain.BaseDirectory + "/log";
             DirectoryInfo di = new DirectoryInfo(logdirectory);
-            StreamWriter logger;
             if (!di.Exists) di.Create();
+
             DateTime logtime = DateTime.Now;
+
+            StreamWriter logger;
             logger = File.CreateText($"{logdirectory}/{logtime.ToString("yyyy-MM-dd HH_mm_ss")}.log");
+
 
             /* ini 유효성 확인 및 선언 */
             IniFile ini = new IniFile();
@@ -32,6 +36,7 @@ namespace DoKevEngine {
                 Console.ReadKey(); return;
             }
 
+
             /* 시스템 아키텍쳐와 운영체제 정보 선언 */
             var ARCH = System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture;
             var OS = System.Environment.OSVersion.Platform.ToString();
@@ -39,13 +44,22 @@ namespace DoKevEngine {
             log(Locale("info", "system"), $"{OS} ({ARCH})");
             log(Locale("info", "lang"), cfg("builder", "language"));
 
+
             /* baseDirectory에 빌드 툴의 절대 경로 선언 */
             string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
             log($"\n{Locale("info", "path")}", baseDirectory);
 
+
+            /* 빌드 파일 폴더 유무 확인 */
+            string exportfolder = AppDomain.CurrentDomain.BaseDirectory + $"{cfg("folder", "export")}";
+            DirectoryInfo ef = new DirectoryInfo(exportfolder);
+            if (!ef.Exists) ef.Create();
+
+
             /* filename 설정 및 선언 */
             string targetfile = cfg("filename", "target");
             string exportfile = cfg("filename", "export");
+
 
             /* 변환 과정에서 필요한 변수 선언 */
             bool converting = false;
@@ -55,6 +69,7 @@ namespace DoKevEngine {
             int ExceptNum = 0, fileindex = 0;
             string filePath = "";
 
+
             /* targetfile 유효성 확인을 위한 경로 선언 */
             try {
                 filePath = Path.Combine(baseDirectory, targetfile);
@@ -63,6 +78,7 @@ namespace DoKevEngine {
                 Writelog("", true);
                 return;
             }
+
 
             /* targetfile 유효성 확인 */
             if (File.Exists(filePath)) {
