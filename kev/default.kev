@@ -21,10 +21,11 @@
 삽입 > join
 반올림 > round
 파일열기 > open
+파일닫기 > close
 해석 > encoding
 인코딩 > encoding
-읽기 > r+
-쓰기 > w+
+읽기 > r
+쓰기 > w
 이걸로 > :
 저걸로 > :
 이걸 > in
