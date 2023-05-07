@@ -73,7 +73,7 @@ namespace DoKevEngine {
 
 
             /* filename 설정 및 선언 */
-            string targetfile = cfg("filename", "target")
+            string targetfile = cfg("filename", "target");
             string exportfile = cfg("filename", "export");
 
 
