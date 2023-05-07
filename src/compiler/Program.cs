@@ -72,8 +72,14 @@ namespace DoKevEngine {
             }
 
 
+            /* 매개변수 검사 */
+            int args_ctn = args.Length;
+            string arg_file = "";
+            if (args_ctn == 0) arg_file = args[0];
+
+
             /* filename 설정 및 선언 */
-            string targetfile = cfg("filename", "target");
+            string targetfile = (arg_file == "") ? cfg("filename", "target") : arg_file;
             string exportfile = cfg("filename", "export");
 
 
