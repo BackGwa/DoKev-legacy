@@ -1,15 +1,20 @@
 ﻿using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.Text;
+using System.Numerics;
+
 
 namespace DoKevEngine {
 
-    class Program {
-        static void Main(string[] args) {
+    public class Program {
+        static void Main() {
 
             /* 컴파일러 화면 구성 */
             Console.Clear();
             Console.Title = "DoKev Runner";
+
+            /* Syntax 클래스 연결 */
+            Syntax syntax = new Syntax();
 
 
             /* 로거 선언 */
@@ -46,8 +51,8 @@ namespace DoKevEngine {
 
 
             /* 시스템 아키텍쳐와 운영체제 정보 선언 */
-            var ARCH = System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture;
-            var OS = System.Environment.OSVersion.Platform.ToString();
+            var ARCH = RuntimeInformation.ProcessArchitecture;
+            var OS = Environment.OSVersion.Platform.ToString();
 
             log(Locale("info", "system"), $"{OS} ({ARCH})");
             log(Locale("info", "lang"), cfg("builder", "language"));
@@ -78,9 +83,9 @@ namespace DoKevEngine {
 
 
             /* 변환 과정에서 필요한 변수 선언 */
-            bool converting = false;
+            bool Excepting = false;
             bool randomBool = false, osBool = false;
-            string[] wline = new string[1];
+            string[] WriteLine = new string[1];
             string[] ExceptList = new string[0];
             int ExceptNum = 0, fileindex = 0;
             string filePath = "";
@@ -109,135 +114,123 @@ namespace DoKevEngine {
 
 
             /* Converter
-             * convert.dkv 파일을 Python 코드로 빌드합니다. */
+             * 설정 된 dkv 파일을 Python 코드로 빌드합니다. */
             void Converter() {
-
                 log(NowTime(), Locale("build", "initializing"));
 
-                int counter = 0;
-                string[] stringArray = new string[0];
-                bool checking_bool = false;
+                /* 파싱에 필요한 변수 선언 */
+                Parser parser = new Parser();
 
-                ExceptNum = 0;
-                converting = false;
-                Array.Clear(wline, 0, wline.Length);
-                Array.Clear(ExceptList, 0, ExceptList.Length);
+                bool isExcept = false;
+                int line_counter = 1;
+                string LIBNAME = "";
 
                 log(NowTime(), $"{Locale("build", "initialized")}\n", "success");
-                log(NowTime(), Locale("lib", "ready"));
 
-                foreach (string line in System.IO.File.ReadLines($"{baseDirectory}/{targetfile}")) {
-                    if(line.Replace(" ", "") != "") {
-                        log(NowTime(), $"[{counter}] : {Locale("lib", "check")}");
+                /* 코드를 파싱하여 변환 */
+                foreach (string code in File.ReadLines($"{baseDirectory}/{targetfile}")) {
 
-                        Array.Resize(ref stringArray, stringArray.Length + 1);
-                        stringArray[counter] = line;
-
-                        if (line.Contains("필요한 라이브러리는") && line.Contains("random")) randomBool = true;
-                        if (line.Contains("필요한 라이브러리는") && line.Contains("os")) osBool = true;
-
-                        counter++;
+                    /* 코드가 공백이면, 파서 실행 패스 */
+                    if (code.Replace(" ", "") == "") {
+                        line_counter++; continue;
                     }
-                }
 
-                log(NowTime(), Locale("lib", "finish"), "success");
+                    /* 라이브러리 체크 */
+                    if (parser.LIBCHK(code)) {
+                        LIBNAME = parser.LIBPARSER(line_counter, code);
+                        if (parser.LIBKR(LIBNAME) == "random") {
+                            randomBool = true;
+                        }
+                        if (parser.LIBKR(LIBNAME) == "os") {
+                            osBool = true;
+                        }
+                    }
 
-                foreach (string line in stringArray) {
+                    /* 파서 실행 */
+                    string Result = code;
 
-                    if (line.Replace(" ", "") == "") continue;
+                    /* 예외 처리 필요 유무 확인 */
+                    isExcept = Result.Contains("$\"");
 
-                    checking_bool = line.Contains("@\"");
-                    string encoder = "", code = "";
-
+                    /* 예외 처리 초기화 */
                     Array.Clear(ExceptList, 0, ExceptList.Length);
-                    converting = false;
+                    Excepting = false;
 
-                    log($"\n{NowTime()}", $"{Locale("convert", "wait")} : {line.Replace("    ", "")}");
+                    /* 변환 대기열 */
+                    log($"\n{NowTime()}", $"{Locale("convert", "wait")} : {Result.Replace("    ", "")}");
 
-                    if (checking_bool) {
+                    /* 예외 처리 */
+                    if (isExcept) {
                         log(NowTime(), Locale("except", "ishas"));
 
-                        Array.Clear(ExceptList, 0, ExceptList.Length);
                         ExceptNum = 0;
-                        converting = true;
+                        Excepting = true;
 
                         try {
-                            encoder = StringException(line);
-                            code = encoder;
+                            Result = StringException(Result);
 
+                            /* 문자열 리터럴 처리 */
                             log(NowTime(), Locale("convert", "literal"));
                             for (int i = 0; i < ExceptList.Length; i++) {
-                                string fiv = ExceptList[i];
-
-                                if (fiv != null) {
-                                    foreach (string vbsline in System.IO.File.ReadLines($"{baseDirectory}/{cfg("folder", "kev")}/exhand.kev")) {
-                                        string[] changeValue = vbsline.Split(" > ", StringSplitOptions.RemoveEmptyEntries);
-
-                                        if (fiv.Contains(changeValue[0])) ExceptList[i] = fiv.Replace(changeValue[0], changeValue[1]);
-
-                                        fiv = ExceptList[i];
-                                    }
-                                }
+                                string ExceptText = ExceptList[i];
+                                if (ExceptText != null) ExceptText = parser.LITERAL_PARSER(ExceptText);
                             }
                         } catch {
-                            code = line;
+                            /* 예외 처리 변환 오류 시 */
                             log(NowTime(), Locale("convert", "error"), "fatal");
                             Writelog("", true);
                             return;
                         }
-
-                    } else code = line;
-
-                    ExceptNum = 0;
-
-                    if (osBool) {
-                        log(NowTime(), $"'os.kev' {Locale("convert", "rules")}");
-                        foreach (string vbsline in System.IO.File.ReadLines($"{baseDirectory}/{cfg("folder", "kev")}/os.kev")) {
-                            string[] changeValue = vbsline.Split(" > ", StringSplitOptions.RemoveEmptyEntries);
-                            code = code.Replace(changeValue[0], changeValue[1]);
-                        }
                     }
 
+                    /* RANDOM 모듈 사용 시 파싱 작업 */
                     if (randomBool) {
-                        log(NowTime(), $"'random.kev' {Locale("convert", "rules")}");
-                        foreach (string vbsline in System.IO.File.ReadLines($"{baseDirectory}/{cfg("folder", "kev")}/random.kev")) {
-                            string[] changeValue = vbsline.Split(" > ", StringSplitOptions.RemoveEmptyEntries);
-                            code = code.Replace(changeValue[0], changeValue[1]);
-                        }
+                        log(NowTime(), $"'RANDOM' {Locale("convert", "rules")}");
+                        Result = parser.RANDOM_PARSER(Result);
                     }
 
-                    log(NowTime(), $"'default.kev' {Locale("convert", "rules")}");
-                    foreach (string vbsline in System.IO.File.ReadLines($"{baseDirectory}/{cfg("folder", "kev")}/default.kev")) {
-                        string[] changeValue = vbsline.Split(" > ", StringSplitOptions.RemoveEmptyEntries);
-                        code = code.Replace(changeValue[0], changeValue[1]);
+                    /* OS 모듈 사용 시 파싱 작업 */
+                    if (osBool) {
+                        log(NowTime(), $"'OS' {Locale("convert", "rules")}");
+                        Result = parser.OS_PARSER(Result);
                     }
 
-                    if (converting) {
+                    /* 내장 함수 파싱 작업 */
+                    log(NowTime(), $"'DEFAULT' {Locale("convert", "rules")}");
+                    Result = parser.PARSER(Result);
+
+                    /* 예외처리 복구 */
+                    if (Excepting) {
                         log(NowTime(), Locale("except", "recovery"));
                         for (int i = 0; i < ExceptList.Length; i++) {
-                            code = code.Replace("{>" + i + "<}", "\"" + ExceptList[i] + "\"");
-                            code = code.Replace("@", "");
+                            Result = Result.Replace("{>" + i + "<}", "\"" + ExceptList[i] + "\"");
+                            Result = Result.Replace("$", "");
                         }
                     }
 
-                    converting = false;
+                    /* 예외처리 종료 */
+                    Excepting = false;
                     fileindex += 1;
 
-                    log(NowTime(), $"{Locale("convert", "result")} : {code.Replace("    ", "")}");
+                    log(NowTime(), $"{Locale("convert", "result")} : {Result.Replace("    ", "")}");
 
-                    wline[wline.Length - 1] = code;
-                    Array.Resize(ref wline, wline.Length + 1);
+                    /* 파싱 된 코드 작성 */
+                    WriteLine[WriteLine.Length - 1] = Result;
+                    Array.Resize(ref WriteLine, WriteLine.Length + 1);
 
+                    /* 라인 추가 */
+                    line_counter++;
                 }
 
                 log($"\n{NowTime()}", Locale("build", "finish"), "success", true);
 
+                /* 빌드 파일 작성 */
                 log(NowTime(), Locale("file", "ready"));
                 StreamWriter writer;
 
                 try {
                     writer = File.CreateText($"{baseDirectory}/{cfg("folder", "export")}/{exportfile}");
-                    foreach (string itemA in wline) writer.WriteLine(itemA);
+                    foreach (string Code in WriteLine) writer.WriteLine(Code);
                     writer.Close();
                     log(NowTime(), Locale("file", "finish"), "success", true);
                 } catch {
@@ -246,6 +239,7 @@ namespace DoKevEngine {
                     return;
                 }
 
+                /* 디버깅 시작 */
                 try {
                     log(NowTime(), Locale("debug", "start"), "default", true);
                     Runner();
@@ -254,7 +248,6 @@ namespace DoKevEngine {
                     Writelog("", true);
                     return;
                 }
-                return;
             }
 
 
@@ -264,7 +257,7 @@ namespace DoKevEngine {
                 string[] ExceptReturn = new string[16];
                 string ExceptValue = " ", AfterString = " ", ifRemaining = sourceString;
 
-                ExceptReturn = sourceString.Split("@\"", StringSplitOptions.None);
+                ExceptReturn = sourceString.Split("$\"", StringSplitOptions.None);
                 Array.Resize(ref ExceptReturn, ExceptReturn.Length + 1);
 
                 AfterString = ExceptReturn[1];
@@ -274,11 +267,11 @@ namespace DoKevEngine {
                 Array.Resize(ref ExceptList, ExceptList.Length + 1);
                 ExceptList[ExceptNum] = ExceptValue;
 
-                ifRemaining = ifRemaining.Replace("@\"" + ExceptValue + "\"", "{>" + ExceptNum + "<}");
+                ifRemaining = ifRemaining.Replace("$\"" + ExceptValue + "\"", "{>" + ExceptNum + "<}");
 
                 ExceptNum += 1;
 
-                if (ifRemaining.Contains("@\"")) return StringException(ifRemaining);
+                if (ifRemaining.Contains("$\"")) return StringException(ifRemaining);
                 else return ifRemaining;
             }
 
@@ -321,38 +314,14 @@ namespace DoKevEngine {
             }
 
 
-            /* CreateLine
-             * 구분자 기호를 카운트 횟수만큼 출력합니다. */
-            void CreateLine(int count) {
-                for (int i = 1; i <= count; i++) Console.Write("_");
-                Console.Write("\n\n");
-            }
-
-
-            /* setColor
-             * 콘솔의 색상을 유형에 따라 변경합니다. */
-            void setColor(string type) {
-                switch (type) {
-                    case "default":
-                        Console.ResetColor(); break;
-                    case "success":
-                        Console.ForegroundColor = ConsoleColor.Green; break;
-                    case "warning":
-                        Console.ForegroundColor = ConsoleColor.Yellow; break;
-                    case "fatal":
-                        Console.ForegroundColor = ConsoleColor.Red; break;
-                }
-            }
-            
-
             /* log
              * 빌드 정보나 결과를 한 줄로 출력합니다. */
             void log(string text, string details, string type = "default", bool createline = false) {
                 Console.Write($"{text} > ");
-                setColor(type);
+                syntax.setColor(type);
                 Console.Write($"{details}\n");
                 Console.ResetColor();
-                if (createline) CreateLine(50);
+                if (createline) syntax.CreateLine(50);
 
                 Writelog($"{text} > {details}");
             }
