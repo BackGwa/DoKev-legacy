@@ -8,6 +8,7 @@ namespace DoKevEngine {
         /* 클래스 연결 */
         RichSupport rich = new RichSupport();
 
+
         /* 라이브러리 선언인지 확인 */
         public bool LIBCHK(string code) {
             if ((code.Contains("라이브러리")) || (code.Contains("모듈")) &&
