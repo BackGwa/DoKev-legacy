@@ -322,36 +322,36 @@ namespace DoKevEngine {
 
         /* 문자열 리터널 파서 */
         public string LITERAL_PARSER(string code) {
-            code = code.Replace("\\ㅈ", "\\n");
-            code = code.Replace("\\줄바꿈", "\\n");
-            code = code.Replace("\\줄", "\\n");
+            code = code.Replace(@"\ㅈ", @"\n");
+            code = code.Replace(@"\줄바꿈", @"\n");
+            code = code.Replace(@"\줄", @"\n");
 
-            code = code.Replace("\\ㄷ", "\\b");
-            code = code.Replace("\\뒤로", "\\b");
-            code = code.Replace("\\뒤", "\\b");
+            code = code.Replace(@"\ㄷ", @"\b");
+            code = code.Replace(@"\뒤로", @"\b");
+            code = code.Replace(@"\뒤", @"\b");
 
-            code = code.Replace("\\ㅂ", "\\000");
-            code = code.Replace("\\빈공간", "\\000");
-            code = code.Replace("\\ㄴ", "\\000");
-            code = code.Replace("\\널", "\\000");
+            code = code.Replace(@"\ㅂ", @"\000");
+            code = code.Replace(@"\빈공간", @"\000");
+            code = code.Replace(@"\ㄴ", @"\000");
+            code = code.Replace(@"\널", @"\000");
 
-            code = code.Replace("\\ㅌ", "\\t");
-            code = code.Replace("\\탭", "\\t");
+            code = code.Replace(@"\ㅌ", @"\t");
+            code = code.Replace(@"\탭", @"\t");
 
-            code = code.Replace("\\ㅇ", "\\f");
-            code = code.Replace("\\앞", "\\f");
-            code = code.Replace("\\앞으로", "\\f");
+            code = code.Replace(@"\ㅇ", @"\f");
+            code = code.Replace(@"\앞", @"\f");
+            code = code.Replace(@"\앞으로", @"\f");
 
-            code = code.Replace("\\ㄷ", "\\r");
-            code = code.Replace("\\다음", "\\r");
-            code = code.Replace("\\다음으로", "\\r");
+            code = code.Replace(@"\ㄷ", @"\r");
+            code = code.Replace(@"\다음", @"\r");
+            code = code.Replace(@"\다음으로", @"\r");
 
-            code = code.Replace("\\ㅂ", "\\a");
-            code = code.Replace("\\벨", "\\a");
-            code = code.Replace("\\부저", "\\a");
+            code = code.Replace(@"\ㅂ", @"\a");
+            code = code.Replace(@"\벨", @"\a");
+            code = code.Replace(@"\부저", @"\a");
 
-            code = code.Replace("\\ㅅ", "\\v");
-            code = code.Replace("\\수직탭", "\\v");
+            code = code.Replace(@"\ㅅ", @"\v");
+            code = code.Replace(@"\수직탭", @"\v");
 
             return code;
         }
