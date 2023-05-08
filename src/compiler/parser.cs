@@ -24,7 +24,7 @@ namespace DoKevEngine {
             string[] SPLIT = code.Split(" ");
 
             if (LIB_ERRCHK(SPLIT[0])) {
-                return "<ERROR:METHOD>";
+                return "{ERROR:METHOD}";
             }
             else {
                 return SPLIT[0];

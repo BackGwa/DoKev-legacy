@@ -1,12 +1,10 @@
 ﻿using System.Runtime.InteropServices;
 using System.Diagnostics;
-using System.Text;
-using System.Numerics;
 
 
 namespace DoKevEngine {
 
-    public class Program {
+    class Program {
         static void Main() {
 
             /* 컴파일러 화면 구성 */
@@ -80,14 +78,12 @@ namespace DoKevEngine {
             string targetfile = cfg("filename", "target");
             string exportfile = cfg("filename", "export");
 
-
-            /* 변환 과정에서 필요한 변수 선언 */
-            bool Excepting = false;
+            /* 변환에 필요한 변수 선언 */
             bool randomBool = false, osBool = false;
             string[] WriteLine = new string[1];
             string[] ExceptList = new string[0];
-            int ExceptNum = 0, fileindex = 0;
-            string filePath = "";
+            int fileindex = 0;
+            string filePath;
 
 
             /* targetfile 유효성 확인을 위한 경로 선언 */
@@ -111,7 +107,7 @@ namespace DoKevEngine {
                 return;
             }
 
-
+            int ExceptNum;
             /* Converter
              * 설정 된 dkv 파일을 Python 코드로 빌드합니다. */
             void Converter() {
@@ -152,7 +148,9 @@ namespace DoKevEngine {
 
                     /* 예외 처리 초기화 */
                     Array.Clear(ExceptList, 0, ExceptList.Length);
-                    Excepting = false;
+
+                    /* 변환 과정에서 필요한 변수 선언 */
+                    bool Excepting = false;
 
                     /* 변환 대기열 */
                     log($"\n{NowTime()}", $"{Locale("convert", "wait")} : {Result.Replace("    ", "")}");
@@ -169,7 +167,8 @@ namespace DoKevEngine {
 
                             /* 문자열 리터럴 처리 */
                             log(NowTime(), Locale("convert", "literal"));
-                            for (int i = 0; i < ExceptList.Length; i++) {
+                            for (int i = 0; i < ExceptList.Length; i++)
+                            {
                                 if (ExceptList[i] != null) ExceptList[i] = parser.LITERAL_PARSER(ExceptList[i]);
                             }
                         } catch {
@@ -277,7 +276,8 @@ namespace DoKevEngine {
             void Runner() {
                 Process module = new Process();
 
-                if (cfg("interpreter", "custom") != "true") {
+                if (cfg("interpreter", "custom") != "true" && 
+                    cfg("interpreter", "custom") == "false") {
                     if (OS == "Unix") module.StartInfo.FileName = "python3";
                     else module.StartInfo.FileName = $"{baseDirectory}/Python/{(ARCH == Architecture.Arm64 ? "ARM" : "x86")}/python.exe";
                     module.StartInfo.Arguments = $"-d \"{baseDirectory}/{cfg("folder", "export")}/{exportfile}\"";
