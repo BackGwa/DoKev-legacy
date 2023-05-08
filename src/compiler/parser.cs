@@ -4,9 +4,8 @@ using static System.Net.Mime.MediaTypeNames;
 namespace DoKevEngine {
     public class Parser {
 
-        /* RichSupprot 클래스 연결 */
+        /* 클래스 연결 */
         RichSupport rich = new RichSupport();
-
 
         /* 라이브러리 선언인지 확인 */
         public bool LIBCHK(string code) {

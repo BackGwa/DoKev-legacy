@@ -2,9 +2,6 @@
 namespace DoKevEngine {
     public class RichSupport {
 
-        /* 클래스 연결 */
-        Config cf = new Config();
-
         /* LoggerSet
          * 로거 등록 */
         bool logercreated = false;
@@ -45,8 +42,8 @@ namespace DoKevEngine {
         /* CreateLine
          * 구분자 기호를 카운트 횟수만큼 출력합니다. */
         public void CreateLine(int count) {
-            for (int i = 1; i <= count; i++) Console.Write("_");
-            Console.Write("\n\n");
+            for (int i = 1; i <= count; i++) Console.Write("-");
+            Console.Write("\n");
         }
 
 
@@ -82,12 +79,16 @@ namespace DoKevEngine {
         /* SyntaxError
          * 문법적 오류에 대한 메세지를 표시합니다. */
         public void SyntaxError(string code, string type) {
+            /* 클래스 연결 */
+            Config cf = new Config();
+
+            cf.ConfigSet();
             setColor("fatal");
             Console.WriteLine(cf.Text("error", "title"));
-            Console.WriteLine(code);
+            Console.WriteLine(cf.Text("error", "code") + code.Replace("    ", ""));
             CreateLine(50);
-            Console.WriteLine(cf.Text("error", type + "-message"));
-            Console.WriteLine(cf.Text("error", type + "-suggest"));
+            Console.WriteLine(cf.Text("error", $"{type}-message"));
+            Console.WriteLine("\n" + cf.Text("error", $"{type}-suggest"));
             Console.ResetColor();
         }
 

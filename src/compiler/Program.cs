@@ -169,6 +169,8 @@ namespace DoKevEngine {
                     log(NowTime(), $"'DEFAULT' {locale("convert", "rules")}");
                     Result = parser.PARSER(Result);
 
+                    if (Result == "") break;
+
                     /* 예외처리 복구 */
                     if (Excepting) {
                         log(NowTime(), locale("except", "recovery"));

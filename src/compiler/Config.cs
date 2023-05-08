@@ -3,10 +3,6 @@ namespace DoKevEngine
 {
     public class Config {
 
-        /* 클래스 연결 */
-        RichSupport rich = new RichSupport();
-
-
         /* ini 유효성 확인 및 선언 */
         IniFile ini = new IniFile();
         IniFile lang = new IniFile();
@@ -15,6 +11,9 @@ namespace DoKevEngine
         /* ConfigSet
          * 설정 등록 */
         public void ConfigSet() {
+            /* 클래스 연결 */
+            RichSupport rich = new RichSupport();
+
             try {
                 ini.Load($"{AppDomain.CurrentDomain.BaseDirectory}/config.ini");
                 lang.Load($"{AppDomain.CurrentDomain.BaseDirectory}/{Cfg("folder", "language")}/{Cfg("builder", "language")}.ini");
@@ -38,7 +37,7 @@ namespace DoKevEngine
         /* Text
          * 값에 따라 언어 설정에 맞는 텍스트를 반환합니다. */
         public string Text(string key, string value) {
-            return lang[key][value].ToString();
+            return lang[key][value].ToString().Replace("\\n", "\n");
         }
 
     }   /* Config Class */
