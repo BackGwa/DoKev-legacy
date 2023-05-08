@@ -6,7 +6,7 @@ namespace DoKevEngine {
 
         /* RichSupprot 클래스 연결 */
         RichSupport rich = new RichSupport();
-        
+
 
         /* 코드 오류 및 디버깅 메세지 출력 */
         void syntax_error(string code, string err_type) {
