@@ -1,4 +1,6 @@
 ﻿
+using System.Text;
+
 namespace DoKevEngine
 {
     public class Config {
@@ -11,9 +13,7 @@ namespace DoKevEngine
         /* ConfigSet
          * 설정 등록 */
         public void ConfigSet() {
-            /* 클래스 연결 */
             RichSupport rich = new RichSupport();
-
             try {
                 ini.Load($"{AppDomain.CurrentDomain.BaseDirectory}/config.ini");
                 lang.Load($"{AppDomain.CurrentDomain.BaseDirectory}/{Cfg("folder", "language")}/{Cfg("builder", "language")}.ini");
@@ -30,14 +30,17 @@ namespace DoKevEngine
         /* Cfg
          * config의 설정 값을 반환합니다. */
         public string Cfg(string key, string value) {
-            return ini[key][value].ToString();
+            var innerDict = ini[key];
+            return innerDict[value].ToString();
         }
 
 
         /* Text
          * 값에 따라 언어 설정에 맞는 텍스트를 반환합니다. */
         public string Text(string key, string value) {
-            return lang[key][value].ToString().Replace("\\n", "\n");
+            var innerDict = lang[key];
+            var text = innerDict[value].ToString();
+            return new StringBuilder(text).Replace("\\n", "\n").ToString();
         }
 
     }   /* Config Class */
