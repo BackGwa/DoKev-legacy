@@ -31,8 +31,9 @@ namespace DoKevEngine {
                 logger = File.CreateText($"{logdirectory}/{logtime.ToString("yyyy-MM-dd HH_mm_ss")}.log");
 
                 logercreated = true;
-            } catch {
+            } catch (Exception e) {
                 log($"Logger Usage Warning", $"Failed to create log folder.\n", "warning");
+                log("\nFatal Error", e.Message, "fatal");
             }
 
 
@@ -44,8 +45,9 @@ namespace DoKevEngine {
                 lang.Load($"{AppDomain.CurrentDomain.BaseDirectory}/{cfg("folder", "language")}/{cfg("builder", "language")}.ini");
 
                 log(Locale("info", "builder"), cfg("builder", "version"));
-            } catch {
+            } catch (Exception e) {
                 log("Fatal Error", "An error occurred during initialization.", "fatal");
+                log("\nFatal Error", e.Message, "fatal");
                 Console.ReadKey(); return;
             }
 
