@@ -7,7 +7,7 @@ namespace DoKevEngine {
     partial class Program {
         static void Main() {
 
-            /* 컴파일러 화면 구성 */
+            /* 빌더 화면 구성 */
             Console.Clear();
             Console.Title = "DoKev Runner";
 
