@@ -37,8 +37,7 @@ namespace DoKevEngine
         /* Text
          * 값에 따라 언어 설정에 맞는 텍스트를 반환합니다. */
         public string Text(string key, string value) {
-            var text = lang[key][value].ToString();
-            return new StringBuilder(text).Replace("\\n", "\n").ToString();
+            return lang[key][value].ToString().Replace("\\n", "\n");
         }
 
     }   /* Config Class */
