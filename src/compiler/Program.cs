@@ -58,6 +58,7 @@ namespace DoKevEngine {
             string targetfile = cfg("filename", "target");
             string exportfile = cfg("filename", "export");
 
+
             /* 변환에 필요한 변수 선언 */
             bool Enable_random = false, Enable_os = false;
             string[] WriteLine = new string[1];

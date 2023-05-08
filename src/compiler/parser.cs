@@ -147,6 +147,7 @@ namespace DoKevEngine {
             return code;
         }
 
+
         /* FOR 반복문 파싱 */
         string FOR(string code) {
             code = Regex.Replace(code, "(증감반복해줘|증감반복해)", "for");
@@ -154,6 +155,7 @@ namespace DoKevEngine {
             code = Regex.Replace(code, "(이걸로|저걸로|으로)", ":");
             return code;
         }
+
 
         /* BREAK 반복문 파싱 */
         string BREAK(string code) {
@@ -292,6 +294,11 @@ namespace DoKevEngine {
         string IDAF(string code) {
             code = Regex.Replace(code, "(증가해줘|증가)", "+= 1");
             code = Regex.Replace(code, "(감소해줘|감소)", "-= 1");
+            if (code.Contains(" = ") && 
+               (code.Contains("+= 1") || code.Contains("-= 1"))) {
+                rich.SyntaxError(code, "idaf-assignment");
+                return "";
+            }
             return code;
         }
 
