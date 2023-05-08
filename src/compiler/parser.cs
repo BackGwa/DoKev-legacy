@@ -294,6 +294,7 @@ namespace DoKevEngine {
             code = Regex.Replace(code, "(랜덤범위정수|난수범위정수|범위정수)", "randrange");
             code = Regex.Replace(code, "(여럿값선택)", "sample");
             code = Regex.Replace(code, "(선택)", "choice");
+            code = Regex.Replace(code, "(섞기)", "shuffle");
             code = Regex.Replace(code, "(랜덤|난수)", "random");
             return code;
         }
