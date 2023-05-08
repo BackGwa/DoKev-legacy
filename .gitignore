@@ -7,3 +7,4 @@ src/compiler/.vs
 src/compiler/Properties/PublishProfiles
 *.user
 export/
+src/compiler/Properties/launchSettings.json
