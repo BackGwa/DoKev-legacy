@@ -75,6 +75,13 @@ namespace DoKevEngine {
             return $"[{now:HH:mm:ss.fff}]";
         }
 
+
+        /* SyntaxError
+         * 문법적 오류에 대한 메세지를 표시합니다. */
+        public void SyntaxError(string code, string type) {
+
+        }
+
     }   /* RichSupport Class */
 
 }       /* DoKevEngine namespace */
