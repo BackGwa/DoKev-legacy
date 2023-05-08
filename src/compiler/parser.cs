@@ -44,13 +44,6 @@ namespace DoKevEngine {
         }
 
 
-        /* 라이브러리 선언 파싱 */
-        string IMPORT(string code) {
-            if (LIBCHK(code)) return $"import {LIBKR(code.Split(" ")[0])}";
-            return code;
-        }
-
-
         /* 출력문 파싱 */
         string PRINT(string code) {
             code = Regex.Replace(code, "(말해줘|보여줘|출력해줘|출력해)", "print");
@@ -256,7 +249,6 @@ namespace DoKevEngine {
 
         /* 파서 */
         public string PARSER(string code = "") {
-            code = IMPORT(code);
             code = PRINT(code);
             code = INPUT(code);
             code = FORMAT(code);
