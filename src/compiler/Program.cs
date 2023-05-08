@@ -143,9 +143,7 @@ namespace DoKevEngine {
                             /* 문자열 리터럴 처리 */
                             log(NowTime(), locale("convert", "literal"));
                             for (int i = 0; i < ExceptList.Length; i++)
-                            {
                                 if (ExceptList[i] != null) ExceptList[i] = parser.LITERAL_PARSER(ExceptList[i]);
-                            }
                         } catch {
                             /* 예외 처리 변환 오류 시 */
                             log(NowTime(), locale("convert", "error"), "fatal");
