@@ -86,6 +86,27 @@ namespace DoKevEngine {
         }
 
 
+        /* 문자열 검사 */
+        string STRING_S(string code) {
+
+            /* 문자열 포함 여부 검사 */
+            if (!(code.Contains("\"") || code.Contains("'"))) return code;
+
+            /* 문자열 작은 따옴표 사용 경고 검사 */
+            if (code.Contains("'")) rich.SyntaxWarning(BeforeCode, "string-mark");
+
+            /* 문자열을 여닫았는지 확인 */
+            string[] smallmark = code.Split(new string[] { "'" }, StringSplitOptions.None);
+            string[] bigmark = code.Split(new string[] { "\"" }, StringSplitOptions.None);
+
+            if (smallmark.Length - 1 / 2 != 0 || bigmark.Length - 1 / 2 != 0) {
+                rich.SyntaxError(BeforeCode, "unmatched-mark");
+                return "";
+            }
+            return code;
+        }
+
+
         /* 출력문 파싱 */
         string PRINT(string code) {
             code = Regex.Replace(code, "(말해줘|보여줘|출력해줘|출력해)", "print");
@@ -179,7 +200,6 @@ namespace DoKevEngine {
         /* JOIN 파싱 */
         string JOIN(string code) {
             code = Regex.Replace(code, "(넣기|삽입)", "join");
-            if (code.Contains("join")) code = BRACKET_S(code);
             return code;
         }
 
@@ -295,8 +315,8 @@ namespace DoKevEngine {
         string ITEMCALC(string code) {
             code = Regex.Replace(code, "(모으기|합치기|붙이기)", "append");
             code = Regex.Replace(code, "(문자길이|길이)", "len");
-            if (code.Contains("append")) code = BRACKET_S(code);
-            if (code.Contains("len")) code = BRACKET_S(code);
+            if (code.Contains("append") ||
+                code.Contains("len")) code = BRACKET_S(code);
             return code;
         }
 
@@ -304,6 +324,8 @@ namespace DoKevEngine {
         /* 파서 */
         public string PARSER(string code = "") {
             BeforeCode = code;
+
+            code = STRING_S(code);
 
             code = IMPORT(code);
             code = UPPER_LOWER(code);
@@ -349,8 +371,7 @@ namespace DoKevEngine {
                 code.Contains("randrange") ||
                 code.Contains("sample") ||
                 code.Contains("choice") ||
-                code.Contains("shuffle") ||
-                code.Contains("random")) code = BRACKET_S(code);
+                code.Contains("shuffle")) code = BRACKET_S(code);
             return code;
         }
 
