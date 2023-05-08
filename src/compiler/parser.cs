@@ -258,6 +258,7 @@ namespace DoKevEngine {
         /* 파서 */
         public string PARSER(string code = "") {
             code = IMPORT(code);
+            code = UPPER_LOWER(code);
             code = PRINT(code);
             code = INPUT(code);
             code = FORMAT(code);
@@ -265,7 +266,6 @@ namespace DoKevEngine {
             code = FUNCTION(code);
             code = DATA_TYPE(code);
             code = VARIABLE(code);
-            code = UPPER_LOWER(code);
             code = FOR(code);
             code = WHILE(code);
             code = BREAK(code);
@@ -301,6 +301,7 @@ namespace DoKevEngine {
 
         /* OS 파서 */
         public string OS_PARSER(string code) {
+            code = Regex.Replace(code, "(운영체계)", "os");
             code = Regex.Replace(code, "(현재경로)", "getcwd");
             code = Regex.Replace(code, "(폴더변경)", "chdir");
             code = Regex.Replace(code, "(파일목록)", "listdir");
