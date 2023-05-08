@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using System.Xml.Serialization;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace DoKevEngine {
@@ -41,6 +42,13 @@ namespace DoKevEngine {
             if (libname == "난수" || libname == "랜덤") return "random";
             if (libname == "운영체계") return "os";
             return libname;
+        }
+
+
+        /* 라이브러리 선언 파싱 */
+        string IMPORT(string code) {
+            if (LIBCHK(code)) return $"import {LIBKR(code.Split(" ")[0])}";
+            return code;
         }
 
 
@@ -205,8 +213,8 @@ namespace DoKevEngine {
             code = Regex.Replace(code, "(더하기)", "+");
             code = Regex.Replace(code, "(빼기)", "-");
             code = Regex.Replace(code, "(곱하기)", "*");
-            code = Regex.Replace(code, "(/)", "나누기");
-            code = Regex.Replace(code, "(%)", "나머지");
+            code = Regex.Replace(code, "(나누기)", "/");
+            code = Regex.Replace(code, "(나머지)", "%");
             code = Regex.Replace(code, "(거듭 제곱|제곱)", "**");
             code = Regex.Replace(code, "(절댓값)", "abs");
             code = Regex.Replace(code, "(문자수식|수식)", "eval");
@@ -249,6 +257,7 @@ namespace DoKevEngine {
 
         /* 파서 */
         public string PARSER(string code = "") {
+            code = IMPORT(code);
             code = PRINT(code);
             code = INPUT(code);
             code = FORMAT(code);
@@ -257,8 +266,8 @@ namespace DoKevEngine {
             code = DATA_TYPE(code);
             code = VARIABLE(code);
             code = UPPER_LOWER(code);
-            code = WHILE(code);
             code = FOR(code);
+            code = WHILE(code);
             code = BREAK(code);
             code = IFTHEN(code);
             code = LOGIC(code);
