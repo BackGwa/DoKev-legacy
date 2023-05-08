@@ -3,7 +3,6 @@ namespace DoKevEngine
 {
     public class Syntax {
 
-
         /* ERROR
          * 문법 오류를 표시합니다. */
         public void ERROR(int line, string code, string type) {
@@ -51,5 +50,5 @@ namespace DoKevEngine
             Console.Write("\n\n");
         }
 
-    }
-}
+    }   /* Syntax Class */
+}       /* DoKevEngine namespace */
