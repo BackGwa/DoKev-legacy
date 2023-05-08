@@ -30,16 +30,14 @@ namespace DoKevEngine
         /* Cfg
          * config의 설정 값을 반환합니다. */
         public string Cfg(string key, string value) {
-            var innerDict = ini[key];
-            return innerDict[value].ToString();
+            return ini[key][value].ToString();
         }
 
 
         /* Text
          * 값에 따라 언어 설정에 맞는 텍스트를 반환합니다. */
         public string Text(string key, string value) {
-            var innerDict = lang[key];
-            var text = innerDict[value].ToString();
+            var text = lang[key][value].ToString();
             return new StringBuilder(text).Replace("\\n", "\n").ToString();
         }
 
