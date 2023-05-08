@@ -81,14 +81,15 @@ namespace DoKevEngine {
         public void SyntaxError(string code, string type) {
             /* 클래스 연결 */
             Config cf = new Config();
-
             cf.ConfigSet();
             setColor("fatal");
-            Console.WriteLine(cf.Text("error", "title"));
-            Console.WriteLine(cf.Text("error", "code") + code.Replace("    ", ""));
-            CreateLine(50);
+            CreateLine(75);
+            Console.Write(cf.Text("error", "title"));
+            Console.WriteLine(code.Replace("    ", ""));
+            CreateLine(75);
             Console.WriteLine(cf.Text("error", $"{type}-message"));
             Console.WriteLine("\n" + cf.Text("error", $"{type}-suggest"));
+            CreateLine(75);
             Console.ResetColor();
         }
 
