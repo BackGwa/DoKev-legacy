@@ -1,7 +1,18 @@
 ﻿using System.Text.RegularExpressions;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace DoKevEngine {
     public class Parser {
+
+        /* RichSupprot 클래스 연결 */
+        RichSupport rich = new RichSupport();
+        
+
+        /* 코드 오류 및 디버깅 메세지 출력 */
+        void syntax_error(string code, string err_type) {
+
+        }
+
 
         /* 라이브러리 선언인지 확인 */
         public bool LIBCHK(string code) {
@@ -24,9 +35,9 @@ namespace DoKevEngine {
             string[] SPLIT = code.Split(" ");
 
             if (LIB_ERRCHK(SPLIT[0])) {
-                return "{ERROR:METHOD}";
-            }
-            else {
+                syntax_error(code, "lib-space");
+                return "";
+            } else {
                 return SPLIT[0];
             }
         }
