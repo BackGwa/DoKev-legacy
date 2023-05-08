@@ -83,6 +83,7 @@ namespace DoKevEngine {
             Config cf = new Config();
             cf.ConfigSet();
             setColor("fatal");
+            Console.WriteLine();
             CreateLine(75);
             Console.Write(cf.Text("error", "title"));
             Console.WriteLine(code.Replace("    ", ""));
