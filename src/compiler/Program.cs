@@ -121,7 +121,6 @@ namespace DoKevEngine {
                 /* 파싱에 필요한 변수 선언 */
                 Parser parser = new Parser();
 
-                bool isExcept = false;
                 int line_counter = 1;
                 string LIBNAME = "";
 
@@ -150,7 +149,7 @@ namespace DoKevEngine {
                     string Result = code;
 
                     /* 예외 처리 필요 유무 확인 */
-                    isExcept = Result.Contains("$\"");
+                    bool isExcept = Result.Contains("$\"");
 
                     /* 예외 처리 초기화 */
                     Array.Clear(ExceptList, 0, ExceptList.Length);
@@ -172,8 +171,7 @@ namespace DoKevEngine {
                             /* 문자열 리터럴 처리 */
                             log(NowTime(), Locale("convert", "literal"));
                             for (int i = 0; i < ExceptList.Length; i++) {
-                                string ExceptText = ExceptList[i];
-                                if (ExceptText != null) ExceptText = parser.LITERAL_PARSER(ExceptText);
+                                if (ExceptList[i] != null) ExceptList[i] = parser.LITERAL_PARSER(ExceptList[i]);
                             }
                         } catch {
                             /* 예외 처리 변환 오류 시 */
