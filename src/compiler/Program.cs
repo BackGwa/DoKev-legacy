@@ -88,6 +88,7 @@ namespace DoKevEngine {
 
             int ExceptNum;
 
+
             /* Converter
              * 설정 된 dkv 파일을 Python 코드로 빌드합니다. */
             void Converter() {
@@ -114,6 +115,10 @@ namespace DoKevEngine {
                         LIBNAME = parser.LIBPARSER(code);
                         if (parser.LIBKR(LIBNAME) == "random") Enable_random = true;
                         if (parser.LIBKR(LIBNAME) == "os") Enable_os = true;
+                        if (parser.LIBKR(LIBNAME) == "") {
+                            Writelog("", true);
+                            return;
+                        }
                     }
 
                     /* 파서 실행 */
@@ -169,7 +174,7 @@ namespace DoKevEngine {
                     log(NowTime(), $"'DEFAULT' {locale("convert", "rules")}");
                     Result = parser.PARSER(Result);
 
-                    if (Result == "") break;
+                    if (Result == "") return;
 
                     /* 예외처리 복구 */
                     if (Excepting) {

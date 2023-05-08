@@ -7,6 +7,7 @@ namespace DoKevEngine {
         bool logercreated = false;
         StreamWriter? logger;
 
+
         public void LoggerSet() {
             string logdirectory = AppDomain.CurrentDomain.BaseDirectory + "/log";
             DirectoryInfo di = new DirectoryInfo(logdirectory);
@@ -82,16 +83,17 @@ namespace DoKevEngine {
             /* 클래스 연결 */
             Config cf = new Config();
             cf.ConfigSet();
+
             setColor("fatal");
-            Console.WriteLine();
-            CreateLine(75);
+
+            Console.WriteLine(); CreateLine(75);
             Console.Write(cf.Text("error", "title"));
-            Console.WriteLine(code.Replace("    ", ""));
-            CreateLine(75);
+            Console.WriteLine(code.Replace("    ", "")); CreateLine(75);
             Console.WriteLine(cf.Text("error", $"{type}-message"));
-            Console.WriteLine("\n" + cf.Text("error", $"{type}-suggest"));
-            CreateLine(75);
+            Console.WriteLine("\n" + cf.Text("error", $"{type}-suggest")); CreateLine(75);
+
             Console.ResetColor();
+            Console.ReadKey();
         }
 
     }   /* RichSupport Class */
