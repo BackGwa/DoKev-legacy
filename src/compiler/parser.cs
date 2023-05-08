@@ -147,6 +147,7 @@ namespace DoKevEngine {
         /* WHILE 반복문 파싱 */
         string WHILE(string code) {
             code = Regex.Replace(code, "(반복해줘|반복해)", "while");
+            code = Regex.Replace(code, "(인동안|인 동안)", ":");
             return code;
         }
 
@@ -171,6 +172,7 @@ namespace DoKevEngine {
             code = Regex.Replace(code, "(그게 아니고|그게 아니면|그게 아니라면)", "elif");
             code = Regex.Replace(code, "(모두 아니면|모두 아니라면|다 아니면|다 아니라면)", "else:");
             code = Regex.Replace(code, "(이라면|라면|이면|면)", ":");
+            code = Regex.Replace(code, "(아니 |진짜 |정말로 |정말 )", "");
             return code;
         }
 
