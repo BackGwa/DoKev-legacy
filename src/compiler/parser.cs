@@ -237,8 +237,8 @@ namespace DoKevEngine {
 
         /* LOGIC 파싱 */
         string LOGIC(string code) {
-            code = Regex.Replace(code, "(참|진짜|진실)", "True");
-            code = Regex.Replace(code, "(거짓|가짜|허위)", "False");
+            code = Regex.Replace(code, "(참|진실)", "True");
+            code = Regex.Replace(code, "(거짓|허위)", "False");
             code = Regex.Replace(code, "(그리고)", "and");
             code = Regex.Replace(code, "(또는|또한)", "or");
             code = Regex.Replace(code, "(반대|거꾸로)", "not");
