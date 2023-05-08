@@ -6,3 +6,4 @@ src/compiler/.vs
 *.log
 src/compiler/Properties/PublishProfiles
 *.user
+export/
