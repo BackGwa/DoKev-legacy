@@ -11,13 +11,14 @@ namespace DoKevEngine {
             Console.Clear();
             Console.Title = "DoKev Runner";
 
-
             /* 클래스 연결 */
             RichSupport rich = new RichSupport();
             Config cf = new Config();
 
             cf.ConfigSet();
             rich.LoggerSet();
+
+            rich.Log(cf.Text("info", "builder"), (cf.Cfg("builder", "version")));
 
             var locale = cf.Text;
             var cfg = cf.Cfg;
@@ -113,11 +114,13 @@ namespace DoKevEngine {
                     /* 라이브러리 체크 */
                     if (parser.LIBCHK(code)) {
                         LIBNAME = parser.LIBPARSER(code);
-                        if (parser.LIBKR(LIBNAME) == "random") Enable_random = true;
-                        if (parser.LIBKR(LIBNAME) == "os") Enable_os = true;
-                        if (parser.LIBKR(LIBNAME) == "") {
-                            Writelog("", true);
-                            return;
+                        switch (parser.LIBKR(LIBNAME)) {
+                            case "random": Enable_random = true; break;
+                            case "os": Enable_os = true; break;
+                            case "": Writelog("", true); return;
+                            default:
+                                rich.SyntaxWarning(code, "unknown-lib");
+                            break;
                         }
                     }
 

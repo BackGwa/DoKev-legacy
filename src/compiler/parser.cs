@@ -8,6 +8,8 @@ namespace DoKevEngine {
         /* 클래스 연결 */
         RichSupport rich = new RichSupport();
 
+        /* 원본 코드 */
+        string BeforeCode = "";
 
         /* 라이브러리 선언인지 확인 */
         public bool LIBCHK(string code) {
@@ -30,7 +32,7 @@ namespace DoKevEngine {
             string[] SPLIT = code.Split(" ");
 
             if (LIB_ERRCHK(SPLIT[0])) {
-                rich.SyntaxError(code, "lib-space");
+                rich.SyntaxError(BeforeCode, "lib-space");
                 return "";
             } else {
                 return SPLIT[0];
@@ -40,9 +42,13 @@ namespace DoKevEngine {
 
         /* 라이브러리 명칭 영어로 변경 */
         public string LIBKR(string libname) {
-            if (libname == "난수" || libname == "랜덤") return "random";
-            if (libname == "운영체계") return "os";
-            return libname;
+            switch (libname) {
+                case "난수": return "random";
+                case "랜덤": return "random";
+                case "운영체계": return "os";
+                default: return libname;
+            }
+
         }
 
 
@@ -53,10 +59,38 @@ namespace DoKevEngine {
         }
 
 
+        /* 괄호 검사 */
+        string BRACKET_S(string code) {
+
+            /* 괄호가 존재하는지 검사 */
+            if (!code.Contains("(") || !code.Contains(")")) {
+                if (!code.Contains("(") && !code.Contains(")")) rich.SyntaxError(BeforeCode, "excluded-bracket");
+                else if (!code.Contains("(")) rich.SyntaxError(BeforeCode, "excluded-left-bracket");
+                else if (!code.Contains(")")) rich.SyntaxError(BeforeCode, "excluded-right-bracket");
+                return "";
+            }
+
+            /* 괄호 갯수가 일치하는지 검사 */
+            string[] L_bracket = code.Split(new string[] { "(" }, StringSplitOptions.None);
+            string[] R_bracket = code.Split(new string[] { ")" }, StringSplitOptions.None);
+            if(L_bracket.Length - 1 < R_bracket.Length - 1) {
+                rich.SyntaxError(BeforeCode, "unmatched-left-bracket");
+                return "";
+            }
+            else if (L_bracket.Length - 1 > R_bracket.Length - 1) {
+                rich.SyntaxError(BeforeCode, "unmatched-right-bracket");
+                return "";
+            }
+
+            return code;
+        }
+
+
         /* 출력문 파싱 */
         string PRINT(string code) {
             code = Regex.Replace(code, "(말해줘|보여줘|출력해줘|출력해)", "print");
             code = Regex.Replace(code, "(맺음값|종단값)", "end");
+            if (code.Contains("print")) code = BRACKET_S(code);
             return code;
         }
 
@@ -64,6 +98,7 @@ namespace DoKevEngine {
         /* 입력문 파싱 */
         string INPUT(string code) {
             code = Regex.Replace(code, "(입력받아줘|입력받아)", "input");
+            if (code.Contains("input")) code = BRACKET_S(code);
             return code;
         }
 
@@ -71,6 +106,7 @@ namespace DoKevEngine {
         /* 형식문자 파싱 */
         string FORMAT(string code) {
             code = Regex.Replace(code, "(형식문자|포맷문자|형식|포맷)", "format");
+            if (code.Contains("format")) code = BRACKET_S(code);
             return code;
         }
 
@@ -135,6 +171,7 @@ namespace DoKevEngine {
         /* RANGE 파싱 */
         string RANGE(string code) {
             code = Regex.Replace(code, "(범위값|범위)", "range");
+            if (code.Contains("range")) code = BRACKET_S(code);
             return code;
         }
 
@@ -142,6 +179,7 @@ namespace DoKevEngine {
         /* JOIN 파싱 */
         string JOIN(string code) {
             code = Regex.Replace(code, "(넣기|삽입)", "join");
+            if (code.Contains("join")) code = BRACKET_S(code);
             return code;
         }
 
@@ -149,6 +187,7 @@ namespace DoKevEngine {
         /* ROUND 파싱 */
         string ROUND(string code) {
             code = Regex.Replace(code, "(반올림)", "round");
+            if (code.Contains("round")) code = BRACKET_S(code);
             return code;
         }
 
@@ -164,6 +203,10 @@ namespace DoKevEngine {
             code = Regex.Replace(code, "(쓰기)", "w");
             code = Regex.Replace(code, "(줄읽기|라인읽기)", "readlines");
             code = Regex.Replace(code, "(줄쓰기|라인쓰기)", "writelines");
+            if (code.Contains("open") ||
+                code.Contains("close") ||
+                code.Contains("readlines") ||
+                code.Contains("writelines")) code = BRACKET_S(code);
             return code;
         }
 
@@ -252,12 +295,16 @@ namespace DoKevEngine {
         string ITEMCALC(string code) {
             code = Regex.Replace(code, "(모으기|합치기|붙이기)", "append");
             code = Regex.Replace(code, "(문자길이|길이)", "len");
+            if (code.Contains("append")) code = BRACKET_S(code);
+            if (code.Contains("len")) code = BRACKET_S(code);
             return code;
         }
 
 
         /* 파서 */
         public string PARSER(string code = "") {
+            BeforeCode = code;
+
             code = IMPORT(code);
             code = UPPER_LOWER(code);
             code = PRINT(code);
@@ -297,6 +344,13 @@ namespace DoKevEngine {
             code = Regex.Replace(code, "(선택)", "choice");
             code = Regex.Replace(code, "(섞기)", "shuffle");
             code = Regex.Replace(code, "(랜덤|난수)", "random");
+            if (code.Contains("randint") ||
+                code.Contains("uniform") ||
+                code.Contains("randrange") ||
+                code.Contains("sample") ||
+                code.Contains("choice") ||
+                code.Contains("shuffle") ||
+                code.Contains("random")) code = BRACKET_S(code);
             return code;
         }
 

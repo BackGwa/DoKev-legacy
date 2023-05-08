@@ -76,11 +76,11 @@ namespace DoKevEngine {
             return $"[{now:HH:mm:ss.fff}]";
         }
 
+        Config cf = new Config();
 
         /* SyntaxError
          * 문법적 오류에 대한 메세지를 표시합니다. */
         public void SyntaxError(string code, string type) {
-            Config cf = new Config();
             cf.ConfigSet();
 
             setColor("fatal");
@@ -96,6 +96,22 @@ namespace DoKevEngine {
 
             Console.ResetColor();
             Console.ReadKey();
+        }
+
+        public void SyntaxWarning(string code, string type) {
+            cf.ConfigSet();
+
+            setColor("warning");
+
+            Console.WriteLine();
+            CreateLine(75);
+            Console.Write(cf.Text("warning", "title"));
+            Console.WriteLine(code.Replace("    ", ""));
+            CreateLine(75);
+            Console.WriteLine(cf.Text("warning", type));
+            CreateLine(75);
+
+            Console.ResetColor();
         }
 
     }   /* RichSupport Class */

@@ -17,8 +17,6 @@ namespace DoKevEngine
             try {
                 ini.Load($"{AppDomain.CurrentDomain.BaseDirectory}/config.ini");
                 lang.Load($"{AppDomain.CurrentDomain.BaseDirectory}/{Cfg("folder", "language")}/{Cfg("builder", "language")}.ini");
-
-                rich.Log(Text("info", "builder"), Cfg("builder", "version"));
             } catch (Exception e) {
                 rich.Log("Fatal Error", "An error occurred during initialization.", "fatal");
                 rich.Log("\nFatal Error", e.Message, "fatal");
