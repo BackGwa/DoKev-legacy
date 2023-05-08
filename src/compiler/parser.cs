@@ -96,10 +96,14 @@ namespace DoKevEngine {
             if (code.Contains("'")) rich.SyntaxWarning(BeforeCode, "string-mark");
 
             /* 문자열을 여닫았는지 확인 */
+            
             string[] smallmark = code.Split(new string[] { "'" }, StringSplitOptions.None);
             string[] bigmark = code.Split(new string[] { "\"" }, StringSplitOptions.None);
 
-            if (smallmark.Length - 1 / 2 != 0 || bigmark.Length - 1 / 2 != 0) {
+            int smallmark_len = (smallmark.Length - 1 == 0) ? 2 : smallmark.Length - 1;
+            int bigmark_len = (bigmark.Length - 1 == 0) ? 2 : bigmark.Length - 1;
+
+            if (smallmark_len % 2 != 0 || bigmark_len % 2 != 0) {
                 rich.SyntaxError(BeforeCode, "unmatched-mark");
                 return "";
             }
@@ -164,7 +168,7 @@ namespace DoKevEngine {
         /* 조건문 파싱 */
         string IFTHEN(string code) {
             code = Regex.Replace(code, "(혹시나|혹여나|혹시|만약에|만약)", "if");
-            code = Regex.Replace(code, "(그게 아니면|그게 아니라면)", "elif");
+            code = Regex.Replace(code, "(그게 아니고|그게 아니면|그게 아니라면)", "elif");
             code = Regex.Replace(code, "(모두 아니면|모두 아니라면|다 아니면|다 아니라면)", "else:");
             code = Regex.Replace(code, "(이라면|라면|이면|면)", ":");
             return code;
