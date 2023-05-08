@@ -17,6 +17,7 @@ namespace DoKevEngine {
             Config cf = new Config();
 
             cf.ConfigSet();
+            rich.LoggerSet();
 
             var locale = cf.Text;
             var cfg = cf.Cfg;

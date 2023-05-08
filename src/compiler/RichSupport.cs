@@ -2,6 +2,9 @@
 namespace DoKevEngine {
     public class RichSupport {
 
+        /* 클래스 연결 */
+        Config cf = new Config();
+
         /* LoggerSet
          * 로거 등록 */
         bool logercreated = false;
@@ -79,7 +82,13 @@ namespace DoKevEngine {
         /* SyntaxError
          * 문법적 오류에 대한 메세지를 표시합니다. */
         public void SyntaxError(string code, string type) {
-
+            setColor("fatal");
+            Console.WriteLine(cf.Text("error", "title"));
+            Console.WriteLine(code);
+            CreateLine(50);
+            Console.WriteLine(cf.Text("error", type + "-message"));
+            Console.WriteLine(cf.Text("error", type + "-suggest"));
+            Console.ResetColor();
         }
 
     }   /* RichSupport Class */

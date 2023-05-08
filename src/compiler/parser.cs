@@ -8,12 +8,6 @@ namespace DoKevEngine {
         RichSupport rich = new RichSupport();
 
 
-        /* 코드 오류 및 디버깅 메세지 출력 */
-        void syntax_error(string code, string err_type) {
-
-        }
-
-
         /* 라이브러리 선언인지 확인 */
         public bool LIBCHK(string code) {
             if ((code.Contains("라이브러리")) || (code.Contains("모듈")) &&
@@ -35,7 +29,7 @@ namespace DoKevEngine {
             string[] SPLIT = code.Split(" ");
 
             if (LIB_ERRCHK(SPLIT[0])) {
-                syntax_error(code, "lib-space");
+                rich.SyntaxError(code, "lib-space");
                 return "";
             } else {
                 return SPLIT[0];
