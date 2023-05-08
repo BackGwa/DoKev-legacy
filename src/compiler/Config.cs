@@ -28,18 +28,19 @@ namespace DoKevEngine
         }
 
 
-        /* cfg
+        /* Cfg
          * config의 설정 값을 반환합니다. */
         public string Cfg(string key, string value) {
             return ini[key][value].ToString();
         }
 
 
-        /* text
+        /* Text
          * 값에 따라 언어 설정에 맞는 텍스트를 반환합니다. */
         public string Text(string key, string value) {
             return lang[key][value].ToString();
         }
 
-    }
-}
+    }   /* Config Class */
+
+}       /* DoKevEngine namespace */
