@@ -13,9 +13,6 @@ namespace DoKevEngine {
             Console.Clear();
             Console.Title = "DoKev Runner";
 
-            /* Syntax 클래스 연결 */
-            Syntax syntax = new Syntax();
-
 
             /* 로거 선언 */
             string logdirectory = AppDomain.CurrentDomain.BaseDirectory + "/log";
@@ -138,7 +135,7 @@ namespace DoKevEngine {
 
                     /* 라이브러리 체크 */
                     if (parser.LIBCHK(code)) {
-                        LIBNAME = parser.LIBPARSER(line_counter, code);
+                        LIBNAME = parser.LIBPARSER(code);
                         if (parser.LIBKR(LIBNAME) == "random") {
                             randomBool = true;
                         }
@@ -255,13 +252,12 @@ namespace DoKevEngine {
              * 한글 문자열 예외처리를 분석하고 처리합니다. */
             string StringException(string sourceString) {
                 string[] ExceptReturn = new string[16];
-                string ExceptValue = " ", AfterString = " ", ifRemaining = sourceString;
+                string ExceptValue = " ", ifRemaining = sourceString;
 
                 ExceptReturn = sourceString.Split("$\"", StringSplitOptions.None);
                 Array.Resize(ref ExceptReturn, ExceptReturn.Length + 1);
 
-                AfterString = ExceptReturn[1];
-                ExceptReturn = AfterString.Split("\"", StringSplitOptions.None);
+                ExceptReturn = ExceptReturn[1].Split("\"", StringSplitOptions.None);
                 ExceptValue = ExceptReturn[0];
 
                 Array.Resize(ref ExceptList, ExceptList.Length + 1);
@@ -318,10 +314,10 @@ namespace DoKevEngine {
              * 빌드 정보나 결과를 한 줄로 출력합니다. */
             void log(string text, string details, string type = "default", bool createline = false) {
                 Console.Write($"{text} > ");
-                syntax.setColor(type);
+                setColor(type);
                 Console.Write($"{details}\n");
                 Console.ResetColor();
-                if (createline) syntax.CreateLine(50);
+                if (createline) CreateLine(50);
 
                 Writelog($"{text} > {details}");
             }
@@ -341,9 +337,32 @@ namespace DoKevEngine {
              * 현재 시간에 대한 정밀한 값을 반환합니다. */
             string NowTime() {
                 DateTime now = DateTime.Now;
-                return $"[{now.ToString("HH:mm:ss.fff")}]";
+                return $"[{now:HH:mm:ss.fff}]";
             }
 
+
+            /* setColor
+             * 콘솔의 색상을 유형에 따라 변경합니다. */
+            void setColor(string type) {
+                switch (type) {
+                    case "default":
+                        Console.ResetColor(); break;
+                    case "success":
+                        Console.ForegroundColor = ConsoleColor.Green; break;
+                    case "warning":
+                        Console.ForegroundColor = ConsoleColor.Yellow; break;
+                    case "fatal":
+                        Console.ForegroundColor = ConsoleColor.Red; break;
+                }
+            }
+
+
+            /* CreateLine
+             * 구분자 기호를 카운트 횟수만큼 출력합니다. */
+            void CreateLine(int count) {
+                for (int i = 1; i <= count; i++) Console.Write("_");
+                Console.Write("\n\n");
+            }
 
         }   /* Main Function */
 

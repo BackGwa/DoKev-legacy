@@ -3,10 +3,6 @@
 namespace DoKevEngine {
     public class Parser {
 
-        /* Syntax 클래스 연결 */
-        Syntax syntax = new Syntax();
-
-
         /* 라이브러리 선언인지 확인 */
         public bool LIBCHK(string code) {
             if ((code.Contains("라이브러리")) || (code.Contains("모듈")) &&
@@ -24,12 +20,11 @@ namespace DoKevEngine {
 
 
         /* 라이브러리 선언 구분 */
-        public string LIBPARSER(int line, string code) {
+        public string LIBPARSER(string code) {
             string[] SPLIT = code.Split(" ");
 
             if (LIB_ERRCHK(SPLIT[0])) {
-                syntax.ERROR(line, code, "LIB-SPACE");
-                return SPLIT[0].Replace("라이브러리", "").Replace("모듈", "");
+                return "<ERROR:METHOD>";
             }
             else {
                 return SPLIT[0];
