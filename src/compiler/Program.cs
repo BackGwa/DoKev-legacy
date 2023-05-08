@@ -257,8 +257,7 @@ namespace DoKevEngine {
             void Runner() {
                 Process module = new Process();
 
-                if (cfg("interpreter", "custom") != "true" && 
-                    cfg("interpreter", "custom") == "false") {
+                if (cfg("interpreter", "custom") == "false") {
                     if (OS == "Unix") module.StartInfo.FileName = "python3";
                     else module.StartInfo.FileName = $"{baseDirectory}/Python/{(ARCH == Architecture.Arm64 ? "ARM" : "x86")}/python.exe";
                     module.StartInfo.Arguments = $"-d \"{baseDirectory}/{cfg("folder", "export")}/{exportfile}\"";
