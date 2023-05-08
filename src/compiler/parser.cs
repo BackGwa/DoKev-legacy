@@ -96,7 +96,6 @@ namespace DoKevEngine {
             if (code.Contains("'")) rich.SyntaxWarning(BeforeCode, "string-mark");
 
             /* 문자열을 여닫았는지 확인 */
-            
             string[] smallmark = code.Split(new string[] { "'" }, StringSplitOptions.None);
             string[] bigmark = code.Split(new string[] { "\"" }, StringSplitOptions.None);
 
@@ -106,8 +105,7 @@ namespace DoKevEngine {
             if (smallmark_len % 2 != 0 || bigmark_len % 2 != 0) {
                 rich.SyntaxError(BeforeCode, "unmatched-mark");
                 return "";
-            }
-            return code;
+            } return code;
         }
 
 
