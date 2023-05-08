@@ -1,6 +1,4 @@
 ﻿using System.Text.RegularExpressions;
-using System.Xml.Serialization;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace DoKevEngine {
     public class Parser {
