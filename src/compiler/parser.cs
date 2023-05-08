@@ -161,6 +161,8 @@ namespace DoKevEngine {
             code = Regex.Replace(code, "(쓰기확장)", "w+");
             code = Regex.Replace(code, "(읽기)", "r");
             code = Regex.Replace(code, "(쓰기)", "w");
+            code = Regex.Replace(code, "(줄읽기|라인읽기)", "readlines");
+            code = Regex.Replace(code, "(줄쓰기|라인쓰기)", "writelines");
             return code;
         }
 
