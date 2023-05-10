@@ -109,9 +109,27 @@ namespace DoKevEngine {
 
         /* 출력문 파싱 */
         string PRINT(string code) {
-            code = Regex.Replace(code, "(말해줘|보여줘|출력해줘|출력해)", "print");
-            code = Regex.Replace(code, "(맺음값|종단값)", "end");
-            if (code.Contains("print")) code = BRACKET_S(code);
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|말해줘|보여줘|출력해줘|출력해", 
+                match => match.Value == "말해줘" || 
+                         match.Value == "보여줘" ||
+                         match.Value == "출력해줘" ||
+                         match.Value == "출력해"
+                         ? "print" : match.Value);
+
+            if (Regex.IsMatch(code, @"(['""])(?:\\\1|.)*?\1|print")) {
+                code = OPTION_END(code);
+                code = BRACKET_S(code);
+            }
+            return code;
+        }
+
+
+        /* 출력문 옵션 END 파싱 */
+        string OPTION_END(string code) {
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|맺음값|종단값",
+                match => match.Value == "맺음값" ||
+                         match.Value == "종단값"
+                         ? "end" : match.Value);
             return code;
         }
 
