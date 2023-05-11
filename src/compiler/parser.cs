@@ -116,7 +116,7 @@ namespace DoKevEngine {
                          match.Value == "출력해"
                          ? "print" : match.Value);
 
-            if (Regex.IsMatch(code, @"(['""])(?:\\\1|.)*?\1|print")) {
+            if (code.Contains("print")) {
                 code = OPTION_END(code);
                 code = BRACKET_S(code);
             }
