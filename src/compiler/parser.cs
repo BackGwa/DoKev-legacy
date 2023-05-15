@@ -274,6 +274,7 @@ namespace DoKevEngine {
             return code;
         }
 
+        // TODO : 아래 라인부터 신규 파싱 알고리즘으로 교체
 
         /* 함수 선언 파싱 */
         string FUNCTION(string code) {
@@ -319,10 +320,12 @@ namespace DoKevEngine {
             code = Regex.Replace(code, "(쓰기)", "w");
             code = Regex.Replace(code, "(줄읽기|라인읽기)", "readlines");
             code = Regex.Replace(code, "(줄쓰기|라인쓰기)", "writelines");
+
             if (code.Contains("open") ||
                 code.Contains("close") ||
                 code.Contains("readlines") ||
                 code.Contains("writelines")) code = BRACKET_S(code);
+
             return code;
         }
 
