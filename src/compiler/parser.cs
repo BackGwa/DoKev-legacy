@@ -207,18 +207,55 @@ namespace DoKevEngine {
 
         /* BREAK 반복문 파싱 */
         string BREAK(string code) {
-            code = Regex.Replace(code, "(빠져나오자|빠져나와줘|빠져|나와|나가)", "break");
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|빠져나오자|빠져나와줘|빠져|나와|나가",
+                match => match.Value == "빠져나오자" ||
+                         match.Value == "빠져나와줘" ||
+                         match.Value == "빠져" ||
+                         match.Value == "나와" ||
+                         match.Value == "나가"
+                         ? "break" : match.Value);
             return code;
         }
 
 
         /* 조건문 파싱 */
         string IFTHEN(string code) {
-            code = Regex.Replace(code, "(혹시나|혹여나|혹시|만약에|만약)", "if");
-            code = Regex.Replace(code, "(그게 아니고|그게 아니면|그게 아니라면)", "elif");
-            code = Regex.Replace(code, "(모두 아니면|모두 아니라면|다 아니면|다 아니라면)", "else:");
-            code = Regex.Replace(code, "(이라면|라면|이면|면)", ":");
-            code = Regex.Replace(code, "(아니 |진짜 |정말로 |정말 )", "");
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|혹시나|혹여나|혹시|만약에|만약",
+                match => match.Value == "혹시나" ||
+                         match.Value == "혹여나" ||
+                         match.Value == "혹시" ||
+                         match.Value == "만약에" ||
+                         match.Value == "만약"
+                         ? "if" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|그게 아니고|그게 아니라면|그게 아니면",
+                match => match.Value == "그게 아니고" ||
+                         match.Value == "그게 아니라면" ||
+                         match.Value == "그게 아니면"
+                         ? "elif" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|모두 아니라면|모두 아니면|다 아니라면|다 아니면",
+                match => match.Value == "모두 아니라면" ||
+                         match.Value == "모두 아니면" ||
+                         match.Value == "다 아니라면" ||
+                         match.Value == "다 아니면"
+                         ? "else:" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|이라면|라면|이면|면",
+                match => match.Value == "이라면" ||
+                         match.Value == "라면" ||
+                         match.Value == "이면" ||
+                         match.Value == "면"
+                         ? ":" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|아니 |진짜 |정말로 |정말 ",
+                match => match.Value == "아니 " ||
+                         match.Value == "진짜 " ||
+                         match.Value == "정말로 " ||
+                         match.Value == "정말 "
+                         ? "" : match.Value);
+
             return code;
         }
 
