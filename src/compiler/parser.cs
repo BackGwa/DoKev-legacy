@@ -138,7 +138,13 @@ namespace DoKevEngine {
 
         /* 형식문자 파싱 */
         string FORMAT(string code) {
-            code = Regex.Replace(code, "(형식문자|포맷문자|형식|포맷)", "format");
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|형식문자|포맷문자|형식|포맷",
+                match => match.Value == "형식문자" ||
+                         match.Value == "포맷문자" ||
+                         match.Value == "형식" ||
+                         match.Value == "포맷"
+                         ? "format" : match.Value);
+
             if (code.Contains("format")) code = BRACKET_S(code);
             return code;
         }
