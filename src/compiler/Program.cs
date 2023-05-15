@@ -132,7 +132,7 @@ namespace DoKevEngine {
                     if (Enable_random)  Result = parser.RANDOM_PARSER(Result);
                                         Result = parser.PARSER(Result);
 
-                    if (Result == "") return;
+                    if (Result == "")   return;
 
                     log(NowTime(), $"{locale("convert", "result")} : {Result.Replace("    ", "")}");
 
