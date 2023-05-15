@@ -83,9 +83,6 @@ namespace DoKevEngine {
             /* 문자열 포함 여부 검사 */
             if (!(code.Contains("\"") || code.Contains("'"))) return code;
 
-            /* 문자열 작은 따옴표 사용 경고 검사 */
-            if (code.Contains("'")) rich.SyntaxWarning(BeforeCode, "string-mark");
-
             /* 문자열을 여닫았는지 확인 */
             string[] smallmark = code.Split(new string[] { "'" }, StringSplitOptions.None);
             string[] bigmark = code.Split(new string[] { "\"" }, StringSplitOptions.None);
