@@ -44,7 +44,6 @@ namespace DoKevEngine {
                 case "운영체계": return "os";
                 default: return libname;
             }
-
         }
 
 
@@ -67,18 +66,14 @@ namespace DoKevEngine {
             }
 
             /* 괄호 갯수가 일치하는지 검사 */
-            string[] L_bracket = code.Split(new string[] { "(" }, StringSplitOptions.None);
-            string[] R_bracket = code.Split(new string[] { ")" }, StringSplitOptions.None);
-            if(L_bracket.Length - 1 < R_bracket.Length - 1) {
-                rich.SyntaxError(BeforeCode, "unmatched-left-bracket");
-                return "";
-            }
-            else if (L_bracket.Length - 1 > R_bracket.Length - 1) {
-                rich.SyntaxError(BeforeCode, "unmatched-right-bracket");
-                return "";
-            }
+            int L_bracket = code.Split(new string[] { "(" }, StringSplitOptions.None).Length - 1;
+            int R_bracket = code.Split(new string[] { ")" }, StringSplitOptions.None).Length - 1;
 
-            return code;
+            if (L_bracket - 1 < R_bracket - 1)      rich.SyntaxError(BeforeCode, "unmatched-left-bracket");
+            else if (L_bracket - 1 > R_bracket - 1) rich.SyntaxError(BeforeCode, "unmatched-right-bracket");
+            else return code;
+
+            return "";
         }
 
 
