@@ -155,12 +155,12 @@ namespace DoKevEngine {
             code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|대문자로|대문자",
                 match => match.Value == "대문자로" ||
                          match.Value == "대문자"
-             ? "upper" : match.Value);
+                         ? "upper" : match.Value);
 
             code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|소문자로|소문자",
                 match => match.Value == "소문자로" ||
                          match.Value == "소문자"
-             ? "lower" : match.Value);
+                         ? "lower" : match.Value);
 
             return code;
         }
@@ -168,17 +168,39 @@ namespace DoKevEngine {
 
         /* WHILE 반복문 파싱 */
         string WHILE(string code) {
-            code = Regex.Replace(code, "(반복해줘|반복해)", "while");
-            code = Regex.Replace(code, "(인동안|인 동안)", ":");
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|반복해줘|반복해",
+                match => match.Value == "반복해줘" ||
+                         match.Value == "반복해"
+                         ? "while" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|인동안|인 동안",
+                match => match.Value == "반복해줘" ||
+                         match.Value == "반복해"
+                         ? ":" : match.Value);
+
             return code;
         }
 
 
         /* FOR 반복문 파싱 */
         string FOR(string code) {
-            code = Regex.Replace(code, "(증감반복해줘|증감반복해)", "for");
-            code = Regex.Replace(code, "(이걸|저걸)", "in");
-            code = Regex.Replace(code, "(이걸로|저걸로|으로)", ":");
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|증감반복해줘|증감반복해|증감반복",
+                match => match.Value == "증감반복해줘" ||
+                         match.Value == "증감반복해" ||
+                         match.Value == "증감반복"
+                         ? "for" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|이걸로|저걸로|으로",
+                match => match.Value == "이걸로" ||
+                         match.Value == "저걸로" ||
+                         match.Value == "으로"
+                         ? ":" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|이걸|저걸",
+                match => match.Value == "이걸" ||
+                         match.Value == "저걸"
+                         ? "in" : match.Value);
+
             return code;
         }
 
