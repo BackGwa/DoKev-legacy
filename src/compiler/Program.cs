@@ -62,8 +62,6 @@ namespace DoKevEngine {
             /* 변환에 필요한 변수 선언 */
             bool Enable_random = false, Enable_os = false;
             string[] WriteLine = new string[1];
-            string[] ExceptList = new string[0];
-            int fileindex = 0;
             string filePath;
 
 
@@ -88,8 +86,6 @@ namespace DoKevEngine {
                 return;
             }
 
-            int ExceptNum;
-
 
             /* Converter
              * 설정 된 dkv 파일을 Python 코드로 빌드합니다. */
@@ -99,99 +95,44 @@ namespace DoKevEngine {
                 /* 파싱에 필요한 변수 선언 */
                 Parser parser = new Parser();
 
-                int line_counter = 1;
-                string LIBNAME = "";
-
                 log(NowTime(), $"{locale("build", "initialized")}\n", "success");
 
                 /* 코드를 파싱하여 변환 */
                 foreach (string code in File.ReadLines($"{baseDirectory}/{targetfile}")) {
 
                     /* 코드가 공백이면, 파서 실행 패스 */
-                    if (code.Replace(" ", "") == "") {
-                        line_counter++; continue;
-                    }
+                    if (code.Replace(" ", "") == "") continue;
 
-                    /* 라이브러리 체크 */
+                    /* 라이브러리 확인 */
                     if (parser.LIBCHK(code)) {
-                        LIBNAME = parser.LIBPARSER(code);
-                        switch (parser.LIBKR(LIBNAME)) {
-                            case "random": Enable_random = true; break;
-                            case "os": Enable_os = true; break;
-                            case "": Writelog("", true); return;
+                        switch (parser.NAME_FIX(parser.LIBPARSER(code))) {
+                            case "random":
+                                Enable_random = true;   break;
+                            case "os":
+                                Enable_os = true;       break;
+                            case "":
+                                Writelog("", true);     return;
                             default:
                                 rich.SyntaxWarning(code, "unknown-lib");
-                            break;
+                                break;
                         }
                     }
+
 
                     /* 파서 실행 */
                     string Result = code;
 
-                    /* 예외 처리 필요 유무 확인 */
-                    bool isExcept = Result.Contains("$\"");
-
-                    /* 예외 처리 초기화 */
-                    Array.Clear(ExceptList, 0, ExceptList.Length);
-
-                    /* 변환 과정에서 필요한 변수 선언 */
-                    bool Excepting = false;
-
                     /* 변환 대기열 */
                     log($"\n{NowTime()}", $"{locale("convert", "wait")} : {Result.Replace("    ", "")}");
 
-                    /* 예외 처리 */
-                    if (isExcept) {
-                        log(NowTime(), locale("except", "ishas"));
-
-                        ExceptNum = 0;
-                        Excepting = true;
-
-                        try {
-                            Result = StringException(Result);
-
-                            /* 문자열 리터럴 처리 */
-                            log(NowTime(), locale("convert", "literal"));
-                            for (int i = 0; i < ExceptList.Length; i++)
-                                if (ExceptList[i] != null) ExceptList[i] = parser.LITERAL_PARSER(ExceptList[i]);
-                        } catch {
-                            /* 예외 처리 변환 오류 시 */
-                            log(NowTime(), locale("convert", "error"), "fatal");
-                            Writelog("", true);
-                            return;
-                        }
-                    }
-
-                    /* RANDOM 모듈 사용 시 파싱 작업 */
-                    if (Enable_random) {
-                        log(NowTime(), $"'RANDOM' {locale("convert", "rules")}");
-                        Result = parser.RANDOM_PARSER(Result);
-                    }
-
-                    /* OS 모듈 사용 시 파싱 작업 */
-                    if (Enable_os) {
-                        log(NowTime(), $"'OS' {locale("convert", "rules")}");
-                        Result = parser.OS_PARSER(Result);
-                    }
-
                     /* 내장 함수 파싱 작업 */
-                    log(NowTime(), $"'DEFAULT' {locale("convert", "rules")}");
-                    Result = parser.PARSER(Result);
+                    log(NowTime(), locale("convert", "rules"));
+
+                                        Result = parser.PARSER(Result);
+                    if (Enable_os)      Result = parser.OS_PARSER(Result);
+                    if (Enable_random)  Result = parser.RANDOM_PARSER(Result);
 
                     if (Result == "") return;
-
-                    /* 예외처리 복구 */
-                    if (Excepting) {
-                        log(NowTime(), locale("except", "recovery"));
-                        for (int i = 0; i < ExceptList.Length; i++) {
-                            Result = Result.Replace("{>" + i + "<}", "\"" + ExceptList[i] + "\"");
-                            Result = Result.Replace("$", "");
-                        }
-                    }
-
-                    /* 예외처리 종료 */
-                    Excepting = false;
-                    fileindex += 1;
 
                     log(NowTime(), $"{locale("convert", "result")} : {Result.Replace("    ", "")}");
 
@@ -199,8 +140,6 @@ namespace DoKevEngine {
                     WriteLine[WriteLine.Length - 1] = Result;
                     Array.Resize(ref WriteLine, WriteLine.Length + 1);
 
-                    /* 라인 추가 */
-                    line_counter++;
                 }
 
                 log($"\n{NowTime()}", locale("build", "finish"), "success", true);
@@ -229,30 +168,6 @@ namespace DoKevEngine {
                     Writelog("", true);
                     return;
                 }
-            }
-
-
-            /* StringException
-             * 한글 문자열 예외처리를 분석하고 처리합니다. */
-            string StringException(string sourceString) {
-                string[] ExceptReturn = new string[16];
-                string ExceptValue = " ", ifRemaining = sourceString;
-
-                ExceptReturn = sourceString.Split("$\"", StringSplitOptions.None);
-                Array.Resize(ref ExceptReturn, ExceptReturn.Length + 1);
-
-                ExceptReturn = ExceptReturn[1].Split("\"", StringSplitOptions.None);
-                ExceptValue = ExceptReturn[0];
-
-                Array.Resize(ref ExceptList, ExceptList.Length + 1);
-                ExceptList[ExceptNum] = ExceptValue;
-
-                ifRemaining = ifRemaining.Replace("$\"" + ExceptValue + "\"", "{>" + ExceptNum + "<}");
-
-                ExceptNum += 1;
-
-                if (ifRemaining.Contains("$\"")) return StringException(ifRemaining);
-                else return ifRemaining;
             }
 
 

@@ -32,14 +32,12 @@ namespace DoKevEngine {
             if (LIB_ERRCHK(SPLIT[0])) {
                 rich.SyntaxError(BeforeCode, "lib-space");
                 return "";
-            } else {
-                return SPLIT[0];
-            }
+            } else return SPLIT[0];
         }
 
 
         /* 라이브러리 명칭 영어로 변경 */
-        public string LIBKR(string libname) {
+        public string NAME_FIX(string libname) {
             switch (libname) {
                 case "난수": return "random";
                 case "랜덤": return "random";
@@ -52,7 +50,7 @@ namespace DoKevEngine {
 
         /* 라이브러리 선언 파싱 */
         string IMPORT(string code) {
-            if (LIBCHK(code)) return $"import {LIBKR(code.Split(" ")[0])}";
+            if (LIBCHK(code)) return $"import {NAME_FIX(code.Split(" ")[0])}";
             return code;
         }
 
