@@ -128,9 +128,9 @@ namespace DoKevEngine {
                     /* 내장 함수 파싱 작업 */
                     log(NowTime(), locale("convert", "rules"));
 
-                                        Result = parser.PARSER(Result);
                     if (Enable_os)      Result = parser.OS_PARSER(Result);
                     if (Enable_random)  Result = parser.RANDOM_PARSER(Result);
+                                        Result = parser.PARSER(Result);
 
                     if (Result == "") return;
 
