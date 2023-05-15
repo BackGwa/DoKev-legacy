@@ -152,8 +152,16 @@ namespace DoKevEngine {
 
         /* 대소문자 변경 파싱 */
         string UPPER_LOWER(string code) {
-            code = Regex.Replace(code, "(대문자로|대문자)", "upper");
-            code = Regex.Replace(code, "(소문자로|소문자)", "lower");
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|대문자로|대문자",
+                match => match.Value == "대문자로" ||
+                         match.Value == "대문자"
+             ? "upper" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|소문자로|소문자",
+                match => match.Value == "소문자로" ||
+                         match.Value == "소문자"
+             ? "lower" : match.Value);
+
             return code;
         }
 
