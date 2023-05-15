@@ -126,7 +126,11 @@ namespace DoKevEngine {
 
         /* 입력문 파싱 */
         string INPUT(string code) {
-            code = Regex.Replace(code, "(입력받아줘|입력받아)", "input");
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|입력받아줘|입력받아",
+                match => match.Value == "입력받아줘" ||
+                         match.Value == "입력받아"
+                         ? "input" : match.Value);
+
             if (code.Contains("input")) code = BRACKET_S(code);
             return code;
         }
