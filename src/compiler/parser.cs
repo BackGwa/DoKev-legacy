@@ -433,23 +433,59 @@ namespace DoKevEngine {
 
         /* CAST 파싱 */
         string CAST(string code) {
-            code = Regex.Replace(code, "(정수형으로)", "int");
-            code = Regex.Replace(code, "(실수형으로)", "float");
-            code = Regex.Replace(code, "(문자열로)", "str");
-            code = Regex.Replace(code, "(문자로)", "chr");
-            code = Regex.Replace(code, "(불로)", "bool");
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|정수형으로",
+                match => match.Value == "정수형으로"
+                         ? "int" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|실수형으로",
+                match => match.Value == "실수형으로"
+                         ? "float" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|문자열로",
+                match => match.Value == "문자열로"
+                         ? "str" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|문자로",
+                match => match.Value == "문자로"
+                         ? "chr" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|불로",
+                match => match.Value == "불로"
+                         ? "bool" : match.Value);
+
             return code;
         }
 
 
         /* DATA_TYPE 파싱 */
         string DATA_TYPE(string code) {
-            code = Regex.Replace(code, "(정수)", "int");
-            code = Regex.Replace(code, "(실수)", "float");
-            code = Regex.Replace(code, "(문자열)", "str");
-            code = Regex.Replace(code, "(문자)", "chr");
-            code = Regex.Replace(code, "(불)", "bool");
-            code = Regex.Replace(code, "(빈공간|널|논)", "None");
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|정수",
+                match => match.Value == "정수"
+                         ? "int" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|실수",
+                match => match.Value == "실수"
+                         ? "float" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|문자열",
+                match => match.Value == "문자열"
+                         ? "str" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|문자",
+                match => match.Value == "문자"
+                         ? "chr" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|불",
+                match => match.Value == "불"
+                         ? "bool" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|빈공간|널|논",
+                match => match.Value == "빈공간" ||
+                         match.Value == "널" ||
+                         match.Value == "논"
+                         ? "None" : match.Value);
+
             return code;
         }
 
