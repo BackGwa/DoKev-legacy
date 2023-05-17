@@ -385,18 +385,48 @@ namespace DoKevEngine {
 
         /* LOGIC 파싱 */
         string LOGIC(string code) {
-            code = Regex.Replace(code, "(참|진실)", "True");
-            code = Regex.Replace(code, "(거짓|허위)", "False");
-            code = Regex.Replace(code, "(그리고)", "and");
-            code = Regex.Replace(code, "(또는|또한)", "or");
-            code = Regex.Replace(code, "(반대|거꾸로)", "not");
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|참|진실",
+                match => match.Value == "참" ||
+                         match.Value == "진실"
+                         ? "True" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|참|진실",
+                match => match.Value == "거짓" ||
+                         match.Value == "허위"
+                         ? "False" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|그리고",
+                match => match.Value == "그리고"
+                         ? "and" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|또는|또한",
+                match => match.Value == "또는" ||
+                         match.Value == "또한"
+                         ? "or" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|반대|거꾸로",
+                match => match.Value == "반대" ||
+                         match.Value == "거꾸로"
+                         ? "not" : match.Value);
+
             return code;
         }
 
+
         /* VARIABLE 파싱 */
         string VARIABLE(string code) {
-            code = Regex.Replace(code, "(은|는)", " =");
-            code = Regex.Replace(code, "(이야|야)", "");
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|은|는",
+                match => match.Value == "은" ||
+                         match.Value == "는"
+                         ? " =" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|이야|야",
+                match => match.Value == "이야" ||
+                         match.Value == "야"
+                         ? "" : match.Value);
+
             return code;
         }
 
