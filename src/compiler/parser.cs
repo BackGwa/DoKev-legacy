@@ -341,15 +341,38 @@ namespace DoKevEngine {
 
         /* 파일 관리 파싱 */
         string FILE(string code) {
-            code = Regex.Replace(code, "(파일열기)", "open");
-            code = Regex.Replace(code, "(파일닫기)", "close");
-            code = Regex.Replace(code, "(해석|인코딩 방식|인코딩)", "encoding");
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|파일열기",
+                match => match.Value == "파일열기"
+                         ? "open" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|파일닫기",
+                match => match.Value == "파일닫기"
+                         ? "close" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|해석|인코딩 방식|인코딩",
+                match => match.Value == "해석" ||
+                         match.Value == "인코딩 방식" ||
+                         match.Value == "인코딩"
+                         ? "encoding" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|파일닫기",
+                match => match.Value == "파일닫기"
+                         ? "close" : match.Value);
+
             code = Regex.Replace(code, "(읽기확장)", "r+");
             code = Regex.Replace(code, "(쓰기확장)", "w+");
             code = Regex.Replace(code, "(읽기)", "r");
             code = Regex.Replace(code, "(쓰기)", "w");
-            code = Regex.Replace(code, "(줄읽기|라인읽기)", "readlines");
-            code = Regex.Replace(code, "(줄쓰기|라인쓰기)", "writelines");
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|줄읽기|라인읽기",
+                match => match.Value == "줄읽기" ||
+                         match.Value == "라인읽기"
+                         ? "readlines" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|줄쓰기|라인쓰기",
+                match => match.Value == "줄쓰기" ||
+                         match.Value == "라인쓰기"
+                         ? "writelines" : match.Value);
 
             if (code.Contains("open") ||
                 code.Contains("close") ||
