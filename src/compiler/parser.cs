@@ -274,21 +274,45 @@ namespace DoKevEngine {
             return code;
         }
 
-        // TODO : 아래 라인부터 신규 파싱 알고리즘으로 교체
 
         /* 함수 선언 파싱 */
         string FUNCTION(string code) {
-            code = Regex.Replace(code, "(약속하자|약속해|약속|선언하자|선언해|선언)", "def");
-            code = Regex.Replace(code, "(함수는)", "");
-            code = Regex.Replace(code, "(가 필요해|이 필요해)", ":");
-            code = Regex.Replace(code, "(반환해줘|반환해|돌려줘|던져줘)", "return");
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|약속하자|약속해|약속|선언하자|선언해|선언",
+                match => match.Value == "약속하자" ||
+                         match.Value == "약속해" ||
+                         match.Value == "약속" ||
+                         match.Value == "선언하자" ||
+                         match.Value == "선언해" ||
+                         match.Value == "선언"
+                         ? "def" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|함수는",
+                match => match.Value == "함수는"
+                         ? "" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|가 필요해|이 필요해",
+                match => match.Value == "가 필요해" ||
+                         match.Value == "이 필요해"
+                         ? ":" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|반환해줘|반환해|돌려줘|던져줘",
+                match => match.Value == "반환해줘" ||
+                         match.Value == "반환해" ||
+                         match.Value == "돌려줘" ||
+                         match.Value == "던져줘"
+                         ? "return" : match.Value);
+
             return code;
         }
 
 
         /* RANGE 파싱 */
         string RANGE(string code) {
-            code = Regex.Replace(code, "(범위값|범위)", "range");
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|범위값|범위",
+                match => match.Value == "범위값" ||
+                         match.Value == "범위"
+                         ? "range" : match.Value);
+
             if (code.Contains("range")) code = BRACKET_S(code);
             return code;
         }
@@ -296,14 +320,20 @@ namespace DoKevEngine {
 
         /* JOIN 파싱 */
         string JOIN(string code) {
-            code = Regex.Replace(code, "(넣기|삽입)", "join");
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|넣기|삽입",
+                match => match.Value == "넣기" ||
+                         match.Value == "삽입"
+                         ? "join" : match.Value);
             return code;
         }
 
 
         /* ROUND 파싱 */
         string ROUND(string code) {
-            code = Regex.Replace(code, "(반올림)", "round");
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|반올림",
+                match => match.Value == "반올림"
+                         ? "round" : match.Value);
+
             if (code.Contains("round")) code = BRACKET_S(code);
             return code;
         }
