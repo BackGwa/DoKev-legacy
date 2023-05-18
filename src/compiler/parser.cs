@@ -93,14 +93,14 @@ namespace DoKevEngine {
         }
 
 
-        /* 새로운 출력문 파서 */
+        /* 출력문 파서 */
         string PRINT(string code) {
-            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|말해줘|보여줘|출력해줘|출력해|출력",
-                match => match.Value == "말해줘" ||
-                         match.Value == "보여줘" ||
-                         match.Value == "출력해줘" ||
-                         match.Value == "출력해" ||
-                         match.Value == "출력"
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1| 말해줘| 보여줘| 출력해줘| 출력해| 출력",
+                match => match.Value == " 말해줘" ||
+                         match.Value == " 보여줘" ||
+                         match.Value == " 출력해줘" ||
+                         match.Value == " 출력해" ||
+                         match.Value == " 출력"
                          ? ":print:" : match.Value);
 
             if (code.Contains(":print:")) {
@@ -121,7 +121,7 @@ namespace DoKevEngine {
                 TABLINE = SPLIT[0].Split(":tabline:").Length - 1;
 
                 for (int i = 1; i <= TABLINE; i++) TABSTR += "    ";
-                code = TABSTR + $"print({SPLIT[0].Replace(":tabline:", "")})";
+                code = TABSTR + $"print{SPLIT[0].Replace(":tabline:", "")}";
 
                 code = OPTION_END(code);
                 code = BRACKET_S(code);
@@ -142,20 +142,27 @@ namespace DoKevEngine {
         }
 
 
-        /* 입력문 파싱 */
         string INPUT(string code) {
-            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|입력받아줘|입력받아",
-                match => match.Value == "입력받아줘" ||
-                         match.Value == "입력받아"
-                         ? "input" : match.Value);
 
-            if (code.Contains("input")) code = BRACKET_S(code);
+
             return code;
         }
 
+            /* 이전 입력문 파싱
+            string INPUT(string code) {
+                code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|입력받아줘|입력받아",
+                    match => match.Value == "입력받아줘" ||
+                             match.Value == "입력받아"
+                             ? "input" : match.Value);
 
-        /* 형식문자 파싱 */
-        string FORMAT(string code) {
+                if (code.Contains("input")) code = BRACKET_S(code);
+                return code;
+            }
+             */
+
+
+            /* 형식문자 파싱 */
+            string FORMAT(string code) {
             code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|형식문자|포맷문자|형식|포맷",
                 match => match.Value == "형식문자" ||
                          match.Value == "포맷문자" ||
@@ -655,11 +662,11 @@ namespace DoKevEngine {
 
             code = IMPORT(code);
             code = UPPER_LOWER(code);
-            code = PRINT(code);         // NEW PARSER
-            code = INPUT(code);
+            code = PRINT(code);         // 새로운 파서 적용
+            code = INPUT(code);         // 기존 파서 적용
             code = FORMAT(code);
             code = CAST(code);
-            code = FUNCTION(code);      // NEW PARSER
+            code = FUNCTION(code);      // 새로운 파서 적용
             code = DATA_TYPE(code);
             code = VARIABLE(code);
             code = FOR(code);
