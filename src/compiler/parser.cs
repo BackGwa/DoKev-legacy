@@ -633,16 +633,33 @@ namespace DoKevEngine {
 
         /* 진법 파싱 */
         string NUMBER_SYSTEM(string code) {
-            code = Regex.Replace(code, "(16진수|헥스)", "hex");
-            code = Regex.Replace(code, "(8진수|악틀)", "oct");
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|16진수|헥스",
+                match => match.Value == "16진수" ||
+                         match.Value == "헥스"
+                         ? "hex" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|8진수|악틀",
+                match => match.Value == "8진수" ||
+                         match.Value == "악틀"
+                         ? "oct" : match.Value);
+
             return code;
         }
 
 
         /* 아이템 관련 파싱 */
         string ITEMCALC(string code) {
-            code = Regex.Replace(code, "(모으기|합치기|붙이기)", "append");
-            code = Regex.Replace(code, "(문자길이|길이)", "len");
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|모으기|합치기|붙이기",
+                match => match.Value == "모으기" ||
+                         match.Value == "합치기" ||
+                         match.Value == "붙이기"
+                         ? "append" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|문자길이|길이",
+                match => match.Value == "문자길이" ||
+                         match.Value == "길이"
+                         ? "len" : match.Value);
+
             if (code.Contains("append") ||
                 code.Contains("len")) code = BRACKET_S(code);
             return code;
@@ -653,12 +670,6 @@ namespace DoKevEngine {
         public string PARSER(string code = "") {
 
             BeforeCode = code;
-
-            string[] SPLIT = code.Split(" ");
-
-            foreach (var i in SPLIT) {
-                Console.WriteLine(i);
-            }
 
             code = STRING_S(code);
 
