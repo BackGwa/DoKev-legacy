@@ -267,10 +267,12 @@ namespace DoKevEngine {
                          match.Value == "면"
                          ? ":" : match.Value);
 
-            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|아니 |진짜 |정말로 |정말 ",
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|아니 |진짜로 |진짜 |정말로 |근데 |정말 ",
                 match => match.Value == "아니 " ||
+                         match.Value == "진짜로 " ||
                          match.Value == "진짜 " ||
                          match.Value == "정말로 " ||
+                         match.Value == "근데 " ||
                          match.Value == "정말 "
                          ? "" : match.Value);
 
