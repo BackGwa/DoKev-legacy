@@ -11,8 +11,8 @@ namespace DoKevEngine {
 
         /* 라이브러리 선언인지 확인 */
         public bool LIBCHK(string code) {
-            if ((code.Contains("라이브러리")) || (code.Contains("모듈")) &&
-                (code.Contains("필요해")) || (code.Contains("사용할래"))) {
+            if (((code.Contains("라이브러리")) || (code.Contains("모듈"))) &&
+                ((code.Contains("필요해")) || (code.Contains("사용할래")))) {
                 return true;
             } return false;
         }
@@ -58,12 +58,15 @@ namespace DoKevEngine {
         string BRACKET_S(string code) {
 
             /* 괄호가 존재하는지 검사 */
+            /*
             if (!code.Contains("(") || !code.Contains(")")) {
                 if (!code.Contains("(") && !code.Contains(")")) rich.SyntaxError(BeforeCode, "excluded-bracket");
                 else if (!code.Contains("(")) rich.SyntaxError(BeforeCode, "excluded-left-bracket");
                 else if (!code.Contains(")")) rich.SyntaxError(BeforeCode, "excluded-right-bracket");
                 return "";
             }
+
+            */
 
             /* 괄호 갯수가 일치하는지 검사 */
             int L_bracket = code.Split(new string[] { "(" }, StringSplitOptions.None).Length - 1;
@@ -555,9 +558,23 @@ namespace DoKevEngine {
 
         /* 구분자 및 도움말 파싱 */
         string HELPTEXT(string code) {
-            code = Regex.Replace(code, "(이랑|랑|과|와)", ", ");
-            code = Regex.Replace(code, "(의)", ".");
-            code = Regex.Replace(code, "(을|를|진짜로|아니)", "");
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|이랑 |랑 |과 |와 |에서 ",
+                match => match.Value == "이랑 " ||
+                         match.Value == "랑 " ||
+                         match.Value == "과 " ||
+                         match.Value == "와 " ||
+                         match.Value == "에서 "
+                         ? ", " : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|의 ",
+                match => match.Value == "의 "
+                         ? "." : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|을|를",
+                match => match.Value == "을" ||
+                         match.Value == "를"
+                         ? "" : match.Value);
+
             return code;
         }
 
