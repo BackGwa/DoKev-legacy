@@ -88,6 +88,32 @@ namespace DoKevEngine {
         }
 
 
+        /* 새로운 출력문 파서 */
+        string PRINT_NEW(string code) {
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|라고 말해줘",
+                match => match.Value == "라고 말해줘"
+                         ? ":print:" : match.Value);
+
+            if (code.Contains(":print:")) {
+                string[] SPLIT = code.Split(":print:");
+                int TABLINE = 0;
+                string TABSTR = "";
+
+                SPLIT[0] = Regex.Replace(SPLIT[0], @"(['""])(?:\\\1|.)*?\1|    ",
+                    match => match.Value == "    "
+                             ? ":tabline:" : match.Value);
+
+                TABLINE = SPLIT[0].Split(":tabline:").Length - 1;
+
+                for (int i = 1; i <= TABLINE; i++) TABSTR += "    ";
+                code = TABSTR + $"print({SPLIT[0].Replace(":tabline:", "")})";
+
+            }
+
+            return code;
+        }
+
+
         /* 출력문 파싱 */
         string PRINT(string code) {
             code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|말해줘|보여줘|출력해줘|출력해", 
@@ -593,7 +619,8 @@ namespace DoKevEngine {
 
             code = IMPORT(code);
             code = UPPER_LOWER(code);
-            code = PRINT(code);
+            code = PRINT_NEW(code);
+            //code = PRINT(code);
             code = INPUT(code);
             code = FORMAT(code);
             code = CAST(code);
