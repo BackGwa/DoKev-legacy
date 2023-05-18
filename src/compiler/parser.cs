@@ -71,6 +71,11 @@ namespace DoKevEngine {
         /* 문자열 검사 */
         string STRING_S(string code) {
 
+            /* 형식문자 포함 */
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|[$]",
+                match => match.Value == "$"
+                         ? "f" : match.Value);
+
             /* 문자열 포함 여부 검사 */
             if (!(code.Contains("\"") || code.Contains("'"))) return code;
 
@@ -290,6 +295,53 @@ namespace DoKevEngine {
 
         /* 함수 선언 파싱 */
         string FUNCTION(string code) {
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1| 함수는",
+                match => match.Value == " 함수는"
+                         ? ":function:" : match.Value);
+
+            // 인사하기 함수는
+            if (code.Contains(":function:")) {
+
+                string[] SPLIT = code.Split(":function:");
+                int TABLINE = 0;
+                string TABSTR = "";
+
+                string FUNCTION_NAME = SPLIT[0];
+
+                FUNCTION_NAME = Regex.Replace(FUNCTION_NAME, @"(['""])(?:\\\1|.)*?\1|    ",
+                match => match.Value == "    "
+                         ? ":tabline:" : match.Value);
+
+                TABLINE = FUNCTION_NAME.Split(":tabline:").Length - 1;
+
+                for (int i = 1; i <= TABLINE; i++) TABSTR += "    ";
+
+                string FUNCTION_PARA = "()";
+
+                code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|이 필요해|가 필요해",
+                    match => match.Value == "이 필요해" ||
+                             match.Value == "가 필요해"
+                             ? ":parameter:" : match.Value);
+
+
+                if (code.Contains(":parameter:")) {
+                    code = code.Replace(":parameter:", "");
+                    FUNCTION_PARA = Regex.Replace(SPLIT[1], "(이 필요해|가 필요해)", "");
+                }
+
+                code = TABSTR + $"def {FUNCTION_NAME}{FUNCTION_PARA}:".Replace(":function:", "");
+
+            }
+
+
+
+
+
+
+
+
+            /*
+
             code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|약속하자|약속해|약속|선언하자|선언해|선언",
                 match => match.Value == "약속하자" ||
                          match.Value == "약속해" ||
@@ -314,6 +366,7 @@ namespace DoKevEngine {
                          match.Value == "돌려줘" ||
                          match.Value == "던져줘"
                          ? "return" : match.Value);
+            */
 
             return code;
         }
