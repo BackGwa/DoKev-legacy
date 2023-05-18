@@ -56,18 +56,6 @@ namespace DoKevEngine {
 
         /* 괄호 검사 */
         string BRACKET_S(string code) {
-
-            /* 괄호가 존재하는지 검사 */
-            /*
-            if (!code.Contains("(") || !code.Contains(")")) {
-                if (!code.Contains("(") && !code.Contains(")")) rich.SyntaxError(BeforeCode, "excluded-bracket");
-                else if (!code.Contains("(")) rich.SyntaxError(BeforeCode, "excluded-left-bracket");
-                else if (!code.Contains(")")) rich.SyntaxError(BeforeCode, "excluded-right-bracket");
-                return "";
-            }
-
-            */
-
             /* 괄호 갯수가 일치하는지 검사 */
             int L_bracket = code.Split(new string[] { "(" }, StringSplitOptions.None).Length - 1;
             int R_bracket = code.Split(new string[] { ")" }, StringSplitOptions.None).Length - 1;
