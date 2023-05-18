@@ -333,40 +333,27 @@ namespace DoKevEngine {
 
             }
 
-
-
-
-
-
-
-
-            /*
-
-            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|약속하자|약속해|약속|선언하자|선언해|선언",
-                match => match.Value == "약속하자" ||
-                         match.Value == "약속해" ||
-                         match.Value == "약속" ||
-                         match.Value == "선언하자" ||
-                         match.Value == "선언해" ||
-                         match.Value == "선언"
-                         ? "def" : match.Value);
-
-            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|함수는",
-                match => match.Value == "함수는"
-                         ? "" : match.Value);
-
-            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|가 필요해|이 필요해",
-                match => match.Value == "가 필요해" ||
-                         match.Value == "이 필요해"
-                         ? ":" : match.Value);
-
             code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|반환해줘|반환해|돌려줘|던져줘",
                 match => match.Value == "반환해줘" ||
                          match.Value == "반환해" ||
                          match.Value == "돌려줘" ||
                          match.Value == "던져줘"
-                         ? "return" : match.Value);
-            */
+                         ? ":return:" : match.Value);
+
+            if (code.Contains(":return:")) {
+                string[] SPLIT = code.Split(":return:");
+                int TABLINE = 0;
+                string TABSTR = "";
+
+                SPLIT[0] = Regex.Replace(SPLIT[0], @"(['""])(?:\\\1|.)*?\1|    ",
+                match => match.Value == "    "
+                         ? ":tabline:" : match.Value);
+
+                TABLINE = SPLIT[0].Split(":tabline:").Length - 1;
+                for (int i = 1; i <= TABLINE; i++) TABSTR += "    ";
+
+                code = TABSTR + $"return {SPLIT[0].Replace(":tabline:", "")}".Replace(":return:", "");
+            }
 
             return code;
         }
