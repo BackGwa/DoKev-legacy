@@ -650,7 +650,6 @@ namespace DoKevEngine {
         /* 파서 */
         public string PARSER(string code = "") {
 
-            /*
             BeforeCode = code;
 
             string[] SPLIT = code.Split(" ");
@@ -686,7 +685,6 @@ namespace DoKevEngine {
             code = HELPTEXT(code);
             code = NUMBER_SYSTEM(code);
             code = LITERAL_PARSER(code);
-            */
 
             return code;
         }
