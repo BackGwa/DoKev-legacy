@@ -89,12 +89,22 @@ namespace DoKevEngine {
 
 
         /* 새로운 출력문 파서 */
-        string PRINT_NEW(string code) {
-            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|라고 말해줘",
-                match => match.Value == "라고 말해줘"
+        string PRINT(string code) {
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|말해줘|보여줘|출력해줘|출력해|출력",
+                match => match.Value == "말해줘" ||
+                         match.Value == "보여줘" ||
+                         match.Value == "출력해줘" ||
+                         match.Value == "출력해" ||
+                         match.Value == "출력"
                          ? ":print:" : match.Value);
 
             if (code.Contains(":print:")) {
+                code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|라고|을|를",
+                    match => match.Value == "라고" ||
+                             match.Value == "을" ||
+                             match.Value == "를"
+                             ? "" : match.Value);
+
                 string[] SPLIT = code.Split(":print:");
                 int TABLINE = 0;
                 string TABSTR = "";
@@ -108,25 +118,11 @@ namespace DoKevEngine {
                 for (int i = 1; i <= TABLINE; i++) TABSTR += "    ";
                 code = TABSTR + $"print({SPLIT[0].Replace(":tabline:", "")})";
 
-            }
-
-            return code;
-        }
-
-
-        /* 출력문 파싱 */
-        string PRINT(string code) {
-            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|말해줘|보여줘|출력해줘|출력해", 
-                match => match.Value == "말해줘" || 
-                         match.Value == "보여줘" ||
-                         match.Value == "출력해줘" ||
-                         match.Value == "출력해"
-                         ? "print" : match.Value);
-
-            if (code.Contains("print")) {
                 code = OPTION_END(code);
                 code = BRACKET_S(code);
+
             }
+
             return code;
         }
 
@@ -619,8 +615,7 @@ namespace DoKevEngine {
 
             code = IMPORT(code);
             code = UPPER_LOWER(code);
-            code = PRINT_NEW(code);
-            //code = PRINT(code);
+            code = PRINT(code);         // NEW PARSER
             code = INPUT(code);
             code = FORMAT(code);
             code = CAST(code);
