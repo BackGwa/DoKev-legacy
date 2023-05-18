@@ -145,36 +145,14 @@ namespace DoKevEngine {
 
         /* 입력문 파싱 */
         string INPUT(string code) {
-            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|물어봐줘|물어봐",
-                match => match.Value == " 물어봐줘" ||
-                         match.Value == " 물어봐"
-                         ? ":input:" : match.Value);
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|입력받아줘|입력받아",
+                match => match.Value == "입력받아줘" ||
+                         match.Value == "입력받아"
+                         ? "input" : match.Value);
 
-            if (code.Contains(":input:")) {
-                code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|이라고|라고|라",
-                    match => match.Value == "이라고" ||
-                             match.Value == "라고" ||
-                             match.Value == "라"
-                             ? "" : match.Value);
-
-                Console.WriteLine(code);
-            }
-
-
-                return code;
+            if (code.Contains("input")) code = BRACKET_S(code);
+            return code;
         }
-
-            /* 이전 입력문 파싱
-            string INPUT(string code) {
-                code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|입력받아줘|입력받아",
-                    match => match.Value == "입력받아줘" ||
-                             match.Value == "입력받아"
-                             ? "input" : match.Value);
-
-                if (code.Contains("input")) code = BRACKET_S(code);
-                return code;
-            }
-             */
 
 
         /* 형식문자 파싱 */
@@ -322,7 +300,6 @@ namespace DoKevEngine {
                 match => match.Value == " 함수는"
                          ? ":function:" : match.Value);
 
-            // 인사하기 함수는
             if (code.Contains(":function:")) {
 
                 string[] SPLIT = code.Split(":function:");
