@@ -492,22 +492,58 @@ namespace DoKevEngine {
 
         /* CALC 파싱 */
         string CALC(string code) {
-            code = Regex.Replace(code, "(더하기)", "+");
-            code = Regex.Replace(code, "(빼기)", "-");
-            code = Regex.Replace(code, "(곱하기)", "*");
-            code = Regex.Replace(code, "(나누기)", "/");
-            code = Regex.Replace(code, "(나머지)", "%");
-            code = Regex.Replace(code, "(거듭 제곱|제곱)", "**");
-            code = Regex.Replace(code, "(절댓값)", "abs");
-            code = Regex.Replace(code, "(문자수식|수식)", "eval");
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|더하기",
+                match => match.Value == "더하기"
+                         ? "+" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|빼기",
+                match => match.Value == "빼기"
+                         ? "-" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|곱하기",
+                match => match.Value == "곱하기"
+                         ? "*" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|나누기",
+                match => match.Value == "나누기"
+                         ? "/" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|나머지",
+                match => match.Value == "나머지"
+                         ? "%" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|거듭 제곱|제곱",
+                match => match.Value == "거듭 제곱" ||
+                         match.Value == "제곱"
+                         ? "**" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|절댓값",
+                match => match.Value == "절댓값"
+                         ? "abs" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|문자수식|수식",
+                match => match.Value == "문자수식" ||
+                         match.Value == "수식"
+                         ? "**" : match.Value);
+
             return code;
         }
 
 
         /* 증감식 파싱 */
         string IDAF(string code) {
-            code = Regex.Replace(code, "(증가해줘|증가)", "+= 1");
-            code = Regex.Replace(code, "(감소해줘|감소)", "-= 1");
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|증가해줘|증가",
+                match => match.Value == "증가해줘" ||
+                         match.Value == "증가"
+                         ? "+= 1" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|감소해줘|감소",
+                match => match.Value == "감소해줘" ||
+                         match.Value == "감소"
+                         ? "+= 1" : match.Value);
+
             if (code.Contains(" = ") && 
                (code.Contains("+= 1") || code.Contains("-= 1"))) {
                 rich.SyntaxError(code, "idaf-assignment");
