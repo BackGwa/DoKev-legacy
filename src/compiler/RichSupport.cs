@@ -2,29 +2,6 @@
 namespace DoKevEngine {
     public class RichSupport {
 
-        /* LoggerSet
-         * 로거 등록 */
-        bool logercreated = false;
-        StreamWriter? logger;
-
-
-        public void LoggerSet() {
-            string logdirectory = AppDomain.CurrentDomain.BaseDirectory + "/log";
-            DirectoryInfo di = new DirectoryInfo(logdirectory);
-            logger = null;
-
-            try {
-                if (!di.Exists) di.Create();
-                DateTime logtime = DateTime.Now;
-                logger = File.CreateText($"{logdirectory}/{logtime.ToString("yyyy-MM-dd HH_mm_ss")}.log");
-                logercreated = true;
-            } catch (Exception e) {
-                Log($"Logger Usage Warning", $"Failed to create log folder.\n", "warning");
-                Log("\nFatal Error", e.Message, "fatal");
-            }
-        }
-
-
         /* setColor
          * 콘솔의 색상을 유형에 따라 변경합니다. */
         public void setColor(string type) {
@@ -56,18 +33,8 @@ namespace DoKevEngine {
             Console.Write($"{details}\n");
             Console.ResetColor();
             if (createline) CreateLine(50);
-            Writelog($"{text} > {details}");
         }
 
-
-        /* Writelog
-         * 로그 파일을 작성합니다. */
-        public void Writelog(string log, bool close = false){
-            if (logercreated) {
-                if (close) logger.Close();
-                else logger.WriteLine(log);
-            }
-        }
 
         /* NowTime
          * 현재 시간에 대한 정밀한 값을 반환합니다. */

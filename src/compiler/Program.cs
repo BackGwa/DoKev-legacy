@@ -16,14 +16,12 @@ namespace DoKevEngine {
             Config cf = new Config();
 
             cf.ConfigSet();
-            rich.LoggerSet();
 
             rich.Log(cf.Text("info", "builder"), (cf.Cfg("builder", "version")));
 
             var locale = cf.Text;
             var cfg = cf.Cfg;
             var log = rich.Log;
-            var Writelog = rich.Writelog;
             var NowTime = rich.NowTime;
 
 
@@ -70,7 +68,6 @@ namespace DoKevEngine {
                 filePath = Path.Combine(baseDirectory, targetfile);
             } catch {
                 log(locale("target", "error"), "fatal");
-                Writelog("", true);
                 return;
             }
 
@@ -82,7 +79,6 @@ namespace DoKevEngine {
                 Converter();
             } else {
                 log(locale("target", "isvalid"), $"{targetfile} {locale("target", "invalid")}", "fatal");
-                Writelog("", true);
                 return;
             }
 
@@ -111,7 +107,7 @@ namespace DoKevEngine {
                             case "os":
                                 Enable_os = true;       break;
                             case "":
-                                Writelog("", true);     return;
+                                                        return;
                             default:
                                 rich.SyntaxWarning(code, "unknown-lib");
                                 break;
@@ -155,7 +151,6 @@ namespace DoKevEngine {
                     log(NowTime(), locale("file", "finish"), "success", true);
                 } catch {
                     log(NowTime(), locale("file", "error"), "fatal");
-                    Writelog("", true);
                     return;
                 }
 
@@ -165,7 +160,6 @@ namespace DoKevEngine {
                     Runner();
                 } catch {
                     log($"\n{NowTime()}", locale("debug", "error"), "fatal");
-                    Writelog("", true);
                     return;
                 }
             }
@@ -184,9 +178,6 @@ namespace DoKevEngine {
                     module.StartInfo.FileName = cfg("interpreter", "path");
                     module.StartInfo.Arguments = $"{cfg("interpreter", "arguments")} \"{baseDirectory}/{cfg("folder", "export")}/{exportfile}\"";
                 }
-
-                /* 로거 종료 및 닫기 */
-                Writelog("", true);
 
                 /* 인터프리터 실행 */
                 module.Start();
