@@ -179,6 +179,7 @@ namespace DoKevEngine {
                 if (cfg("interpreter", "custom") == "false") {
                     if (OS == "Unix") module.StartInfo.FileName = "python3";
                     else module.StartInfo.FileName = "python";
+                    module.StartInfo.Arguments = $"-d \"{baseDirectory}/{cfg("folder", "export")}/{exportfile}\"";
                 } else {
                     module.StartInfo.FileName = cfg("interpreter", "path");
                     module.StartInfo.Arguments = $"{cfg("interpreter", "arguments")} \"{baseDirectory}/{cfg("folder", "export")}/{exportfile}\"";
