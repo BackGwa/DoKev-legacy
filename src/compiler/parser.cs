@@ -104,8 +104,9 @@ namespace DoKevEngine {
                          ? ":print:" : match.Value);
 
             if (code.Contains(":print:")) {
-                code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|라고|을|를",
-                    match => match.Value == "라고" ||
+                code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|이라고|라고|을|를",
+                    match => match.Value == "이라고" ||
+                             match.Value == "라고" ||
                              match.Value == "을" ||
                              match.Value == "를"
                              ? "" : match.Value);
@@ -142,10 +143,25 @@ namespace DoKevEngine {
         }
 
 
+        /* 입력문 파싱 */
         string INPUT(string code) {
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|물어봐줘|물어봐",
+                match => match.Value == " 물어봐줘" ||
+                         match.Value == " 물어봐"
+                         ? ":input:" : match.Value);
+
+            if (code.Contains(":input:")) {
+                code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|이라고|라고|라",
+                    match => match.Value == "이라고" ||
+                             match.Value == "라고" ||
+                             match.Value == "라"
+                             ? "" : match.Value);
+
+                Console.WriteLine(code);
+            }
 
 
-            return code;
+                return code;
         }
 
             /* 이전 입력문 파싱
@@ -161,8 +177,8 @@ namespace DoKevEngine {
              */
 
 
-            /* 형식문자 파싱 */
-            string FORMAT(string code) {
+        /* 형식문자 파싱 */
+        string FORMAT(string code) {
             code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|형식문자|포맷문자|형식|포맷",
                 match => match.Value == "형식문자" ||
                          match.Value == "포맷문자" ||
