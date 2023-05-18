@@ -659,7 +659,7 @@ namespace DoKevEngine {
             code = INPUT(code);
             code = FORMAT(code);
             code = CAST(code);
-            code = FUNCTION(code);
+            code = FUNCTION(code);      // NEW PARSER
             code = DATA_TYPE(code);
             code = VARIABLE(code);
             code = FOR(code);
