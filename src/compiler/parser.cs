@@ -263,8 +263,7 @@ namespace DoKevEngine {
             code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|이라면|라면|이면|면",
                 match => match.Value == "이라면" ||
                          match.Value == "라면" ||
-                         match.Value == "이면" ||
-                         match.Value == "면"
+                         match.Value == "이면"
                          ? ":" : match.Value);
 
             code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|아니 |진짜로 |진짜 |정말로 |근데 |정말 ",
