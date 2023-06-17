@@ -704,13 +704,41 @@ namespace DoKevEngine {
 
         /* RANDOM 파서 */
         public string RANDOM_PARSER(string code) {
-            code = Regex.Replace(code, "(랜덤정수|난수정수)", "randint");
-            code = Regex.Replace(code, "(랜덤실수|난수실수)", "uniform");
-            code = Regex.Replace(code, "(랜덤범위정수|난수범위정수|범위정수)", "randrange");
-            code = Regex.Replace(code, "(여럿값선택)", "sample");
-            code = Regex.Replace(code, "(선택)", "choice");
-            code = Regex.Replace(code, "(섞기)", "shuffle");
-            code = Regex.Replace(code, "(랜덤|난수)", "random");
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|랜덤정수|난수정수",
+                match => match.Value == "랜덤정수" ||
+                         match.Value == "난수정수"
+                         ? "randint" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|랜덤실수|난수실수",
+                match => match.Value == "랜덤실수" ||
+                         match.Value == "난수실수"
+                         ? "uniform" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|범위난수|범위정수|난수범위",
+                match => match.Value == "범위난수" ||
+                         match.Value == "범위정수" ||
+                         match.Value == "난수범위"
+                         ? "randrange" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|여럿값선택|난수선택",
+                match => match.Value == "여럿값선택" ||
+                         match.Value == "난수선택"
+                         ? "sample" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|선택",
+                match => match.Value == "선택"
+                         ? "choice" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|섞기",
+                match => match.Value == "섞기"
+                         ? "shuffle" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|랜덤|난수",
+                match => match.Value == "랜덤" ||
+                         match.Value == "난수"
+                         ? "random" : match.Value);
+
             if (code.Contains("randint") ||
                 code.Contains("uniform") ||
                 code.Contains("randrange") ||
