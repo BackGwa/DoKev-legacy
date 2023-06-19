@@ -751,24 +751,78 @@ namespace DoKevEngine {
 
         /* OS 파서 */
         public string OS_PARSER(string code) {
-            code = Regex.Replace(code, "(운영체계)", "os");
-            code = Regex.Replace(code, "(현재경로)", "getcwd");
-            code = Regex.Replace(code, "(폴더변경)", "chdir");
-            code = Regex.Replace(code, "(파일목록)", "listdir");
-            code = Regex.Replace(code, "(파일탐색)", "walk");
-            code = Regex.Replace(code, "(명령)", "system");
-            code = Regex.Replace(code, "(경로여부)", "path.exists");
-            code = Regex.Replace(code, "(파일여부)", "path.isfile");
-            code = Regex.Replace(code, "(경로생성)", "mkdir");
-            code = Regex.Replace(code, "(경로변경)", "chdir");
-            code = Regex.Replace(code, "(절대경로)", "path.abspath");
-            code = Regex.Replace(code, "(경로명)", "path.dirname");
-            code = Regex.Replace(code, "(파일명)", "path.basename");
-            code = Regex.Replace(code, "(파일크기)", "path.getsize");
-            code = Regex.Replace(code, "(파일삭제)", "remove");
-            code = Regex.Replace(code, "(경로삭제)", "rmdir");
-            code = Regex.Replace(code, "(이름변경)", "rename");
-            code = Regex.Replace(code, "(상태)", "stat");
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|운영체계",
+                match => match.Value == "운영체계"
+                         ? "os" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|현재경로",
+                match => match.Value == "현재경로"
+                         ? "getcwd" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|폴더변경",
+                match => match.Value == "폴더변경"
+                         ? "chdir" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|파일목록",
+                match => match.Value == "파일목록"
+                         ? "listdir" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|파일탐색",
+                match => match.Value == "파일탐색"
+                         ? "walk" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|명령",
+                match => match.Value == "명령"
+                         ? "system" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|경로여부",
+                match => match.Value == "경로여부"
+                         ? "path.exists" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|파일여부",
+                match => match.Value == "파일여부"
+                         ? "path.isfile" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|경로생성",
+                match => match.Value == "경로생성"
+                         ? "mkdir" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|경로변경",
+                match => match.Value == "경로변경"
+                         ? "chdir" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|절대경로",
+                match => match.Value == "절대경로"
+                         ? "path.abspath" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|경로명",
+                match => match.Value == "경로명"
+                         ? "path.dirname" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|파일명",
+                match => match.Value == "파일명"
+                         ? "path.basename" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|파일크기",
+                match => match.Value == "파일크기"
+                         ? "path.getsize" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|파일삭제",
+                match => match.Value == "파일삭제"
+                         ? "remove" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|경로삭제",
+                match => match.Value == "경로삭제"
+                         ? "rmdir" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|이름변경",
+                match => match.Value == "이름변경"
+                         ? "rename" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|상태",
+                match => match.Value == "상태"
+                         ? "stat" : match.Value);
 
             return code;
         }
