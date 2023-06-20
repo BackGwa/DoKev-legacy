@@ -330,7 +330,7 @@ namespace DoKevEngine {
                     FUNCTION_PARA = Regex.Replace(SPLIT[1], "(이 필요해|가 필요해)", "");
                 }
 
-                code = TABSTR + $"def {FUNCTION_NAME}{FUNCTION_PARA}:".Replace(":function:", "");
+                code = TABSTR + $"def {FUNCTION_NAME}{FUNCTION_PARA}:".Replace(":function:", "").Replace(":tabline:", "");
 
             }
 
