@@ -8,3 +8,5 @@ src/compiler/Properties/PublishProfiles
 *.user
 export/
 src/compiler/Properties/launchSettings.json
+src/compiler/compiler.csproj.user
+src/compiler/Runner.csproj.user
