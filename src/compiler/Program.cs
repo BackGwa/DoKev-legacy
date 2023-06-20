@@ -122,8 +122,6 @@ namespace DoKevEngine {
                     log($"\n{NowTime()}", $"{locale("convert", "wait")} : {Result.Replace("    ", "")}");
 
                     /* 내장 함수 파싱 작업 */
-                    log(NowTime(), locale("convert", "rules"));
-
                     if (Enable_os)      Result = parser.OS_PARSER(Result);
                     if (Enable_random)  Result = parser.RANDOM_PARSER(Result);
                                         Result = parser.PARSER(Result);
