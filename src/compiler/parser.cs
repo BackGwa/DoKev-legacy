@@ -281,9 +281,9 @@ namespace DoKevEngine {
 
         /* 삼항연산자 파싱 */
         string TRINOMIAL(string code) {
-            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1| 이려면| 려면",
-                match => match.Value == " 이려면" ||
-                         match.Value == " 려면"
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|이려면|려면",
+                match => match.Value == "이려면" ||
+                         match.Value == "려면"
                          ? " if" : match.Value);
 
             code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1| 저게 아니면| 저것이 아니면",
