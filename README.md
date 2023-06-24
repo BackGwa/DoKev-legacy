@@ -1,10 +1,7 @@
 <br>
+
 <div align="center">
-<img src="./img/banner.png" width='700'>
-
-## **깨비**야! 프로그래밍**도** 한글로 배우자!
-##### 누구나 쉽게 한글로 프로그래밍을 배워봐요!
-
+  <img src="./res/banner.png" width='200'>
 </div>
 
 <br>
