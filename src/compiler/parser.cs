@@ -193,8 +193,8 @@ namespace DoKevEngine {
                          ? "while" : match.Value);
 
             code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|인동안|인 동안",
-                match => match.Value == "반복해줘" ||
-                         match.Value == "반복해"
+                match => match.Value == "인동안" ||
+                         match.Value == "인 동안"
                          ? ":" : match.Value);
 
             return code;
@@ -239,25 +239,27 @@ namespace DoKevEngine {
 
         /* 조건문 파싱 */
         string IFTHEN(string code) {
-            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|혹시나|혹여나|혹시|만약에|만약",
-                match => match.Value == "혹시나" ||
-                         match.Value == "혹여나" ||
-                         match.Value == "혹시" ||
-                         match.Value == "만약에" ||
-                         match.Value == "만약"
-                         ? "if" : match.Value);
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|혹시나 |혹여나 |혹시 |만약에 |만약 ",
+                match => match.Value == "혹시나 " ||
+                         match.Value == "혹여나 " ||
+                         match.Value == "혹시 " ||
+                         match.Value == "만약에 " ||
+                         match.Value == "만약 "
+                         ? "if " : match.Value);
 
-            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|그게 아니고|그게 아니라면|그게 아니면",
-                match => match.Value == "그게 아니고" ||
-                         match.Value == "그게 아니라면" ||
-                         match.Value == "그게 아니면"
-                         ? "elif" : match.Value);
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|그게 아니고 |그게 아니라면 |그게 아니면 ",
+                match => match.Value == "그게 아니고 " ||
+                         match.Value == "그게 아니라면 " ||
+                         match.Value == "그게 아니면 "
+                         ? "elif " : match.Value);
 
-            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|모두 아니라면|모두 아니면|다 아니라면|다 아니면",
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|모두 아니라면|모두 아니면|다 아니라면|다 아니면|전부 아니라면|전부 아니면",
                 match => match.Value == "모두 아니라면" ||
                          match.Value == "모두 아니면" ||
                          match.Value == "다 아니라면" ||
-                         match.Value == "다 아니면"
+                         match.Value == "다 아니면" ||
+                         match.Value == "전부 아니라면" ||
+                         match.Value == "전부 아니면"
                          ? "else:" : match.Value);
 
             code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|이라면|라면|이면|면",
@@ -459,8 +461,8 @@ namespace DoKevEngine {
                          match.Value == "또한"
                          ? "or" : match.Value);
 
-            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|반대|거꾸로",
-                match => match.Value == "반대" ||
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|반대로|거꾸로",
+                match => match.Value == "반대로" ||
                          match.Value == "거꾸로"
                          ? "not" : match.Value);
 
@@ -471,9 +473,9 @@ namespace DoKevEngine {
         /* VARIABLE 파싱 */
         string VARIABLE(string code) {
 
-            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|은|는",
-                match => match.Value == "은" ||
-                         match.Value == "는"
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|은 |는 ",
+                match => match.Value == "은 " ||
+                         match.Value == "는 "
                          ? " =" : match.Value);
 
             code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|이야|야",
@@ -596,7 +598,7 @@ namespace DoKevEngine {
             code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|감소해줘|감소",
                 match => match.Value == "감소해줘" ||
                          match.Value == "감소"
-                         ? "+= 1" : match.Value);
+                         ? "-= 1" : match.Value);
 
             if (code.Contains(" = ") && 
                (code.Contains("+= 1") || code.Contains("-= 1"))) {
