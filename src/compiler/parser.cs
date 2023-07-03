@@ -316,7 +316,7 @@ namespace DoKevEngine {
 
         /* 조건문 파싱 */
         string IFTHEN(string code) {
-            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|혹시나 |혹여나 |혹시 |만약에 |만약 ",
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|혹시나|혹여나|혹시|만약에|만약",
                 match => match.Value == "혹시나 " ||
                          match.Value == "혹여나 " ||
                          match.Value == "혹시 " ||
@@ -324,10 +324,10 @@ namespace DoKevEngine {
                          match.Value == "만약 "
                          ? ":if:" : match.Value);
 
-            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|그게 아니고 |그게 아니라면 |그게 아니면 ",
-                match => match.Value == "그게 아니고 " ||
-                         match.Value == "그게 아니라면 " ||
-                         match.Value == "그게 아니면 "
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|그게 아니고|그게 아니라면|그게 아니면",
+                match => match.Value == "그게 아니고" ||
+                         match.Value == "그게 아니라면" ||
+                         match.Value == "그게 아니면"
                          ? ":elif:" : match.Value);
 
             code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|모두 아니라면|모두 아니면|다 아니라면|다 아니면|전부 아니라면|전부 아니면",
