@@ -282,13 +282,13 @@ namespace DoKevEngine {
                          match.Value == "혹시 " ||
                          match.Value == "만약에 " ||
                          match.Value == "만약 "
-                         ? "if " : match.Value);
+                         ? ":if:" : match.Value);
 
             code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|그게 아니고 |그게 아니라면 |그게 아니면 ",
                 match => match.Value == "그게 아니고 " ||
                          match.Value == "그게 아니라면 " ||
                          match.Value == "그게 아니면 "
-                         ? "elif " : match.Value);
+                         ? ":elif:" : match.Value);
 
             code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|모두 아니라면|모두 아니면|다 아니라면|다 아니면|전부 아니라면|전부 아니면",
                 match => match.Value == "모두 아니라면" ||
@@ -314,6 +314,21 @@ namespace DoKevEngine {
                          match.Value == "정말 "
                          ? "" : match.Value);
 
+            if (code.Contains(":if:") || code.Contains(":elif:")) {
+                code = code.Replace(":if:", "if ");
+                code = code.Replace(":elif:", "elif ");
+
+                code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|:",
+                    match => match.Value == ":"
+                             ? ":then:" : match.Value);
+
+                if (!code.Contains(":then:")) {
+                    rich.SyntaxWarning(BeforeCode, "if-fix");
+                    code = code + ":";
+                } else {
+                    code = code.Replace(":then:", ":");
+                }
+            }
             return code;
         }
 
@@ -484,7 +499,7 @@ namespace DoKevEngine {
                          match.Value == "진실"
                          ? "True" : match.Value);
 
-            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|참|진실",
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|거짓|허위",
                 match => match.Value == "거짓" ||
                          match.Value == "허위"
                          ? "False" : match.Value);
