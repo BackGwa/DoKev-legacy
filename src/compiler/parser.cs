@@ -240,49 +240,53 @@ namespace DoKevEngine {
 
         /* FOR 반복문 파싱 */
         string FOR(string code) {
-            /*
+
             code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|증감반복해줘|증감반복해|증감반복",
                 match => match.Value == "증감반복해줘" ||
                          match.Value == "증감반복해" ||
                          match.Value == "증감반복"
-                         ? "for" : match.Value);
+                         ? ":for-nt:" : match.Value);
 
-            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|이걸로|저걸로|으로",
-                match => match.Value == "이걸로" ||
-                         match.Value == "저걸로" ||
-                         match.Value == "으로"
-                         ? ":" : match.Value);
+            if(code.Contains(":for-nt:")) {
+                rich.SyntaxWarning(BeforeCode, "not-recommand-for");
+                code = code.Replace(":for-nt:", "for");
 
-            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|이걸|저걸",
-                match => match.Value == "이걸" ||
-                         match.Value == "저걸"
-                         ? "in" : match.Value);
-            */
+                code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|이걸로|저걸로|으로",
+                    match => match.Value == "이걸로" ||
+                             match.Value == "저걸로" ||
+                             match.Value == "으로"
+                             ? ":" : match.Value);
 
-            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|에 넣고",
-                match => match.Value == "에 넣고"
-                         ? ":for-insert:" : match.Value);
+                code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|이걸|저걸",
+                    match => match.Value == "이걸" ||
+                             match.Value == "저걸"
+                             ? "in" : match.Value);
+            } else {
+                code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|에 넣고",
+                    match => match.Value == "에 넣고"
+                             ? ":for-insert:" : match.Value);
 
-            if(code.Contains(":for-insert:")) {
-                code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|을 |를 ",
-                    match => match.Value == "을 " ||
-                             match.Value == "를 "
-                             ? ":for-split:" : match.Value);
+                if(code.Contains(":for-insert:")) {
+                    code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|을 |를 ",
+                        match => match.Value == "을 " ||
+                                 match.Value == "를 "
+                                 ? ":for-split:" : match.Value);
 
-                string[] SPLIT = code.Split(":for-insert:");
-                int TABLINE = 0;
-                string TABSTR = "";
+                    string[] SPLIT = code.Split(":for-insert:");
+                    int TABLINE = 0;
+                    string TABSTR = "";
 
-                SPLIT[0] = Regex.Replace(SPLIT[0], @"(['""])(?:\\\1|.)*?\1|    ",
-                            match => match.Value == "    "
-                                     ? ":tabline:" : match.Value);
+                    SPLIT[0] = Regex.Replace(SPLIT[0], @"(['""])(?:\\\1|.)*?\1|    ",
+                                match => match.Value == "    "
+                                         ? ":tabline:" : match.Value);
 
-                TABLINE = SPLIT[0].Split(":tabline:").Length - 1;
-                for (int i = 1; i <= TABLINE; i++) TABSTR += "    ";
+                    TABLINE = SPLIT[0].Split(":tabline:").Length - 1;
+                    for (int i = 1; i <= TABLINE; i++) TABSTR += "    ";
 
-                string[] FOR_SPLIT = SPLIT[0].Split(":for-split:");
+                    string[] FOR_SPLIT = SPLIT[0].Split(":for-split:");
 
-                code = TABSTR + $"for {FOR_SPLIT[1]} in {FOR_SPLIT[0]}:".Replace(":tabline:", "");
+                    code = TABSTR + $"for {FOR_SPLIT[1]} in {FOR_SPLIT[0]}:".Replace(":tabline:", "");
+                }
             }
 
             return code;
