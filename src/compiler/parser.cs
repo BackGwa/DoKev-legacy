@@ -317,11 +317,11 @@ namespace DoKevEngine {
         /* 조건문 파싱 */
         string IFTHEN(string code) {
             code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|혹시나|혹여나|혹시|만약에|만약",
-                match => match.Value == "혹시나 " ||
-                         match.Value == "혹여나 " ||
-                         match.Value == "혹시 " ||
-                         match.Value == "만약에 " ||
-                         match.Value == "만약 "
+                match => match.Value == "혹시나" ||
+                         match.Value == "혹여나" ||
+                         match.Value == "혹시" ||
+                         match.Value == "만약에" ||
+                         match.Value == "만약"
                          ? ":if:" : match.Value);
 
             code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|그게 아니고|그게 아니라면|그게 아니면",
@@ -369,7 +369,7 @@ namespace DoKevEngine {
                 } else {
                     code = code.Replace(":isthen:", ":");
                 }
-            } else if (code.Contains(":isthen:")) {
+            } else if (!(code.Contains(":if:") || code.Contains(":elif:")) && code.Contains(":isthen:")) {
 
                 string[] SPLIT = code.Split(":isthen:");
                 int TABLINE = 0;
@@ -382,6 +382,7 @@ namespace DoKevEngine {
                 TABLINE = SPLIT[0].Split(":tabline:").Length - 1;
 
                 for (int i = 1; i <= TABLINE; i++) TABSTR += "    ";
+
                 code = TABSTR + $"if {SPLIT[0].Replace(":tabline:", "")}:";
 
             } else if (code.Contains(":else-then:")) {
