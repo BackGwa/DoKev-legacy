@@ -122,7 +122,13 @@ namespace DoKevEngine {
                 TABLINE = SPLIT[0].Split(":tabline:").Length - 1;
 
                 for (int i = 1; i <= TABLINE; i++) TABSTR += "    ";
-                code = TABSTR + $"print{SPLIT[0].Replace(":tabline:", "")}";
+
+                if(!SPLIT[0].Contains("(") || !SPLIT[0].Contains(")")) {
+                    rich.SyntaxWarning(BeforeCode, "print-insert-bracket");
+                    code = TABSTR + $"print({SPLIT[0].Replace(":tabline:", "")})";
+                } else {
+                    code = TABSTR + $"print{SPLIT[0].Replace(":tabline:", "")}";
+                }
 
                 code = OPTION_END(code);
                 code = BRACKET_S(code);
