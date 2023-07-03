@@ -5,9 +5,18 @@
 
 ### 브랜치 릴리즈 : `DoKev 6`
 
-### 소스 코드 : `DoKev 7 Pre-Release 4`
+### 소스 코드 : `DoKev 7 Pre-Release 5`
 
 ---
+<br>
+
+## DoKev 7 Pre-Release 5
+* 괄호가 없어도 출력문을 사용할 수 있도록 변경하였습니다.
+```python
+# 권장되지 않지만, 괄호를 사용하지 않아도 출력이 가능합니다.
+<값>을 말해줘
+```
+
 <br>
 
 ## DoKev 7 Pre-Release 4
