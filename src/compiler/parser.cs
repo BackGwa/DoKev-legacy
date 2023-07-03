@@ -187,15 +187,52 @@ namespace DoKevEngine {
 
         /* WHILE 반복문 파싱 */
         string WHILE(string code) {
-            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|반복해줘|반복해",
-                match => match.Value == "반복해줘" ||
-                         match.Value == "반복해"
-                         ? "while" : match.Value);
-
             code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|인동안|인 동안",
                 match => match.Value == "인동안" ||
                          match.Value == "인 동안"
-                         ? ":" : match.Value);
+                         ? ":while:" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|반복해줘|반복해",
+                match => match.Value == "반복해줘" ||
+                         match.Value == "반복해"
+                         ? ":while-nt:" : match.Value);
+
+            if (code.Contains(":while:")) {
+
+                if (code.Contains(":while-nt:")) {
+                    rich.SyntaxWarning(BeforeCode, "not-recommand-while");
+                    code = code.Replace(":while-nt:", "");
+                }
+
+                string[] SPLIT = code.Split(":while:");
+                int TABLINE = 0;
+                string TABSTR = "";
+
+                SPLIT[0] = Regex.Replace(SPLIT[0], @"(['""])(?:\\\1|.)*?\1|    ",
+                            match => match.Value == "    "
+                                     ? ":tabline:" : match.Value);
+
+                TABLINE = SPLIT[0].Split(":tabline:").Length - 1;
+
+                for (int i = 1; i <= TABLINE; i++) TABSTR += "    ";
+                code = TABSTR + $"while {SPLIT[0].Replace(":tabline:", "")}:";
+
+            } else if (!code.Contains(":while:") && code.Contains(":while-nt:")) {
+                rich.SyntaxWarning(BeforeCode, "while-fix");
+
+                string[] SPLIT = code.Split(":while-nt:");
+                int TABLINE = 0;
+                string TABSTR = "";
+
+                SPLIT[0] = Regex.Replace(SPLIT[0], @"(['""])(?:\\\1|.)*?\1|    ",
+                            match => match.Value == "    "
+                                     ? ":tabline:" : match.Value);
+
+                TABLINE = SPLIT[0].Split(":tabline:").Length - 1;
+
+                for (int i = 1; i <= TABLINE; i++) TABSTR += "    ";
+                code = TABSTR + $"while{SPLIT[1]}:";
+            }
 
             return code;
         }
@@ -676,11 +713,11 @@ namespace DoKevEngine {
 
             code = IMPORT(code);
             code = UPPER_LOWER(code);
-            code = PRINT(code);         // 새로운 파서 적용
-            code = INPUT(code);         // 기존 파서 적용
+            code = PRINT(code);
+            code = INPUT(code);
             code = FORMAT(code);
             code = CAST(code);
-            code = FUNCTION(code);      // 새로운 파서 적용
+            code = FUNCTION(code);
             code = DATA_TYPE(code);
             code = VARIABLE(code);
             code = FOR(code);
