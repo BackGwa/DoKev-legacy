@@ -303,7 +303,12 @@ namespace DoKevEngine {
                 match => match.Value == "이라면" ||
                          match.Value == "라면" ||
                          match.Value == "이면"
-                         ? ":" : match.Value);
+                         ? ":isthen:" : match.Value);
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|아니라면|아니면",
+                match => match.Value == "아니라면" ||
+                         match.Value == "아니면"
+                         ? ":else-then:" : match.Value);
 
             code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|아니 |진짜로 |진짜 |정말로 |근데 |정말 ",
                 match => match.Value == "아니 " ||
@@ -318,16 +323,40 @@ namespace DoKevEngine {
                 code = code.Replace(":if:", "if ");
                 code = code.Replace(":elif:", "elif ");
 
-                code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|:",
-                    match => match.Value == ":"
-                             ? ":then:" : match.Value);
-
-                if (!code.Contains(":then:")) {
+                if (!code.Contains(":isthen:")) {
                     rich.SyntaxWarning(BeforeCode, "if-fix");
                     code = code + ":";
                 } else {
-                    code = code.Replace(":then:", ":");
+                    code = code.Replace(":isthen:", ":");
                 }
+            } else if (code.Contains(":isthen:")) {
+
+                string[] SPLIT = code.Split(":isthen:");
+                int TABLINE = 0;
+                string TABSTR = "";
+
+                SPLIT[0] = Regex.Replace(SPLIT[0], @"(['""])(?:\\\1|.)*?\1|    ",
+                            match => match.Value == "    "
+                                     ? ":tabline:" : match.Value);
+
+                TABLINE = SPLIT[0].Split(":tabline:").Length - 1;
+
+                for (int i = 1; i <= TABLINE; i++) TABSTR += "    ";
+                code = TABSTR + $"if {SPLIT[0].Replace(":tabline:", "")}:";
+
+            } else if (code.Contains(":else-then:")) {
+                string[] SPLIT = code.Split(":else-then:");
+                int TABLINE = 0;
+                string TABSTR = "";
+
+                SPLIT[0] = Regex.Replace(SPLIT[0], @"(['""])(?:\\\1|.)*?\1|    ",
+                    match => match.Value == "    "
+                             ? ":tabline:" : match.Value);
+
+                for (int i = 1; i <= TABLINE; i++) TABSTR += "    ";
+
+                code = TABSTR + code.Replace(":else-then:", "else:");
+
             }
             return code;
         }
