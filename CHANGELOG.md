@@ -5,9 +5,23 @@
 
 ### 브랜치 릴리즈 : `DoKev 6`
 
-### 소스 코드 : `DoKev 7 Pre-Release 3`
+### 소스 코드 : `DoKev 7 Pre-Release 4`
 
 ---
+<br>
+
+## DoKev 7 Pre-Release 4
+* for 반복문 문법이 변경되었습니다. `이전 코드와 아직 호환되지 않습니다.`
+```python
+# 새롭게 바뀐 for 문법
+<리스트>를 <내부_변수>에 넣고
+    <내부_변수>를 말해줘
+
+# 예시
+[1, 2, 3]을 가에 넣고
+    (가)를 말해줘
+```
+
 <br>
 
 ## DoKev 7 Pre-Release 3
