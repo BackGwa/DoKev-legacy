@@ -1,13 +1,19 @@
 
 # **패치노트**
 
-### 최신 릴리즈 : `DoKev 6`
+### 최신 릴리즈 : `DoKev RC7`
 
-### 브랜치 릴리즈 : `DoKev 6`
+### 브랜치 릴리즈 : `DoKev RC7`
 
-### 소스 코드 : `DoKev 7 Pre-Release 5`
+### 소스 코드 : `DoKev RC7`
 
 ---
+<br>
+
+## DoKev RC7
+* `DoKev 7 Pre-Release 5`를 기반으로 `RC7`을 릴리즈 하였습니다.
+* 언어팩 번역 오류를 수정하였습니다.
+
 <br>
 
 ## DoKev 7 Pre-Release 5
