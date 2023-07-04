@@ -152,10 +152,12 @@ namespace DoKevEngine {
 
                     } else {
                         rich.SyntaxError(BeforeCode, "print-prticle");
+                        return "";
                     }
 
                 } else {
                     rich.SyntaxError(BeforeCode, "print-syntax");
+                    return "";
                 }
 
             }
@@ -429,10 +431,12 @@ namespace DoKevEngine {
 
                     } else {
                         rich.SyntaxError(BeforeCode, "comparison");
+                        return "";
                     }
 
                 } else {
                     rich.SyntaxError(BeforeCode, "comparison");
+                    return "";
                 }
                 Console.WriteLine(code);
             }
