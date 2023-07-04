@@ -630,8 +630,9 @@ namespace DoKevEngine {
                          match.Value == "는 "
                          ? " =" : match.Value);
 
-            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|이야|야",
-                match => match.Value == "이야" ||
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|이고|이야|야",
+                match => match.Value == "이고" ||
+                         match.Value == "이야" ||
                          match.Value == "야"
                          ? "" : match.Value);
 
@@ -775,9 +776,11 @@ namespace DoKevEngine {
                 match => match.Value == "의 "
                          ? "." : match.Value);
 
-            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|을|를",
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|을|를|그러고 나서|그러고",
                 match => match.Value == "을" ||
-                         match.Value == "를"
+                         match.Value == "를" ||
+                         match.Value == "그러고 나서" ||
+                         match.Value == "그러고"
                          ? "" : match.Value);
 
             return code;
