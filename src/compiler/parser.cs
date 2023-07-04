@@ -332,6 +332,114 @@ namespace DoKevEngine {
             return code;
         }
 
+        /* 비교 조건문 파싱 */
+        string COMPARISON(string code) {
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|보다 |이랑 |랑 ",
+                match => match.Value == "보다 " ||
+                         match.Value == "이랑 " ||
+                         match.Value == "랑 "
+                         ? "<-if-target:" : match.Value);
+
+            if(code.Contains("<-if-target:")) {
+                code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|가 |이 ",
+                    match => match.Value == "가 " ||
+                             match.Value == "이 "
+                             ? "<-comparison-target:" : match.Value);
+
+                if (code.Contains("<-comparison-target:")) {
+                    code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|크거나 같다면|같거나 크다면",
+                        match => match.Value == "크거나 같다면" ||
+                                 match.Value == "같거나 크다면"
+                                 ? "<-target-bigeq<-" : match.Value);
+
+                    code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|작거나 같다면|같거나 작다면",
+                        match => match.Value == "작거나 같다면" ||
+                                 match.Value == "같거나 작다면"
+                                 ? "<-target-smalleq<-" : match.Value);
+
+                    code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|크다면",
+                        match => match.Value == "크다면"
+                                 ? "<-target-big<-" : match.Value);
+
+                    code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|작다면",
+                        match => match.Value == "작다면"
+                                 ? "<-target-small<-" : match.Value);
+
+                    code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|같다면",
+                        match => match.Value == "같다면"
+                                 ? "<-target-eq<-" : match.Value);
+
+                    code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|더 ",
+                        match => match.Value == "더 "
+                                 ? "" : match.Value);
+
+                    if(code.Contains("<-target-bigeq<-") ||
+                       code.Contains("<-target-smalleq<-") ||
+                       code.Contains("<-target-big<-") ||
+                       code.Contains("<-target-small<-") ||
+                       code.Contains("<-target-eq<-")) {
+
+                        string[] SPLIT = code.Split("<-if-target:");
+                        int TABLINE = 0;
+                        string TABSTR = "";
+
+                        SPLIT[0] = Regex.Replace(SPLIT[0], @"(['""])(?:\\\1|.)*?\1|    ",
+                                    match => match.Value == "    "
+                                             ? ":tabline:" : match.Value);
+
+                        TABLINE = SPLIT[0].Split(":tabline:").Length - 1;
+
+                        for (int i = 1; i <= TABLINE; i++) TABSTR += "    ";
+
+                        string TARGET = SPLIT[0].Replace(":tabline:", "");
+                        string COMPAR = code.Split("<-if-target:")[1].Split("<-comparison-target:")[0];
+
+                        string CPDASH = "";
+                        string GDASH = "if ";
+
+                        if (code.Contains("<-target-eq<-")) CPDASH = "==";
+                        else if (code.Contains("<-target-bigeq<-")) CPDASH = "<=";
+                        else if (code.Contains("<-target-smalleq<-")) CPDASH = ">=";
+                        else if (code.Contains("<-target-big<-")) CPDASH = "<";
+                        else if (code.Contains("<-target-small<-")) CPDASH = ">";
+
+                        TARGET = Regex.Replace(TARGET, @"(['""])(?:\\\1|.)*?\1|혹시나|혹여나|혹시|만약에|만약",
+                            match => match.Value == "혹시나" ||
+                                     match.Value == "혹여나" ||
+                                     match.Value == "혹시" ||
+                                     match.Value == "만약에" ||
+                                     match.Value == "만약"
+                                     ? "->if:" : match.Value);
+
+                        TARGET = Regex.Replace(TARGET, @"(['""])(?:\\\1|.)*?\1|그게 아니고|그게 아니라",
+                            match => match.Value == "그게 아니고" ||
+                                     match.Value == "그게 아니라"
+                                     ? "->elif:" : match.Value);
+
+                        if (TARGET.Contains("->if:")) {
+                            GDASH = "if ";
+                            TARGET = TARGET.Replace("->if:", "");
+                        } else if (TARGET.Contains("->elif:")) {
+                            GDASH = "elif ";
+                            TARGET = TARGET.Replace("->elif:", "");
+                        }
+
+                        code = TABSTR + $"{GDASH}({TARGET} {CPDASH} {COMPAR}):";
+
+
+                    } else {
+                        rich.SyntaxError(BeforeCode, "comparison");
+                    }
+
+                } else {
+                    rich.SyntaxError(BeforeCode, "comparison");
+                }
+                Console.WriteLine(code);
+            }
+
+            return code;
+        }
+
         /* 조건문 파싱 */
         string IFTHEN(string code) {
             code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|혹시나|혹여나|혹시|만약에|만약",
@@ -799,6 +907,7 @@ namespace DoKevEngine {
             code = BREAK(code);
             code = TRINOMIAL(code);
             code = VARIABLE(code);
+            code = COMPARISON(code);
             code = IFTHEN(code);
             code = LOGIC(code);
             code = ITEMCALC(code);
