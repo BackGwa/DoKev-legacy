@@ -418,18 +418,34 @@ namespace DoKevEngine {
             return code;
         }
 
-
         /* 삼항연산자 파싱 */
         string TRINOMIAL(string code) {
-            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|이려면|려면",
-                match => match.Value == "이려면" ||
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|일려면|이려면|려면",
+                match => match.Value == "일려면" ||
+                         match.Value == "이려면" ||
                          match.Value == "려면"
-                         ? " if" : match.Value);
+                         ? "<-tm-if:" : match.Value);
 
-            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1| 저게 아니면| 저것이 아니면",
-                match => match.Value == " 저게 아니면" ||
-                         match.Value == " 저것이 아니면"
-                         ? " else" : match.Value);
+            if(code.Contains("<-tm-if:")) {
+                code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1| 저게 아니면| 저것이 아니면| 그게 아니면| 아니면",
+                    match => match.Value == " 저게 아니면" ||
+                             match.Value == " 저것이 아니면" ||
+                             match.Value == " 그게 아니면" ||
+                             match.Value == " 아니면"
+                             ? "<-tm-else:" : match.Value);
+
+                if (code.Contains("<-tm-else:")) {
+                    code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|이여야해|여야해|야해",
+                        match => match.Value == "이여야해" ||
+                                 match.Value == "여야해" ||
+                                 match.Value == "야해"
+                                 ? "" : match.Value);
+                    code = code.Replace("<-tm-if:", " if");
+                    code = code.Replace("<-tm-else:", " else");
+                } else {
+                    rich.SyntaxError(BeforeCode, "trinomial");
+                }
+            }
 
             return code;
         }
@@ -820,13 +836,13 @@ namespace DoKevEngine {
             code = CAST(code);
             code = FUNCTION(code);
             code = DATA_TYPE(code);
-            code = VARIABLE(code);
             code = FOR(code);
             code = WHILE(code);
             code = BREAK(code);
+            code = TRINOMIAL(code);
+            code = VARIABLE(code);
             code = IFTHEN(code);
             code = LOGIC(code);
-            code = TRINOMIAL(code);
             code = ITEMCALC(code);
             code = RANGE(code);
             code = JOIN(code);
