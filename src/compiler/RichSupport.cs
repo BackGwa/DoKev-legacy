@@ -58,6 +58,7 @@ namespace DoKevEngine {
             Console.WriteLine(code.Replace("    ", ""));
             CreateLine(75);
             Console.WriteLine(cf.Text("error", $"{type}-message"));
+            Console.WriteLine(cf.Text("error", $"fix"));
             Console.WriteLine($"\n{cf.Text("error", $"{type}-suggest")}");
             CreateLine(75);
 
@@ -79,6 +80,7 @@ namespace DoKevEngine {
             CreateLine(75);
 
             Console.ResetColor();
+            Console.WriteLine();
         }
 
     }   /* RichSupport Class */
