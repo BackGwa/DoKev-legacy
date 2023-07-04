@@ -98,7 +98,7 @@ namespace DoKevEngine {
                          ? "->PRINT:" : match.Value);
 
             if (code.Contains("->PRINT:")) {
-                code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|->PRINT:해줘|->PRINT:해|->PRINT:줘|->PRINT:해주고 그런 다음에|->PRINT:주고 그런 다음에|->PRINT:고 그런 다음에|->PRINT:해준 다음에|->PRINT:준 다음에|->PRINT: 다음에|->PRINT:다음|->PRINT:주고|->PRINT:하고|->PRINT:고",
+                code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|->PRINT:해줘|->PRINT:해|->PRINT:줘|->PRINT:해주고 그런 다음에|->PRINT:주고 그런 다음에|->PRINT:고 그런 다음에|->PRINT:해준 다음에|->PRINT:준 다음에|->PRINT:해주고 그런 다음|->PRINT:주고 그런 다음|->PRINT:고 그런 다음|->PRINT:해준 다음|->PRINT:준 다음|->PRINT: 다음에|->PRINT:다음|->PRINT:주고|->PRINT:하고|->PRINT:고",
                     match => match.Value == "->PRINT:해줘" ||
                              match.Value == "->PRINT:해" ||
                              match.Value == "->PRINT:줘" ||
@@ -108,6 +108,10 @@ namespace DoKevEngine {
                              match.Value == "->PRINT:해준 다음에" ||
                              match.Value == "->PRINT:준 다음에" ||
                              match.Value == "->PRINT: 다음에" ||
+                             match.Value == "->PRINT:주고 그런 다음" ||
+                             match.Value == "->PRINT:고 그런 다음" ||
+                             match.Value == "->PRINT:해준 다음" ||
+                             match.Value == "->PRINT:준 다음" ||
                              match.Value == "->PRINT:다음" ||
                              match.Value == "->PRINT:주고" ||
                              match.Value == "->PRINT:하고" ||
@@ -186,12 +190,14 @@ namespace DoKevEngine {
                          match.Value == "포맷문자" ||
                          match.Value == "형식" ||
                          match.Value == "포맷"
-                         ? "format" : match.Value);
+                         ? ":format->" : match.Value);
 
-            if (code.Contains("format")) code = BRACKET_S(code);
+            if (code.Contains(":format->")) {
+                code = BRACKET_S(code);
+                code = code.Replace(":format->", "format");
+            }
             return code;
         }
-
 
         /* 대소문자 변경 파싱 */
         string UPPER_LOWER(string code) {
@@ -204,10 +210,8 @@ namespace DoKevEngine {
                 match => match.Value == "소문자로" ||
                          match.Value == "소문자"
                          ? "lower" : match.Value);
-
             return code;
         }
-
 
         /* WHILE 반복문 파싱 */
         string WHILE(string code) {
@@ -257,10 +261,8 @@ namespace DoKevEngine {
                 for (int i = 1; i <= TABLINE; i++) TABSTR += "    ";
                 code = TABSTR + $"while{SPLIT[1]}:";
             }
-
             return code;
         }
-
 
         /* FOR 반복문 파싱 */
         string FOR(string code) {
@@ -286,8 +288,10 @@ namespace DoKevEngine {
                              match.Value == "저걸"
                              ? "in" : match.Value);
             } else {
-                code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|에 넣고",
-                    match => match.Value == "에 넣고"
+                code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|에 넣고|에 넣은 다음에|에 넣은 다음",
+                    match => match.Value == "에 넣고" ||
+                             match.Value == "에 넣은 다음에" ||
+                             match.Value == "에 넣은 다음"
                              ? ":for-insert:" : match.Value);
 
                 if(code.Contains(":for-insert:")) {
@@ -312,25 +316,19 @@ namespace DoKevEngine {
                     code = TABSTR + $"for {FOR_SPLIT[1]} in {FOR_SPLIT[0]}:".Replace(":tabline:", "");
                 }
             }
-
             return code;
-
-
         }
-
 
         /* BREAK 반복문 파싱 */
         string BREAK(string code) {
-            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|빠져나오자|빠져나와줘|빠져|나와|나가",
-                match => match.Value == "빠져나오자" ||
-                         match.Value == "빠져나와줘" ||
-                         match.Value == "빠져" ||
-                         match.Value == "나와" ||
-                         match.Value == "나가"
-                         ? "break" : match.Value);
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1| 그리고 빠져나오자| 그리고 빠져나와줘| 빠져나오자| 빠져나와줘",
+                match => match.Value == " 그리고 빠져나오자" ||
+                         match.Value == " 그리고 빠져나와줘" ||
+                         match.Value == " 빠져나오자" ||
+                         match.Value == " 빠져나와줘"
+                         ? " break" : match.Value);
             return code;
         }
-
 
         /* 조건문 파싱 */
         string IFTHEN(string code) {
