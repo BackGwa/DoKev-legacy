@@ -11,10 +11,10 @@ body {
     top: 50%;
     transform: translateY(-50%);
 
-    width: 20%;
+    width: 386px;
     height: 95%;
 
-    margin-left: 1%;
+    margin-left: 12px;
 
     background: #1c2a35d1;
 
@@ -31,7 +31,7 @@ body {
 .logo-area img {
     position: absolute;
 
-    width: 60%;
+    width: 62%;
 
     top: 7%;
     left: 50%;
