@@ -29,10 +29,11 @@ body {
 }
 
 .logo-area img {
+    position: absolute;
     width: 30%;
-    height: 30%;
 
-    margin-left: 36px;
+    left: 50%;
+    transform: translateX(-50%);
     margin-top: 36px;
 
     filter: drop-shadow(0 0 32px #2d6bf050);
@@ -42,7 +43,7 @@ body {
 .document-list {
     position: absolute;
 
-    margin-top: 10%;
+    margin-top: 27%;
 
     left: 50%;
     transform: translateX(-50%);
