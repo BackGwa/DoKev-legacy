@@ -3,7 +3,7 @@
 
 ### 최신 릴리즈 : `DoKev RC 7.01`
 
-### 브랜치 릴리즈 : `DoKev RC 7.01`
+### 브랜치 릴리즈 : `DoKev 8 Pre-Release 4`
 
 ### 소스 코드 : `DoKev 8 Pre-Release 4`
 
