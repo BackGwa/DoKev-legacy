@@ -138,6 +138,8 @@ namespace DoKevEngine {
 
                         tab_counter = SPLIT[0].Split("->TAB->").Length - 1;
 
+                        for (int i = 1; i <= tab_counter; i++) tab_string += "    ";
+
                         if (SPLIT[0].Contains("(") && SPLIT[0].Contains(")")) {
                             code = tab_string + $"print{SPLIT[0].Replace("->TAB->", "")}";
                         } else {
