@@ -5,9 +5,25 @@
 
 ### 브랜치 릴리즈 : `DoKev RC 7.01`
 
-### 소스 코드 : `DoKev 8 Pre-Release 3`
+### 소스 코드 : `DoKev 8 Pre-Release 4`
 
 ---
+<br>
+
+## DoKev 8 Pre-Release 4
+* 비교 조건문이 추가되었습니다.
+```python
+# 새롭게 생긴 비교 조건문
+<값>보다 <값>이 크다면
+    ...코드
+
+<값>보다 <값>이 크거나 같다면
+    ...코드
+    
+<값>이랑 <값>이 같다면
+    ...코드
+```
+
 <br>
 
 ## DoKev 8 Pre-Release 3
