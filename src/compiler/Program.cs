@@ -91,7 +91,7 @@ namespace DoKevEngine {
                 /* 파싱에 필요한 변수 선언 */
                 Parser parser = new Parser();
 
-                log(NowTime(), $"{locale("build", "initialized")}\n", "success");
+                log(NowTime(), $"{locale("build", "initialized")}", "success");
 
                 /* 코드를 파싱하여 변환 */
                 foreach (string code in File.ReadLines($"{baseDirectory}/{targetfile}")) {
@@ -119,7 +119,7 @@ namespace DoKevEngine {
                     string Result = code;
 
                     /* 변환 대기열 */
-                    log($"\n{NowTime()}", $"{locale("convert", "wait")} : {Result.Replace("    ", "")}");
+                    log($"\n{NowTime()}", Result.Replace("    ", ""));
 
                     /* 내장 함수 파싱 작업 */
                     if (Enable_os)      Result = parser.OS_PARSER(Result);
@@ -128,7 +128,7 @@ namespace DoKevEngine {
 
                     if (Result == "")   return;
 
-                    log(NowTime(), $"{locale("convert", "result")} : {Result.Replace("    ", "")}");
+                    log(NowTime(), Result.Replace("    ", ""));
 
                     /* 파싱 된 코드 작성 */
                     WriteLine[WriteLine.Length - 1] = Result;
