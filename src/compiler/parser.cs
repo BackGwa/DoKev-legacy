@@ -522,7 +522,10 @@ namespace DoKevEngine {
                          match.Value == "범위"
                          ? "range" : match.Value);
 
-            if (code.Contains("range")) code = BRACKET_S(code);
+            if (code.Contains(":range->")) {
+                code = code.Replace(":range->", "range");
+                code = BRACKET_S(code);
+            }
             return code;
         }
 
@@ -539,12 +542,14 @@ namespace DoKevEngine {
         string ROUND(string code) {
             code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|반올림",
                 match => match.Value == "반올림"
-                         ? "round" : match.Value);
+                         ? ":round->" : match.Value);
 
-            if (code.Contains("round")) code = BRACKET_S(code);
+            if (code.Contains(":round->")) {
+                code = code.Replace(":round->", "round");
+                code = BRACKET_S(code);
+            }
             return code;
         }
-
 
         /* LOGIC 파싱 */
         string LOGIC(string code) {
@@ -576,14 +581,13 @@ namespace DoKevEngine {
             return code;
         }
 
-
         /* VARIABLE 파싱 */
         string VARIABLE(string code) {
 
             code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|은 |는 ",
                 match => match.Value == "은 " ||
                          match.Value == "는 "
-                         ? " =" : match.Value);
+                         ? " = " : match.Value);
 
             code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|이고|이야|야",
                 match => match.Value == "이고" ||
@@ -593,7 +597,6 @@ namespace DoKevEngine {
 
             return code;
         }
-
 
         /* CAST 파싱 */
         string CAST(string code) {
@@ -620,7 +623,6 @@ namespace DoKevEngine {
 
             return code;
         }
-
 
         /* DATA_TYPE 파싱 */
         string DATA_TYPE(string code) {
@@ -653,8 +655,7 @@ namespace DoKevEngine {
             return code;
         }
 
-
-        /* CALC 파싱 */
+        /* 계산식 파싱 */
         string CALC(string code) {
 
             code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|더하기",
@@ -694,7 +695,6 @@ namespace DoKevEngine {
             return code;
         }
 
-
         /* 증감식 파싱 */
         string IDAF(string code) {
 
@@ -715,7 +715,6 @@ namespace DoKevEngine {
             }
             return code;
         }
-
 
         /* 구분자 및 도움말 파싱 */
         string HELPTEXT(string code) {
