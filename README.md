@@ -1,7 +1,7 @@
 <br>
 
 <div align="center">
-  <img src="./res/banner.png" width='300'>
+  <img src="./docs/res/banner.png" width='300'>
 </div>
 
 <br>
