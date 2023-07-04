@@ -1,0 +1,42 @@
+
+html,
+body {
+    margin: 0;
+    background: #171e26;
+}
+
+.document-selecter {
+    position: absolute;
+
+    top: 50%;
+    transform: translateY(-50%);
+
+    width: 20%;
+    height: 95%;
+
+    margin-left: 1%;
+
+    background: #1c2a35d1;
+
+    border: 1px solid #242e38;
+    border-radius: 18px;
+
+    filter: drop-shadow(6px 6px 48px #00000050);
+    -webkit-filter: drop-shadow(6px 6px 48px #00000050);
+
+    backdrop-filter: blur(48px);
+    -webkit-backdrop-filter: blur(48px);
+}
+
+.logo-area img {
+    position: absolute;
+
+    width: 60%;
+
+    top: 7%;
+    left: 50%;
+    transform: translateX(-50%);
+
+    filter: drop-shadow(0 0 32px #2d6bf050);
+    -webkit-filter: drop-shadow(0 0 32px #2d6bf050);
+}
