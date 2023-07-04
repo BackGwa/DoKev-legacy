@@ -483,13 +483,22 @@ namespace DoKevEngine {
                              ? ":parameter:" : match.Value);
 
                 if (code.Contains(":parameter:")) {
-                    code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|그리고 ",
+                    code = code.Replace(":parameter:", "");
+
+                    FUNCTION_PARA = Regex.Replace(SPLIT[1], "(이 필요해|가 필요해|를 받고|을 받고)", "");
+
+
+                    FUNCTION_PARA = Regex.Replace(FUNCTION_PARA, @"(['""])(?:\\\1|.)*?\1|그리고 ",
                         match => match.Value == "그리고 "
                                  ? ":parameter-split:" : match.Value);
 
-                    code = code.Replace(":parameter:", "");
-                    code = code.Replace(":parameter-split:", ", ");
-                    FUNCTION_PARA = Regex.Replace(SPLIT[1], "(이 필요해|가 필요해)", "");
+                    FUNCTION_PARA = FUNCTION_PARA.Replace(":parameter-split:", ", ");
+
+                    if (FUNCTION_PARA.Contains("(") && FUNCTION_PARA.Contains(")")) {
+                        rich.SyntaxWarning(BeforeCode, "function-bracket");
+                    } else {
+                        FUNCTION_PARA = $"({FUNCTION_PARA})";
+                    }
                 }
 
                 code = TABSTR + $"def {FUNCTION_NAME}{FUNCTION_PARA}:".Replace(":function:", "").Replace(":tabline:", "");
