@@ -357,16 +357,16 @@ namespace DoKevEngine {
                          match.Value == "전부 아니면"
                          ? "else:" : match.Value);
 
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|아니라면|아니면",
+                match => match.Value == "아니라면" ||
+                         match.Value == "아니면"
+                         ? ":else-then:" : match.Value);
+
             code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|이라면|라면|이면|면",
                 match => match.Value == "이라면" ||
                          match.Value == "라면" ||
                          match.Value == "이면"
                          ? ":isthen:" : match.Value);
-
-            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|아니라면|아니면",
-                match => match.Value == "아니라면" ||
-                         match.Value == "아니면"
-                         ? ":else-then:" : match.Value);
 
             code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|아니 |진짜로 |진짜 |정말로 |근데 |정말 ",
                 match => match.Value == "아니 " ||
