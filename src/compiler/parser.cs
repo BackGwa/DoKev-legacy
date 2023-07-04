@@ -446,10 +446,8 @@ namespace DoKevEngine {
                     rich.SyntaxError(BeforeCode, "trinomial");
                 }
             }
-
             return code;
         }
-
 
         /* 함수 선언 파싱 */
         string FUNCTION(string code) {
