@@ -17,13 +17,11 @@ namespace DoKevEngine {
             } return false;
         }
 
-
         /* 라이브러리 선언 오류 확인 */
         bool LIB_ERRCHK(string code) {
             if ((code.Contains("라이브러리")) || (code.Contains("모듈"))) return true;
             return false;
         }
-
 
         /* 라이브러리 선언 구분 */
         public string LIBPARSER(string code) {
@@ -35,7 +33,6 @@ namespace DoKevEngine {
             } else return SPLIT[0];
         }
 
-
         /* 라이브러리 명칭 영어로 변경 */
         public string NAME_FIX(string libname) {
             switch (libname) {
@@ -46,13 +43,11 @@ namespace DoKevEngine {
             }
         }
 
-
         /* 라이브러리 선언 파싱 */
         string IMPORT(string code) {
             if (LIBCHK(code)) return $"import {NAME_FIX(code.Split(" ")[0])}";
             return code;
         }
-
 
         /* 괄호 검사 */
         string BRACKET_S(string code) {
@@ -66,7 +61,6 @@ namespace DoKevEngine {
 
             return "";
         }
-
 
         /* 문자열 검사 */
         string STRING_S(string code) {
@@ -92,52 +86,75 @@ namespace DoKevEngine {
             } return code;
         }
 
-
         /* 출력문 파서 */
         string PRINT(string code) {
-            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1| 말해줘| 보여줘| 출력해줘| 출력해| 출력",
-                match => match.Value == " 말해줘" ||
-                         match.Value == " 보여줘" ||
-                         match.Value == " 출력해줘" ||
-                         match.Value == " 출력해" ||
+
+            code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1| 말해| 말하| 말한| 보여| 출력",
+                match => match.Value == " 말해" ||
+                         match.Value == " 말하" ||
+                         match.Value == " 말한" ||
+                         match.Value == " 보여" ||
                          match.Value == " 출력"
-                         ? ":print:" : match.Value);
+                         ? "->PRINT:" : match.Value);
 
-            if (code.Contains(":print:")) {
-                code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|이라고|라고|을|를",
-                    match => match.Value == "이라고" ||
-                             match.Value == "라고" ||
-                             match.Value == "을" ||
-                             match.Value == "를"
-                             ? "" : match.Value);
+            if (code.Contains("->PRINT:")) {
+                code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|->PRINT:해줘|->PRINT:해|->PRINT:줘|->PRINT:해주고 그런 다음에|->PRINT:주고 그런 다음에|->PRINT:고 그런 다음에|->PRINT:해준 다음에|->PRINT:준 다음에|->PRINT: 다음에|->PRINT:다음|->PRINT:주고|->PRINT:하고|->PRINT:고",
+                    match => match.Value == "->PRINT:해줘" ||
+                             match.Value == "->PRINT:해" ||
+                             match.Value == "->PRINT:줘" ||
+                             match.Value == "->PRINT:해주고 그런 다음에" ||
+                             match.Value == "->PRINT:주고 그런 다음에" ||
+                             match.Value == "->PRINT:고 그런 다음에" ||
+                             match.Value == "->PRINT:해준 다음에" ||
+                             match.Value == "->PRINT:준 다음에" ||
+                             match.Value == "->PRINT: 다음에" ||
+                             match.Value == "->PRINT:다음" ||
+                             match.Value == "->PRINT:주고" ||
+                             match.Value == "->PRINT:하고" ||
+                             match.Value == "->PRINT:고"
+                             ? "->PRINT->" : match.Value);
 
-                string[] SPLIT = code.Split(":print:");
-                int TABLINE = 0;
-                string TABSTR = "";
+                if (code.Contains("->PRINT->")) {
+                    code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|이라고->PRINT->|라고->PRINT->|을->PRINT->|를->PRINT->",
+                        match => match.Value == "이라고->PRINT->" ||
+                                    match.Value == "라고->PRINT->" ||
+                                    match.Value == "을->PRINT->" ||
+                                    match.Value == "를->PRINT->"
+                                    ? "->VALUE->PRINT->" : match.Value);
 
-                SPLIT[0] = Regex.Replace(SPLIT[0], @"(['""])(?:\\\1|.)*?\1|    ",
-                    match => match.Value == "    "
-                             ? ":tabline:" : match.Value);
+                    if (code.Contains("->VALUE->PRINT->")) {
 
-                TABLINE = SPLIT[0].Split(":tabline:").Length - 1;
+                        string[] SPLIT = code.Split("->VALUE->PRINT->");
+                        int tab_counter = 0;
+                        string tab_string = "";
 
-                for (int i = 1; i <= TABLINE; i++) TABSTR += "    ";
+                        SPLIT[0] = Regex.Replace(SPLIT[0], @"(['""])(?:\\\1|.)*?\1|    ",
+                            match => match.Value == "    "
+                                     ? "->TAB->" : match.Value);
 
-                if(!SPLIT[0].Contains("(") || !SPLIT[0].Contains(")")) {
-                    rich.SyntaxWarning(BeforeCode, "print-insert-bracket");
-                    code = TABSTR + $"print({SPLIT[0].Replace(":tabline:", "")})";
+                        tab_counter = SPLIT[0].Split("->TAB->").Length - 1;
+
+                        if (SPLIT[0].Contains("(") && SPLIT[0].Contains(")")) {
+                            code = tab_string + $"print{SPLIT[0].Replace("->TAB->", "")}";
+                        } else {
+                            code = tab_string + $"print({SPLIT[0].Replace("->TAB->", "")})";
+                            rich.SyntaxWarning(BeforeCode, "print-bracket");
+                        }
+
+                        code = OPTION_END(code);
+                        code = BRACKET_S(code);
+
+                    } else {
+                        rich.SyntaxError(BeforeCode, "print-prticle");
+                    }
+
                 } else {
-                    code = TABSTR + $"print{SPLIT[0].Replace(":tabline:", "")}";
+                    rich.SyntaxError(BeforeCode, "print-syntax");
                 }
 
-                code = OPTION_END(code);
-                code = BRACKET_S(code);
-
             }
-
             return code;
         }
-
 
         /* 출력문 옵션 END 파싱 */
         string OPTION_END(string code) {
@@ -148,18 +165,19 @@ namespace DoKevEngine {
             return code;
         }
 
-
         /* 입력문 파싱 */
         string INPUT(string code) {
             code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|입력받아줘|입력받아",
                 match => match.Value == "입력받아줘" ||
                          match.Value == "입력받아"
-                         ? "input" : match.Value);
+                         ? ":input->" : match.Value);
 
-            if (code.Contains("input")) code = BRACKET_S(code);
+            if (code.Contains(":input->")) {
+                code = BRACKET_S(code);
+                code = code.Replace(":input->", "input");
+            }
             return code;
         }
-
 
         /* 형식문자 파싱 */
         string FORMAT(string code) {
