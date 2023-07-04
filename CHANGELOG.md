@@ -5,9 +5,19 @@
 
 ### 브랜치 릴리즈 : `DoKev RC 7.01`
 
-### 소스 코드 : `DoKev 8 Pre-Release 2`
+### 소스 코드 : `DoKev 8 Pre-Release 3`
 
 ---
+<br>
+
+## DoKev 8 Pre-Release 3
+* 파라미터 함수가 개선되었습니다. `기존 문법도 사용할 수 있습니다.`
+```python
+# 개선된 파라미터 함수 선언문
+<함수-이름> 함수는 <파라미터>를 받고
+    ...코드
+```
+
 <br>
 
 ## DoKev 8 Pre-Release 2

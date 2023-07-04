@@ -475,11 +475,13 @@ namespace DoKevEngine {
 
                 string FUNCTION_PARA = "()";
 
-                code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|이 필요해|가 필요해|를 받고|을 받고",
+                code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|이 필요해|가 필요해|를 받고|을 받고|을 받아|를 받아",
                     match => match.Value == "이 필요해" ||
                              match.Value == "가 필요해" ||
                              match.Value == "를 받고" ||
-                             match.Value == "을 받고"
+                             match.Value == "을 받고" ||
+                             match.Value == "를 받아" ||
+                             match.Value == "을 받아"
                              ? ":parameter:" : match.Value);
 
                 if (code.Contains(":parameter:")) {
