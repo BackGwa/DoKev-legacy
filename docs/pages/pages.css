@@ -63,4 +63,10 @@ a {
 
     padding: 4px 8px 4px 8px;
     margin: 2px 8px 4px 2px;
+
+}
+
+.codebox v {
+    color: #d0bf69;
+    filter: drop-shadow(0 0 16px #ebd66c94);
 }
