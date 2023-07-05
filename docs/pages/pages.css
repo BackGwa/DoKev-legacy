@@ -56,6 +56,8 @@ p {
     font-weight: 500;
 
     opacity: 0.9;
+
+    word-break: keep-all;
 }
 
 br {
