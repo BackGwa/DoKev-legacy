@@ -13,6 +13,12 @@ body {
     font-weight: 700;
 }
 
+.mini-titlearea {
+    font-size: 1.8rem;
+    margin: 6px 0 0 0;
+    font-weight: 600;
+}
+
 .content {
     position: absolute;
 
@@ -48,10 +54,28 @@ br {
 }
 
 a {
-    color: #2d6bf0;
+    color: #3474ff;
     text-decoration: none;
 
     opacity: 1.0;
+}
+
+num {
+    font-weight: 900;
+}
+
+.spliter {
+    margin: 12px 0 12px 0;
+    border: 2px solid #2b3e4d;
+
+    border-radius: 4px;
+
+    opacity: 0.4;
+}
+
+code-block-title {
+    font-size: 0.8rem;
+    opacity: 0.5;
 }
 
 code-block {
@@ -61,6 +85,7 @@ code-block {
     display: flex;
     flex-direction: column;
 
+    font-family: 'JetBrains Mono';
     font-size: 1.0rem;
 
     background: #0e1217;
@@ -73,14 +98,15 @@ code-block {
 }
 
 code-box {
+    font-family: 'JetBrains Mono';
     font-size: 1.0rem;
 
     background: #0e1217;
     border: 1px solid #202f39;
     border-radius: 12px;
 
-    padding: 4px 8px 4px 8px;
-    margin: 2px 8px 4px 2px;
+    padding: 2px 8px 2px 8px;
+    margin: 1px 8px 2px 2px;
 
     color: #e7d165;
 }
@@ -96,6 +122,10 @@ code-block code-line {
 
 code-line {
     margin-bottom: 2px;
+}
+
+code-result {
+    color: #ffffff;
 }
 
 code-block code-string {
