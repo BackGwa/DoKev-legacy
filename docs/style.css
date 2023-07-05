@@ -123,17 +123,6 @@ body {
     opacity: 0.9;
 }
 
-.focus {
-    filter: drop-shadow(2px 2px 12px #0000007F);
-    -webkit-filter: drop-shadow(2px 2px 12px #0000007F);
-
-    opacity: 1.0;
-}
-
-.focus b {
-    margin-left: 24px;
-}
-
 hr {
     width: 100%;
     margin: 28px 0 0 0;
