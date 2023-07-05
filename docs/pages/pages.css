@@ -27,16 +27,25 @@ body {
 
     padding-top: 28px;
     width: 70%;
+
+    transition: 0.15s ease-in-out;
+}
+
+@media screen and (min-width: 1400px) {
+    .content {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .content {
+        width: 80%;
+    }
 }
 
 @media screen and (max-width: 800px) {
     .content {
-        position: absolute;
 
-        left: 50%;
-        transform: translateX(-50%);
-
-        padding-top: 28px;
         width: 90%;
     }
 }
