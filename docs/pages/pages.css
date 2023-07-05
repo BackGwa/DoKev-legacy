@@ -40,7 +40,7 @@ p {
     margin-top: 24px;
     font-weight: 500;
 
-    opacity: 0.8;
+    opacity: 0.9;
 }
 
 br {
@@ -54,7 +54,25 @@ a {
     opacity: 1.0;
 }
 
-.codebox {
+code-block {
+    width: 95%;
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+
+    font-size: 1.0rem;
+
+    background: #0e1217;
+    border: 1px solid #202f39;
+    border-radius: 12px;
+
+    padding: 12px;
+    margin: 2px 0 4px 0;
+
+}
+
+code-box {
     font-size: 1.0rem;
 
     background: #0e1217;
@@ -64,9 +82,33 @@ a {
     padding: 4px 8px 4px 8px;
     margin: 2px 8px 4px 2px;
 
+    color: #e7d165;
 }
 
-.codebox v {
-    color: #d0bf69;
-    filter: drop-shadow(0 0 16px #ebd66c94);
+code-newline {
+    padding: 1rem 0 1rem 0;
+}
+
+code-block code-line {
+    color: #bebebe;
+    filter: drop-shadow(0 0 16px #ffffff40);
+}
+
+code-line {
+    margin-bottom: 2px;
+}
+
+code-block code-string {
+    color: #ff663f;
+    filter: drop-shadow(0 0 8px #ff663f54);
+}
+
+code-block code-function {
+    color: #cf8dff;
+    filter: drop-shadow(0 0 8px #cf8dff54);
+}
+
+code-block code-comment {
+    color: #80c17d;
+    filter: drop-shadow(0 0 8px #80c17d54);
 }
