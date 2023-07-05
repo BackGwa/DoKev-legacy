@@ -53,3 +53,14 @@ a {
 
     opacity: 1.0;
 }
+
+.codebox {
+    font-size: 1.0rem;
+
+    background: #0e1217;
+    border: 1px solid #202f39;
+    border-radius: 12px;
+
+    padding: 4px 8px 4px 8px;
+    margin: 2px 8px 4px 2px;
+}
