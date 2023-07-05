@@ -18,19 +18,19 @@
       <div class="document-list">
 
          <div class="title"># 시작하기</div>
-         <div class="document-item">
-            <p><b>DoKev 언어에 대하여</b></p>
+         <div class="document-item" onclick="switch_page('started', 'introduction', 1);">
+            <p><b>DoKev에 대하여...</b></p>
          </div>
 
-         <div class="document-item">
+         <div class="document-item" onclick="switch_page('started', 'installation', 2);">
             <p><b>설치하기</b></p>
          </div>
 
-         <div class="document-item">
+         <div class="document-item" onclick="switch_page('started', 'prepare', 3);">
             <p><b>준비하기</b></p>
          </div>
 
-         <div class="document-item">
+         <div class="document-item" onclick="switch_page('started', 'helloworld', 4);">
             <p><b>안녕, 세상아!</b></p>
          </div>
 
@@ -193,6 +193,12 @@
          </div>
       </div>
    </div>
+
+   <div class="document">
+      <iframe src="" id="docs" frameborder="0"></iframe>
+   </div>
+
+   <script src="./pages.js"></script>
 </body>
 
 </html>

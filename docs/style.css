@@ -26,6 +26,7 @@ body {
     -webkit-backdrop-filter: blur(48px);
 
     overflow: hidden;
+    z-index: 1;
 }
 
 .logo-area img {
@@ -93,7 +94,7 @@ body {
     font-size: 19px;
     font-weight: 900;
 
-    margin-left: 24px;
+    margin-left: 15px;
 
     opacity: 0.9;
 
@@ -122,6 +123,17 @@ body {
     opacity: 0.9;
 }
 
+.focus {
+    filter: drop-shadow(2px 2px 12px #0000007F);
+    -webkit-filter: drop-shadow(2px 2px 12px #0000007F);
+
+    opacity: 1.0;
+}
+
+.focus b {
+    margin-left: 24px;
+}
+
 hr {
     width: 100%;
     margin: 28px 0 0 0;
@@ -135,6 +147,18 @@ hr {
     opacity: 1.0;
 
     margin-left: 24px;
+}
+
+
+.document iframe {
+    position: absolute;
+
+    width: calc(100% - 386px);
+    height: 100%;
+
+    right: 0;
+
+    z-index: 0;
 }
 
 @media screen and (max-width: 800px) {
@@ -185,13 +209,6 @@ hr {
     
         overflow-x: scroll;
         overflow-y: hidden;
-
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-    }
-
-    .document-list::-webkit-scrollbar {
-        display: none;
     }
 
     .document-item p {
@@ -231,8 +248,15 @@ hr {
     }
 
     .document-item:hover {
-        filter: drop-shadow(0 0 12px #00000040);
-        -webkit-filter: drop-shadow(0 0 12px #00000040);
+        filter: drop-shadow(0 0 12px #0000007F);
+        -webkit-filter: drop-shadow(0 0 12px #0000007F);
     }
     
+    .document iframe {
+        width: 100%;
+        height: calc(100% - 140px);
+        bottom: 0;
+        z-index: 0;
+    }
+
 }
