@@ -1,0 +1,19 @@
+
+html,
+body {
+    margin: 0;
+    color: #FFF;
+    font-family: 'SUIT Variable', sans-serif;
+
+}
+
+.titlearea {
+    font-size: 2.2rem;
+    margin-top: 24px;
+    font-weight: 700;
+}
+
+.content {
+    padding: 32px;
+    margin-left: 12px;
+}
