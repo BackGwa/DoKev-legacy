@@ -72,6 +72,36 @@ a {
     opacity: 1.0;
 }
 
+s {
+    font-style: italic;
+    opacity: 0.25;
+}
+
+tooltip-message {
+    position: absolute;
+
+    width: auto;
+    height: auto;
+
+    padding: 8px;
+
+    background: #A90000DF;
+
+    border: 1px solid #FFFFFF40;
+    border-radius: 6px;
+}
+
+tooltip-feedback tooltip-message {
+    opacity: 0.0;
+    transform: translateX(-10%);
+    transition: 0.2s ease-in-out;
+}
+
+tooltip-feedback:hover tooltip-message {
+    transform: translateX(0%);
+    opacity: 1.0;
+}
+
 num {
     font-weight: 900;
 }
