@@ -106,6 +106,14 @@ num {
     font-weight: 900;
 }
 
+img {
+    border-radius: 12px;
+
+    margin-top: 12px;
+
+    width: 350px;
+}
+
 .spliter {
     margin: 12px 0 12px 0;
     border: 2px solid #2b3e4d;
