@@ -371,6 +371,10 @@ namespace DoKevEngine {
                         match => match.Value == "같다면"
                                  ? "<-target-eq<-" : match.Value);
 
+                    code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|다르다면",
+                        match => match.Value == "다르다면"
+                                 ? "<-target-neq<-" : match.Value);
+
                     code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|더 ",
                         match => match.Value == "더 "
                                  ? "" : match.Value);
@@ -379,7 +383,8 @@ namespace DoKevEngine {
                        code.Contains("<-target-smalleq<-") ||
                        code.Contains("<-target-big<-") ||
                        code.Contains("<-target-small<-") ||
-                       code.Contains("<-target-eq<-")) {
+                       code.Contains("<-target-eq<-") ||
+                       code.Contains("<-target-neq<-")) {
 
                         string[] SPLIT = code.Split("<-if-target:");
                         int TABLINE = 0;
@@ -400,6 +405,7 @@ namespace DoKevEngine {
                         string GDASH = "if ";
 
                         if (code.Contains("<-target-eq<-")) CPDASH = "==";
+                        else if (code.Contains("<-target-neq<-")) CPDASH = "!=";
                         else if (code.Contains("<-target-bigeq<-")) CPDASH = "<=";
                         else if (code.Contains("<-target-smalleq<-")) CPDASH = ">=";
                         else if (code.Contains("<-target-big<-")) CPDASH = "<";
