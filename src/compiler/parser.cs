@@ -280,10 +280,11 @@ namespace DoKevEngine {
                             ? ":for-insert:" : match.Value);
 
             if(code.Contains(":for-insert:")) {
-                code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|을 |를 | 각각 ",
-                    match => match.Value == "을 " ||
-                                match.Value == "를 " ||
-                                match.Value == " 각각 "
+                code = Regex.Replace(code, @"(['""])(?:\\\1|.)*?\1|을 각각 |를 각각 |을 |를 ",
+                    match => match.Value == "을 각각 " ||
+                                match.Value == "를 각각 " ||
+                                match.Value == "을 " ||
+                                match.Value == "를 "
                                 ? ":for-split:" : match.Value);
 
                 string[] SPLIT = code.Split(":for-insert:");
