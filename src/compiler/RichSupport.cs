@@ -20,27 +20,23 @@ namespace DoKevEngine {
         /* CreateLine
          * 구분자 기호를 카운트 횟수만큼 출력합니다. */
         public void CreateLine(int count) {
-            for (int i = 1; i <= count; i++) Console.Write("-");
-            Console.Write("\n");
+            Console.WriteLine(new string('-', count));
         }
-
 
         /* log
          * 빌드 정보나 결과를 한 줄로 출력합니다. */
         public void Log(string text, string details, string type = "default", bool createline = false) {
             Console.Write($"{text} > ");
             setColor(type);
-            Console.Write($"{details}\n");
+            Console.WriteLine(details);
             Console.ResetColor();
             if (createline) CreateLine(50);
         }
 
-
         /* NowTime
          * 현재 시간에 대한 정밀한 값을 반환합니다. */
         public string NowTime() {
-            DateTime now = DateTime.Now;
-            return $"[{now:HH:mm:ss.fff}]";
+            return $"[{DateTime.Now:HH:mm:ss.fff}]";
         }
 
         Config cf = new Config();
@@ -66,6 +62,8 @@ namespace DoKevEngine {
             Console.ReadKey();
         }
 
+        /* SyntaxError
+         * 문법 경고에 대한 메세지를 표시합니다. */
         public void SyntaxWarning(string code, string type) {
             cf.ConfigSet();
 
