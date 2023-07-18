@@ -24,7 +24,6 @@ namespace DoKevEngine {
             var log = rich.Log;
             var NowTime = rich.NowTime;
 
-
             /* 시스템 아키텍쳐와 운영체제 정보 선언 */
             var ARCH = RuntimeInformation.ProcessArchitecture;
             var OS = Environment.OSVersion.Platform.ToString();
@@ -32,11 +31,9 @@ namespace DoKevEngine {
             log(locale("info", "system"), $"{OS} ({ARCH})");
             log(locale("info", "lang"), cfg("builder", "language"));
 
-
             /* baseDirectory에 빌드 툴의 절대 경로 선언 */
             string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
             log($"\n{locale("info", "path")}", baseDirectory);
-
 
             /* 빌드 파일 폴더 유무 확인 */
             string exportfolder = AppDomain.CurrentDomain.BaseDirectory + $"{cfg("folder", "export")}";
@@ -51,17 +48,14 @@ namespace DoKevEngine {
                 }
             }
 
-
             /* filename 설정 및 선언 */
             string targetfile = cfg("filename", "target");
             string exportfile = cfg("filename", "export");
-
 
             /* 변환에 필요한 변수 선언 */
             bool Enable_random = false, Enable_os = false;
             string[] WriteLine = new string[1];
             string filePath;
-
 
             /* targetfile 유효성 확인을 위한 경로 선언 */
             try {
@@ -70,7 +64,6 @@ namespace DoKevEngine {
                 log(locale("target", "error"), "fatal");
                 return;
             }
-
 
             /* targetfile 유효성 확인 */
             if (File.Exists(filePath)) {
@@ -82,7 +75,6 @@ namespace DoKevEngine {
                 return;
             }
 
-
             /* Converter
              * 설정 된 dkv 파일을 Python 코드로 빌드합니다. */
             void Converter() {
@@ -90,7 +82,7 @@ namespace DoKevEngine {
 
                 /* 파싱에 필요한 변수 선언 */
                 Parser parser = new Parser();
-
+  
                 log(NowTime(), $"{locale("build", "initialized")}", "success");
 
                 /* 코드를 파싱하여 변환 */
@@ -113,7 +105,6 @@ namespace DoKevEngine {
                                 break;
                         }
                     }
-
 
                     /* 파서 실행 */
                     string Result = code;
@@ -168,16 +159,14 @@ namespace DoKevEngine {
             void Runner() {
                 Process module = new Process();
 
-                if (cfg("interpreter", "custom") == "false") {
-                    if (OS == "Unix") module.StartInfo.FileName = "python3";
-                    else module.StartInfo.FileName = "python";
-                    module.StartInfo.Arguments = $"-d \"{baseDirectory}/{cfg("folder", "export")}/{exportfile}\"";
-                } else {
-                    module.StartInfo.FileName = cfg("interpreter", "path");
-                    module.StartInfo.Arguments = $"{cfg("interpreter", "arguments")} \"{baseDirectory}/{cfg("folder", "export")}/{exportfile}\"";
-                }
+                string interpreterPath = cfg("interpreter", "custom") == "false" ? (OS == "Unix" ? "python3" : "python") : cfg("interpreter", "path");
+                string interpreterArgs = cfg("interpreter", "custom") == "false" ? $"-d \"{baseDirectory}/{cfg("folder", "export")}/{exportfile}\"" : $"{cfg("interpreter", "arguments")} \"{baseDirectory}/{cfg("folder", "export")}/{exportfile}\"";
 
-                /* 인터프리터 실행 */
+                module.StartInfo = new ProcessStartInfo {
+                    FileName = interpreterPath,
+                    Arguments = interpreterArgs
+                };
+
                 module.Start();
                 module.WaitForExit();
                 Console.ReadKey();
