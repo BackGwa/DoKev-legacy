@@ -3,3 +3,4 @@
 export/
 src/DoKevEngine/.vs
 src/DoKevEngine/x64
+.vscode
