@@ -16,6 +16,7 @@ int main(int argc, char* argv[]) {
 }
 
 
+/* argv_check : 옵션 및 인자를 확인합니다. */
 int argv_check(int argc, char* argv[]) {
     // 엔진 파라미터 확인
     if (argc < 2) return 0;
