@@ -12,7 +12,7 @@ int shell();
 
 /* main : DoKevEngine의 시작점입니다. */
 int main(int argc, char* argv[]) {
-    if (argc < 2)
+    if (argc > 0 || argc < 2)
         argv_check(argc, argv);
     else
         shell();
@@ -34,15 +34,18 @@ int argv_check(int argc, char* argv[]) {
 
 /* inerpreted : 코드를 인자로 받아 즉시 번역해 실행합니다. */
 int inerpreted(std::string Code) {
+    std::cout << "인터프리트 실행" << std::endl;
     return 0;
 }
 
 /* compile : 파일 경로를 인자로 받아 컴파일 후 실행합니다. */
 int compile(std::string FilePath) {
+    std::cout << "컴파일 실행" << std::endl;
     return 0;
 }
 
 /* shell : DoKevEngine의 쉘 인터페이스를 실행합니다. */
 int shell() {
+    std::cout << "쉘 인터페이스 실행" << std::endl;
     return 0;
 }
