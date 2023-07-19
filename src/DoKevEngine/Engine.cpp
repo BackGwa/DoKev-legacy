@@ -12,7 +12,7 @@ int shell();
 
 /* main : DoKevEngine의 시작점입니다. */
 int main(int argc, char* argv[]) {
-    if (argc > 0 || argc < 2)
+    if (argc > 1 && argc < 3)
         argv_check(argc, argv);
     else
         shell();
