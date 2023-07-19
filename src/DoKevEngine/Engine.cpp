@@ -8,6 +8,7 @@
 int argv_check(int argc, char* argv[]);
 int inerpreted(std::string Code);
 int compile(std::string FilePath);
+int shell();
 
 
 int main(int argc, char* argv[]) {
@@ -40,5 +41,11 @@ int inerpreted(std::string Code) {
 
 /* compile : 파일 경로를 인자로 받아 컴파일 후 실행합니다. */
 int compile(std::string FilePath) {
+    return 0;
+}
+
+
+/* shell : DoKevEngine의 쉘 인터페이스를 실행합니다. */
+int shell() {
     return 0;
 }
