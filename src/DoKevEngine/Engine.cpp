@@ -27,9 +27,8 @@ int main(int argc, char *argv[])
 /* argv_isValid : 옵션 및 인자를 확인합니다. */
 void argv_isValid(int argc, char *argv[])
 {
-  // 옵션 및 인자 받기
-  std::string option = argv[1];
-  std::string argument = argv[2];
+  std::string option = argv[1];     // 옵션 가져오기
+  std::string argument = argv[2];   // 인자 가져오기
 
   if (option == "-i")
     inerpreted(argument);
