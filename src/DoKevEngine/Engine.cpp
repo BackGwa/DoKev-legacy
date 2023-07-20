@@ -46,5 +46,4 @@ void compile(std::string FilePath) {
 /* shell : DoKevEngine의 쉘 인터페이스를 실행합니다. */
 void shell() {
     std::cout << "쉘 인터페이스 실행" << std::endl;
-    TEST();
 }
