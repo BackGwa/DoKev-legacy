@@ -5,3 +5,4 @@ src/DoKevEngine/.vs
 src/DoKevEngine/x64
 .vscode
 *.out
+src/DoKevEngine/run.sh
