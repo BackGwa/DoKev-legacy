@@ -14,8 +14,7 @@ void compile(std::string FilePath);
 void shell();
 
 /* main : DoKevEngine의 시작점입니다. */
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
   if (argc > 1 && argc < 3)
     argv_isValid(argc, argv);
   else
@@ -25,8 +24,7 @@ int main(int argc, char *argv[])
 }
 
 /* argv_isValid : 옵션 및 인자를 확인합니다. */
-void argv_isValid(int argc, char *argv[])
-{
+void argv_isValid(int argc, char *argv[]) {
   std::string option = argv[1];     // 옵션 가져오기
   std::string argument = argv[2];   // 인자 가져오기
 
@@ -37,19 +35,16 @@ void argv_isValid(int argc, char *argv[])
 }
 
 /* inerpreted : 코드를 인자로 받아 즉시 번역해 실행합니다. */
-void inerpreted(std::string Code)
-{
+void inerpreted(std::string Code) {
   std::cout << "인터프리트 실행" << std::endl;
 }
 
 /* compile : 파일 경로를 인자로 받아 컴파일 후 실행합니다. */
-void compile(std::string FilePath)
-{
+void compile(std::string FilePath) {
   std::cout << "컴파일 실행" << std::endl;
 }
 
 /* shell : DoKevEngine의 쉘 인터페이스를 실행합니다. */
-void shell()
-{
+void shell() {
   std::cout << "쉘 인터페이스 실행" << std::endl;
 }
