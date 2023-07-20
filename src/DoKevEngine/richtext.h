@@ -8,6 +8,7 @@ using namespace std;
 #define COLOR_YELLOW  "\x1B[33m"
 #define COLOR_RESET   "\x1B[0m"
 
+/* 색상 변경 함수 */
 void RED()    { cout << COLOR_RED; }
 void GREEN()  { cout << COLOR_GREEN; }
 void YELLOW() { cout << COLOR_YELLOW; }
