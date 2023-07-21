@@ -3,13 +3,40 @@
 using namespace std;
 
 /* 색상 정의 */
-#define COLOR_RED     "\x1B[31m"
-#define COLOR_GREEN   "\x1B[32m"
-#define COLOR_YELLOW  "\x1B[33m"
-#define COLOR_RESET   "\x1B[0m"
+#define RED     "\x1B[91m"
+#define GREEN   "\x1B[92m"
+#define YELLOW  "\x1B[93m"
+#define CYAN    "\x1B[96m"
+#define RESET   "\x1B[0m"
 
-/* 색상 변경 함수 */
-void RED()    { cout << COLOR_RED; }
-void GREEN()  { cout << COLOR_GREEN; }
-void YELLOW() { cout << COLOR_YELLOW; }
-void RESET()  { cout << COLOR_RESET; }
+/* line_counter : 코드 라인 문자열을 출력합니다. */
+void line_counter(int line, bool number_show = true) {
+  cout << CYAN;
+  if (number_show)
+    cout << line;
+  else {
+    int blank = to_string(line).length();
+    for (int i = 0; i < blank; i++)
+      cout << " ";
+  }
+  cout << " ∥ ";
+  cout << RESET;
+}
+
+/* highlighter : 특정 문자 및 코드를 하이라이팅 문자를 출력합니다. */
+void highlighter(int line, string code, string highlight) {
+  
+  int hint = code.find(highlight);
+  line_counter(line, false);
+
+  cout << RED;
+
+  for (int i = 0; i < hint; i++) {
+    cout << " ";
+  }
+  for (int i = 0; i < highlight.length(); i++) {
+    cout << "^";
+  }
+
+  cout << RESET;
+}
