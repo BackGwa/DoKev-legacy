@@ -1,12 +1,8 @@
-
 .DS_Store
-src/compiler/bin/
-src/compiler/obj/
-src/compiler/.vs
-*.log
-src/compiler/Properties/PublishProfiles
 *.user
 export/
-src/compiler/Properties/launchSettings.json
-src/compiler/compiler.csproj.user
-src/compiler/Runner.csproj.user
+src/DoKevEngine/.vs
+src/DoKevEngine/x64
+.vscode
+*.out
+src/DoKevEngine/run.sh
