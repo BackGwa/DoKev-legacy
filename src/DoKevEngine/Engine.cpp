@@ -7,6 +7,7 @@
 #include "shell.h"
 #include "compiler.h"
 #include "debugger.h"
+#include "pathcheck.h"
 
 using namespace std;
 
@@ -28,29 +29,41 @@ int main(int argc, char *argv[]) {
 
 /* argv_isValid : 옵션 및 인자를 확인합니다. */
 void argv_isValid(int argc, char *argv[]) {
+
+  // 전체 경로 및 인자 가져오기
+  string TARGET = "";
+  for (int i = 0; i < argc; i++) {
+    TARGET = TARGET + " " + argv[i];
+  }
+
   string option = argv[1];     // 옵션 가져오기
   string argument = argv[2];   // 인자 가져오기
 
   if (option == "-i")
     inerpreted(argument);
   else if (option == "-c")
-    compile(argument);
-  else {
-    string TARGET = "";
-
-    for (int i = 0; i < argc; i++) {
-      TARGET = TARGET + " " + argv[i];
-    }
-
+    if(filecheck(argument))
+      compile(argument);
+    else
+      // UNKNOWN_PATH 오류 출력
+      StandardError(0,
+        UNKNOWN_PATH_TITLE,
+        UNKNOWN_PATH_MESSAGE,
+        TARGET,
+        argument,
+        UNKNOWN_PATH_SUGGESTION,
+        UNKNOWN_PATH_SUGGESTION_CONTENT,
+        3);
+  else
+    // UNKNOWN_OPTION 오류 출력
     StandardError(0,
-                  UNKNOWN_OPTION_TITLE,
-                  UNKNOWN_OPTION_MESSAGE,
-                  TARGET,
-                  option,
-                  UNKNOWN_OPTION_SUGGESTION,
-                  UNKNOWN_OPTION_SUGGESTION_CONTENT,
-                  2);
-  }
+      UNKNOWN_OPTION_TITLE,
+      UNKNOWN_OPTION_MESSAGE,
+      TARGET,
+      option,
+      UNKNOWN_OPTION_SUGGESTION,
+      UNKNOWN_OPTION_SUGGESTION_CONTENT,
+      2);
 }
 
 /* inerpreted : 코드를 인자로 받아 즉시 번역해 실행합니다. */
