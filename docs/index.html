@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>DoKev - 공식 문서</title>
+
+   <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+
+   <link rel="stylesheet" href="./style.css">
+   <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/variable/woff2/SUIT-Variable.css" rel="stylesheet"> 
+</head>
+
+<body>
+   <div class="document-selecter">
+      <div class="logo-area">
+         <img src="./res/banner.png" alt="DoKev">
+      </div>
+      <div class="document-list">
+
+         <div class="title"># 시작하기</div>
+         <div class="document-item" onclick="switch_page('started', 'introduction');">
+            <p><b>DoKev에 대하여...</b></p>
+         </div>
+
+         <div class="document-item" onclick="switch_page('started', 'installation');">
+            <p><b>설치하기</b></p>
+         </div>
+
+         <div class="document-item" onclick="switch_page('started', 'helloworld');">
+            <p><b>안녕, 세상아!</b></p>
+         </div>
+
+         <hr><hr>
+         <div class="title"># 자료형과 변수</div>
+
+         <div class="document-item">
+            <p><b>01.</b> 자료형</p>
+         </div>
+
+         <div class="document-item">
+            <p><b>02.</b> 변수의 개념</p>
+         </div>
+
+         <div class="document-item">
+            <p><b>03.</b> 변수 선언</p>
+         </div>
+
+         <div class="document-item">
+            <p><b>04.</b> 증감 연산자</p>
+         </div>
+
+         <hr>
+         <div class="title"># 문자열</div>
+
+         <div class="document-item">
+            <p><b>01.</b> 문자열</p>
+         </div>
+
+         <div class="document-item">
+            <p><b>02.</b> 문자열 리터럴</p>
+         </div>
+
+         <div class="document-item">
+            <p><b>03.</b> 형식문자</p>
+         </div>
+
+         <div class="document-item">
+            <p><b>04.</b> 쿼리 문자열</p>
+         </div>
+
+         <hr>
+         <div class="title"># 형변환</div>
+
+         <div class="document-item">
+            <p><b>01.</b> 형변환의 필요성</p>
+         </div>
+
+         <div class="document-item">
+            <p><b>02.</b> 형변환</p>
+         </div>
+
+         <hr>
+         <div class="title"># 출력</div>
+
+         <div class="document-item">
+            <p><b>01.</b> 출력하기</p>
+         </div>
+
+         <div class="document-item">
+            <p><b>02.</b> 쿼리 문자열 응용</p>
+         </div>
+
+         <hr>
+         <div class="title"># 입력</div>
+
+         <div class="document-item">
+            <p><b>01.</b> 입력받기</p>
+         </div>
+
+         <div class="document-item">
+            <p><b>02.</b> 형변환 응용</p>
+         </div>
+
+         <hr>
+         <div class="title"># 조건문</div>
+
+         <div class="document-item">
+            <p><b>01.</b> 일반 조건문</p>
+         </div>
+
+         <div class="document-item">
+            <p><b>02.</b> 간편 조건문</p>
+         </div>
+
+         <div class="document-item">
+            <p><b>03.</b> 비교 조건문</p>
+         </div>
+
+         <div class="document-item">
+            <p><b>04.</b> 삼항연산자</p>
+         </div>
+         
+         <div class="document-item">
+            <p><b>05.</b> 삼항연산자 응용</p>
+         </div>
+
+         <hr>
+         <div class="title"># 반복문</div>
+
+         <div class="document-item">
+            <p><b>01.</b> 조건 반복문</p>
+         </div>
+
+         <div class="document-item">
+            <p><b>02.</b> 리스트 반복문</p>
+         </div>
+
+         <div class="document-item">
+            <p><b>03.</b> 리스트 반복문 응용</p>
+         </div>
+
+         <hr>
+         <div class="title"># 함수</div>
+
+         <div class="document-item">
+            <p><b>01.</b> 함수의 필요성</p>
+         </div>
+
+         <div class="document-item">
+            <p><b>02.</b> 함수 선언</p>
+         </div>
+
+         <div class="document-item">
+            <p><b>03.</b> 재귀 함수</p>
+         </div>
+
+         <hr>
+         <div class="title"># 모듈</div>
+
+         <div class="document-item">
+            <p><b>01.</b> 모듈의 필요성</p>
+         </div>
+
+         <div class="document-item">
+            <p><b>02.</b> 모듈 가져오기</p>
+         </div>
+
+         <div class="document-item">
+            <p><b>03.</b> 난수 모듈</p>
+         </div>
+
+         <div class="document-item">
+            <p><b>04.</b> 운영체계 모듈</p>
+         </div>
+
+         <hr>
+         <div class="title"># 예제</div>
+
+         <div class="document-item">
+            <p><b>01.</b> 업 & 다운</p>
+         </div>
+
+         <div class="document-item">
+            <p><b>02.</b> 한국식 나이</p>
+         </div>
+
+         <div class="document-item">
+            <p><b>03.</b> 가위바위보</p>
+         </div>
+
+         <hr>
+         <div class="title"># 정보</div>
+
+         <div class="document-item" onclick="switch_page('information', 'dev');">
+            <p><b>개발자</b></p>
+         </div>
+      </div>
+   </div>
+
+   <div class="document">
+      <iframe src="" id="docs" frameborder="0"></iframe>
+   </div>
+
+   <script src="./pages.js"></script>
+</body>
+
+</html>

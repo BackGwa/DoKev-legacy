@@ -1,0 +1,251 @@
+
+html,
+body {
+    margin: 0;
+    background: #171e26;
+    font-family: 'SUIT Variable', sans-serif;
+}
+
+.document-selecter {
+    position: absolute;
+
+    top: 50%;
+    transform: translateY(-50%);
+
+    width: 386px;
+    height: 100%;
+
+    background: #1c2a35d1;
+
+    border: 1px solid #242e38;
+
+    filter: drop-shadow(6px 6px 48px #00000050);
+    -webkit-filter: drop-shadow(6px 6px 48px #00000050);
+
+    backdrop-filter: blur(48px);
+    -webkit-backdrop-filter: blur(48px);
+
+    overflow: hidden;
+    z-index: 1;
+}
+
+.logo-area img {
+    position: absolute;
+    width: 30%;
+
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 36px;
+
+    filter: drop-shadow(0 0 32px #2d6bf050);
+    -webkit-filter: drop-shadow(0 0 32px #2d6bf050);
+}
+
+.document-list {
+    position: absolute;
+
+    margin-top: 27%;
+
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 100%;
+    height: 85%;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.document-item {
+    width: 100%;
+    height: 60px;
+
+    display: flex;
+
+    background: #1c2a35d1;
+
+    border: 1px solid #242e38;
+
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+
+    transition: 0.1s ease-in-out;
+}
+
+.title {
+    color: #FFF;
+    opacity: 0.8;
+    
+    font-size: 17px;
+    font-weight: 800;
+
+    margin-left: 14px;
+    margin-bottom: 12px;
+}
+
+.document-item b {
+    color: #FFF;
+
+    font-size: 19px;
+    font-weight: 900;
+
+    margin-left: 15px;
+
+    opacity: 0.9;
+
+    transition: 0.1s ease-in-out;
+}
+
+.document-item p {
+    color: #FFF;
+
+    font-size: 19px;
+    font-weight: 500;
+
+    opacity: 0.8;
+
+    transition: 0.1s ease-in-out;
+
+    margin-right: 24px;
+}
+
+.document-item:hover {
+    filter: drop-shadow(2px 2px 12px #0000004F);
+    -webkit-filter: drop-shadow(2px 2px 12px #0000004F);
+}
+
+.document-item:hover p {
+    opacity: 0.9;
+}
+
+hr {
+    width: 100%;
+    margin: 28px 0 0 0;
+
+    opacity: 0.0;
+
+    display: block;
+}
+
+.document-item:hover b {
+    opacity: 1.0;
+
+    margin-left: 24px;
+}
+
+
+.document iframe {
+    position: absolute;
+
+    width: calc(100% - 386px);
+    height: 100%;
+
+    right: 0;
+
+    z-index: 0;
+}
+
+@media screen and (max-width: 850px) {
+
+    .logo-area img {
+        position: absolute;
+        width: 148px;
+    
+        left: 50%;
+        transform: translateX(-50%);
+        margin-top: 18px;
+    
+        filter: drop-shadow(0 0 32px #2d6bf050);
+        -webkit-filter: drop-shadow(0 0 32px #2d6bf050);
+    }
+
+    .document-selecter {
+        position: absolute;
+    
+        top: 0%;
+        transform: translateY(0%);
+    
+        width: 100%;
+        height: 140px;
+    
+        filter: drop-shadow(6px 6px 48px #00000050);
+        -webkit-filter: drop-shadow(6px 6px 48px #00000050);
+    
+        backdrop-filter: blur(48px);
+        -webkit-backdrop-filter: blur(48px);
+    
+        overflow: hidden;
+    }
+
+    .document-list {
+        position: absolute;
+    
+        margin-top: 80px;
+    
+        left: 50%;
+        transform: translateX(-50%);
+    
+        width: 100%;
+        height: auto;
+
+        display: flex;
+        flex-direction: row;
+    
+        overflow-x: scroll;
+        overflow-y: hidden;
+    }
+
+    .document-item p {
+        color: #FFF;
+    
+        white-space: nowrap;
+
+        text-align: center;
+    }
+
+    hr {
+        display: none;
+    }
+
+    .title {
+        display: none;
+    }
+    
+    .document-item b {
+        color: #FFF;
+
+        font-size: 19px;
+        font-weight: 900;
+
+        margin-left: 24px;
+        text-align: center;
+
+        opacity: 0.9;
+        transition: 0.1s ease-in-out;
+    }
+
+
+    .document-item:hover {
+        opacity: 1.0;
+    
+        margin-left: 0;
+    }
+
+    .document-item:hover {
+        filter: drop-shadow(0 0 12px #0000007F);
+        -webkit-filter: drop-shadow(0 0 12px #0000007F);
+    }
+    
+    .document iframe {
+        width: 100%;
+        height: calc(100% - 140px);
+        bottom: 0;
+        z-index: 0;
+    }
+
+}
