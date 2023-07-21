@@ -15,7 +15,7 @@ void shell();
 
 /* main : DoKevEngine의 시작점입니다. */
 int main(int argc, char *argv[]) {
-  if (argc > 1 && argc < 3)
+  if (argc == 3)
     argv_isValid(argc, argv);
   else
     shell();
