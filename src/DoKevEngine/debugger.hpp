@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include "langpack.hpp"
 #include "richtext.hpp"
 
 using namespace std;
@@ -16,7 +17,7 @@ void StandardError(int LINE,
                   int len = 1
                   ) {
 
-  cout << endl << RED << "오류: " << RESET << TITLE << endl;
+  cout << endl << RED << ERROR << RESET << TITLE << endl;
   line_counter(LINE, false);
   cout << endl;
   line_counter(LINE);
@@ -26,7 +27,7 @@ void StandardError(int LINE,
 
   cout << " " << RED << MESSAGE << RESET << endl << endl;
 
-  cout << CYAN << "도움말: " << RESET << SUGGESTION << endl;
+  cout << CYAN << HELP << RESET << SUGGESTION << endl;
 
   line_counter(LINE, false);
   cout << endl;

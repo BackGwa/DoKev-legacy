@@ -4,6 +4,10 @@
 #include <string>
 #include <vector>
 
+// DEBUG MESSAGE
+#define ERROR "오류: "
+#define HELP "도움말: "
+
 // UNKNOWN_OPTION
 #define UNKNOWN_OPTION_TITLE              "올바르지 않은 옵션을 받았습니다"
 #define UNKNOWN_OPTION_MESSAGE            "올바른 옵션이 아님"
