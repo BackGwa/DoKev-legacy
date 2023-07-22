@@ -12,3 +12,4 @@ src/compiler/compiler.csproj.user
 src/compiler/Runner.csproj.user
 *.sh
 *.out
+.vscode/
