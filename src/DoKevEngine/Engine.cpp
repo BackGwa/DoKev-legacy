@@ -1,13 +1,14 @@
 
-#define DOKEV_VERSION "Developer Version 8"
+#define VERSION "8"
+#define BUILD "0000"
 
 #include <iostream>
 #include <string>
-#include "langpack.h"
-#include "shell.h"
-#include "compiler.h"
-#include "debugger.h"
-#include "pathcheck.h"
+#include "langpack.hpp"
+#include "shell.hpp"
+#include "compiler.hpp"
+#include "debugger.hpp"
+#include "pathcheck.hpp"
 
 using namespace std;
 
@@ -78,5 +79,5 @@ void compile(string file_path) {
 
 /* shell : DoKevEngine의 쉘 인터페이스를 실행합니다. */
 void shell() {
-  cout << "쉘 인터페이스 실행" << endl;
+  Shell_open();
 }

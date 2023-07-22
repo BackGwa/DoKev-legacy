@@ -1,7 +1,7 @@
 #pragma once
 
 #include <iostream>
-#include "richtext.h"
+#include "richtext.hpp"
 
 using namespace std;
 
