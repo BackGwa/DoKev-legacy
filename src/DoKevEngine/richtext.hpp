@@ -37,26 +37,23 @@ void line_counter(int line, bool number_show = true, bool newline = false) {
 /* separator : 구분자를 생성합니다. */
 void separator(string MESSAGE) {
   cout << endl << GRAY << UDLINE;
-  for (int i = 0; i < MESSAGE.length() * 2; i++) {
+  for (int i = 0; i < MESSAGE.length() * 2; i++)
     cout << " ";
-  }
   cout << RESET << endl << endl;
 }
 
 /* highlighter : 특정 문자 및 코드를 하이라이팅 문자를 출력합니다. */
 void highlighter(int line, string code, string highlight, string MESSAGE = "", string COLOR = RED) {
-  
   int hint = findword(code, highlight);
   line_counter(line, false);
 
   cout << COLOR << BOLD;
 
-  for (int i = 0; i < hint; i++) {
+  for (int i = 0; i < hint; i++)
     cout << " ";
-  }
-  for (int i = 0; i < highlight.length(); i++) {
+  for (int i = 0; i < highlight.length(); i++)
     cout << "^";
-  }
-  cout << " "  << MESSAGE;
+
+  cout << " " << MESSAGE;
   cout << RESET << endl;
 }
