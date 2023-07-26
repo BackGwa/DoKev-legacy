@@ -4,9 +4,10 @@
 
 using namespace std;
 
-void command_check(string command) {
+bool command_check(string command) {
+  return false;
 }
 
-void shell_exit(string command) {
-
+bool shell_exit(string command) {
+  return false;
 }
