@@ -40,16 +40,6 @@ void argv_isValid(int argc, char *argv[]) {
   string option = argv[1];     // 옵션 가져오기
   string argument = argv[2];   // 인자 가져오기
 
-  if (option == "-throw") {
-    SyntaxError(34,
-      THROW_TITLE,
-      THROW_MESSAGE,
-      argument,
-      argument,
-      THROW_SUGGESTION_CONTENT,
-      THROW_INDEX);
-  }
-
   if (option == "-i")
     inerpreted(argument);
   else if (option == "-c")
