@@ -9,9 +9,17 @@ using namespace std;
 #define CYAN    "\x1B[96m"
 #define RESET   "\x1B[0m"
 
+/* 폰트 정의 */
+#define BOLD    "\x1B[1m"
+
+/* findword : 전체 문자열에서 특정 문자열을 찾아 인덱스를 반환합니다. */
+int findword(string code, string word){
+  return code.find(word);
+}
+
 /* line_counter : 코드 라인 문자열을 출력합니다. */
-void line_counter(int line, bool number_show = true) {
-  cout << CYAN;
+void line_counter(int line, bool number_show = true, bool newline = false) {
+  cout << CYAN << BOLD;
   if (number_show)
     cout << line;
   else {
@@ -19,17 +27,18 @@ void line_counter(int line, bool number_show = true) {
     for (int i = 0; i < blank; i++)
       cout << " ";
   }
-  cout << " ∥ ";
+  cout << " | ";
   cout << RESET;
+  if (newline) cout << endl;
 }
 
 /* highlighter : 특정 문자 및 코드를 하이라이팅 문자를 출력합니다. */
-void highlighter(int line, string code, string highlight) {
+void highlighter(int line, string code, string highlight, string MESSAGE = "", string COLOR = RED) {
   
-  int hint = code.find(highlight);
+  int hint = findword(code, highlight);
   line_counter(line, false);
 
-  cout << RED;
+  cout << COLOR << BOLD;
 
   for (int i = 0; i < hint; i++) {
     cout << " ";
@@ -37,6 +46,6 @@ void highlighter(int line, string code, string highlight) {
   for (int i = 0; i < highlight.length(); i++) {
     cout << "^";
   }
-
-  cout << RESET;
+  cout << " "  << MESSAGE;
+  cout << RESET << endl << endl;
 }
