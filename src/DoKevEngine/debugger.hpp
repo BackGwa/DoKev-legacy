@@ -24,6 +24,8 @@ void StandardError(int LINE,
 
   highlighter(LINE, TARGET, HIGHLIGHT, MESSAGE);
 
+  separator(MESSAGE);
+
   cout << CYAN << BOLD << HELP << RESET << BOLD << SUGGESTION << RESET << endl;
 
   line_counter(LINE, false, true);
@@ -52,6 +54,8 @@ void SyntaxError(int LINE,
   cout << TARGET << endl;
 
   highlighter(LINE, TARGET, HIGHLIGHT, MESSAGE);
+
+  separator(MESSAGE);
 
   cout << CYAN << BOLD << HELP << RESET << BOLD << SYNTAX_ERROR << RESET << endl;
 

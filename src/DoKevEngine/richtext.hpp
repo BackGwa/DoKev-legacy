@@ -7,10 +7,12 @@ using namespace std;
 #define GREEN   "\x1B[92m"
 #define YELLOW  "\x1B[93m"
 #define CYAN    "\x1B[96m"
+#define GRAY    "\x1B[90m"
 #define RESET   "\x1B[0m"
 
 /* 폰트 정의 */
 #define BOLD    "\x1B[1m"
+#define UDLINE  "\x1B[9m"
 
 /* findword : 전체 문자열에서 특정 문자열을 찾아 인덱스를 반환합니다. */
 int findword(string code, string word){
@@ -32,6 +34,15 @@ void line_counter(int line, bool number_show = true, bool newline = false) {
   if (newline) cout << endl;
 }
 
+/* separator : 구분자를 생성합니다. */
+void separator(string MESSAGE) {
+  cout << endl << GRAY << UDLINE;
+  for (int i = 0; i < MESSAGE.length() * 2; i++) {
+    cout << " ";
+  }
+  cout << RESET << endl << endl;
+}
+
 /* highlighter : 특정 문자 및 코드를 하이라이팅 문자를 출력합니다. */
 void highlighter(int line, string code, string highlight, string MESSAGE = "", string COLOR = RED) {
   
@@ -47,5 +58,5 @@ void highlighter(int line, string code, string highlight, string MESSAGE = "", s
     cout << "^";
   }
   cout << " "  << MESSAGE;
-  cout << RESET << endl << endl;
+  cout << RESET << endl;
 }
