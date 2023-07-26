@@ -1,6 +1,6 @@
 
 #define VERSION "8"
-#define BUILD "0000"
+#define BUILD "2307261"
 
 #include <iostream>
 #include <string>
@@ -40,6 +40,16 @@ void argv_isValid(int argc, char *argv[]) {
   string option = argv[1];     // 옵션 가져오기
   string argument = argv[2];   // 인자 가져오기
 
+  if (option == "-throw") {
+    SyntaxError(34,
+      THROW_TITLE,
+      THROW_MESSAGE,
+      argument,
+      argument,
+      THROW_SUGGESTION_CONTENT,
+      THROW_INDEX);
+  }
+
   if (option == "-i")
     inerpreted(argument);
   else if (option == "-c")
@@ -54,7 +64,7 @@ void argv_isValid(int argc, char *argv[]) {
         argument,
         UNKNOWN_PATH_SUGGESTION,
         UNKNOWN_PATH_SUGGESTION_CONTENT,
-        3);
+        UNKNOWN_PATH_INDEX);
   else
     // UNKNOWN_OPTION 오류 출력
     StandardError(0,
@@ -64,7 +74,7 @@ void argv_isValid(int argc, char *argv[]) {
       option,
       UNKNOWN_OPTION_SUGGESTION,
       UNKNOWN_OPTION_SUGGESTION_CONTENT,
-      2);
+      UNKNOWN_OPTION_INDEX);
 }
 
 /* inerpreted : 코드를 인자로 받아 즉시 번역해 실행합니다. */
