@@ -8,7 +8,8 @@
 #include "shell.hpp"
 #include "compiler.hpp"
 #include "debugger.hpp"
-#include "pathcheck.hpp"
+#include "check.hpp"
+#include "tester.hpp"
 
 using namespace std;
 
@@ -20,7 +21,7 @@ void shell();
 
 /* main : DoKevEngine의 시작점입니다. */
 int main(int argc, char *argv[]) {
-  if (argc == 3)
+  if (argc >= 2 && argc <= 3)
     argv_isValid(argc, argv);
   else
     shell();
@@ -37,24 +38,38 @@ void argv_isValid(int argc, char *argv[]) {
     TARGET = TARGET + " " + argv[i];
   }
 
-  string option = argv[1];     // 옵션 가져오기
-  string argument = argv[2];   // 인자 가져오기
+  string option = argv[1];      // 옵션 가져오기
+  string argument = "";         // 인자 초기값
+  if (argc >= 3)
+    argument = argv[2];         // 인자 설정
 
   if (option == "-i")
     inerpreted(argument);
   else if (option == "-c")
-    if(filecheck(argument))
-      compile(argument);
-    else
+    if (blankcheck(argument))
+      // BLANK_PATH 오류 출력
+      StandardError(0,
+        BLANK_PATH_TITLE,
+        BLANK_PATH_MESSAGE,
+        TARGET,
+        option,
+        CHECK_THIS,
+        BLANK_PATH_SUGGESTION_CONTENT,
+        BLANK_PATH_INDEX);
+    else if (!filecheck(argument))
       // UNKNOWN_PATH 오류 출력
       StandardError(0,
         UNKNOWN_PATH_TITLE,
         UNKNOWN_PATH_MESSAGE,
         TARGET,
         argument,
-        UNKNOWN_PATH_SUGGESTION,
+        CHECK_THIS,
         UNKNOWN_PATH_SUGGESTION_CONTENT,
         UNKNOWN_PATH_INDEX);
+    else
+      compile(argument);
+  else if (option == "-t")
+    tester();
   else
     // UNKNOWN_OPTION 오류 출력
     StandardError(0,
