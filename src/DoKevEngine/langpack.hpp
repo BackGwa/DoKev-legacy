@@ -16,22 +16,32 @@
 #define ERROR                       "오류: "
 #define HELP                        "도움말: "
 #define SYNTAX_ERROR                "아래 수정사항을 적용해보세요."
+#define CHECK_THIS                  "아래 조건에 충족하는지 확인해보세요."
+
+// BLANK_PATH
+#define BLANK_PATH_TITLE            "경로가 입력되지 않았습니다."
+#define BLANK_PATH_MESSAGE          "이 곳에서 추가 인자를 받지 못 함"
+#define BLANK_PATH_INDEX            1
+
+std::vector<std::pair<std::string, std::string>> BLANK_PATH_SUGGESTION_CONTENT = {
+  {"경로 미입력", "컴파일 대상 소스 코드의 경로가 필요합니다."}
+};
 
 // UNKNOWN_OPTION
 #define UNKNOWN_OPTION_TITLE        "올바르지 않은 옵션을 받았습니다."
 #define UNKNOWN_OPTION_MESSAGE      "올바른 옵션이 아님"
-#define UNKNOWN_OPTION_SUGGESTION   "다음 옵션 중 하나를 선택해 시도해보세요."
-#define UNKNOWN_OPTION_INDEX        2
+#define UNKNOWN_OPTION_SUGGESTION   "적용 가능한 옵션은 아래와 같습니다."
+#define UNKNOWN_OPTION_INDEX        3
 
 std::vector<std::pair<std::string, std::string>> UNKNOWN_OPTION_SUGGESTION_CONTENT = {
   {"-c <파일_경로>", "경로의 파일을 컴파일한 후, 실행합니다."},
-  {"-i <실행_코드>", "실행 코드를 번역 후, 실행합니다."}
+  {"-i <실행_코드>", "실행 코드를 번역 후, 실행합니다."},
+  {"-t", "컴파일러가 정상 작동하는지 확인합니다."}
 };
 
 // UNKNOWN_PATH
 #define UNKNOWN_PATH_TITLE          "파일 경로가 유효하지 않습니다."
 #define UNKNOWN_PATH_MESSAGE        "올바른 경로가 아님"
-#define UNKNOWN_PATH_SUGGESTION     "다음 사항을 확인해보세요."
 #define UNKNOWN_PATH_INDEX          3
 
 std::vector<std::pair<std::string, std::string>> UNKNOWN_PATH_SUGGESTION_CONTENT = {
