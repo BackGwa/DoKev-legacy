@@ -14,7 +14,8 @@ void StandardError(int LINE,
                   string HIGHLIGHT,
                   string SUGGESTION,
                   const std::vector<std::pair<std::string, std::string> >& SUGGESTION_CONTENT,
-                  int len = 1
+                  int len = 1,
+                  bool breaks = true
                   ) {
 
   cout << endl << RED << BOLD << ERROR << RESET << BOLD << TITLE << RESET << endl;
@@ -35,7 +36,8 @@ void StandardError(int LINE,
     cout << GREEN << BOLD << SUGGESTION_CONTENT[i].first << ": " << RESET;
     cout << SUGGESTION_CONTENT[i].second << endl;
   }
-  exit(0);
+  if (breaks) exit(0);
+  else cout << endl;
 }
 
 /* SyntaxError : 코드의 문법적 에러를 출력합니다. */
