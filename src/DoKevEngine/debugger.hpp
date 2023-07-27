@@ -33,8 +33,7 @@ void StandardError(int LINE,
 
   for (int i = 0; i < len; i++) {
     line_counter(LINE, false);
-    cout << GREEN << BOLD << SUGGESTION_CONTENT[i].first << ": " << RESET;
-    cout << SUGGESTION_CONTENT[i].second << endl;
+    cout << GREEN << BOLD << SUGGESTION_CONTENT[i].first << ": " << RESET << SUGGESTION_CONTENT[i].second << endl;
   }
   if (breaks) exit(0);
   else cout << endl;
