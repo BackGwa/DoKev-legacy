@@ -43,9 +43,7 @@ void argv_isValid(int argc, char *argv[]) {
   if (argc >= 3)
     argument = argv[2];         // 인자 설정
 
-  if (option == "-i")
-    inerpreted(argument);
-  else if (option == "-c")
+  if (option == "-c")
     if (blankcheck(argument))
       // BLANK_PATH 오류 출력
       StandardError(0,
@@ -53,7 +51,7 @@ void argv_isValid(int argc, char *argv[]) {
         BLANK_PATH_MESSAGE,
         TARGET,
         option,
-        CHECK_THIS,
+        RECHECKING,
         BLANK_PATH_SUGGESTION_CONTENT,
         BLANK_PATH_INDEX);
     else if (!filecheck(argument))
@@ -63,11 +61,26 @@ void argv_isValid(int argc, char *argv[]) {
         UNKNOWN_PATH_MESSAGE,
         TARGET,
         argument,
-        CHECK_THIS,
+        RECHECKING,
         UNKNOWN_PATH_SUGGESTION_CONTENT,
         UNKNOWN_PATH_INDEX);
     else
       compile(argument);
+
+  else if (option == "-i")
+   if (blankcheck(argument))
+      // BLANK_CODE 오류 출력
+      StandardError(0,
+        BLANK_CODE_TITLE,
+        BLANK_CODE_MESSAGE,
+        TARGET,
+        option,
+        RECHECKING,
+        BLANK_CODE_SUGGESTION_CONTENT,
+        BLANK_CODE_INDEX);
+    else
+      inerpreted(argument);
+
   else if (option == "-t")
     tester();
   else
