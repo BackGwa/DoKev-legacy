@@ -1,6 +1,6 @@
 
 #define VERSION "8"
-#define BUILD "2307271"
+#define BUILD "달갓닷"
 
 #include <iostream>
 #include <string>

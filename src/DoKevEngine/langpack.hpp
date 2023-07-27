@@ -5,7 +5,7 @@
 #include <vector>
 
 // SHELL
-#define SHELL_VERSION               "빌드 번호 : "
+#define SHELL_VERSION               "빌드 : "
 #define SHELL_MESSAGE               "'도움말' 명령어를 통하여, 사용 방법을 확인 할 수 있습니다."
 
 // HELP
