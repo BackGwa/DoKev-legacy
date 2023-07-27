@@ -13,7 +13,7 @@ void Shell_open() {
   cout << SHELL_MESSAGE << endl << endl;
 
   while(true) {
-    cout << ">>> ";
+    cout << BOLD << "⟩⟩⟩ " << RESET;
     cin.getline(command, 128);
 
     if(!command_check(command)) {
