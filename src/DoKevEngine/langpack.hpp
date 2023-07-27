@@ -9,7 +9,7 @@
 #define SHELL_MESSAGE               "'도움말' 명령어를 통하여, 쉘 사용 방법을 확인 할 수 있습니다."
 
 // HELP
-#define HELP_TITLE                  ""
+#define HELP_TITLE                  "도움말"
 #define HELP_MESSAGE                "'https://backgwa.github.io/DoKev/'에서 상세한 정보를 볼 수 있습니다."
 
 // DEBUG
@@ -29,7 +29,7 @@ std::vector<std::pair<std::string, std::string>> BLANK_PATH_SUGGESTION_CONTENT =
 
 // UNKNOWN_OPTION
 #define UNKNOWN_OPTION_TITLE        "올바르지 않은 옵션을 받았습니다."
-#define UNKNOWN_OPTION_MESSAGE      "올바른 옵션이 아님"
+#define UNKNOWN_OPTION_MESSAGE      "이런 옵션은 올바르지 못 함"
 #define UNKNOWN_OPTION_SUGGESTION   "적용 가능한 옵션은 아래와 같습니다."
 #define UNKNOWN_OPTION_INDEX        3
 
@@ -41,7 +41,7 @@ std::vector<std::pair<std::string, std::string>> UNKNOWN_OPTION_SUGGESTION_CONTE
 
 // UNKNOWN_PATH
 #define UNKNOWN_PATH_TITLE          "파일 경로가 유효하지 않습니다."
-#define UNKNOWN_PATH_MESSAGE        "올바른 경로가 아님"
+#define UNKNOWN_PATH_MESSAGE        "해당 경로는 유효하지 않음"
 #define UNKNOWN_PATH_INDEX          3
 
 std::vector<std::pair<std::string, std::string>> UNKNOWN_PATH_SUGGESTION_CONTENT = {
