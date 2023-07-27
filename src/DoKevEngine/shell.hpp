@@ -1,4 +1,5 @@
 
+#include <cstdlib>
 #include "compiler.hpp"
 #include "debugger.hpp"
 #include "langpack.hpp"
@@ -17,7 +18,16 @@ void Shell_open() {
     cin.getline(command, 128);
 
     if(!command_check(command)) {
-      
+      if(system(command))
+        StandardError(0,
+          UNKNOWN_COMMAND_TITLE,
+          UNKNOWN_COMMAND_MESSAGE,
+          command,
+          command,
+          RECHECKING,
+          UNKNOWN_COMMAND_SUGGESTION_CONTENT,
+          UNKNOWN_COMMAND_INDEX,
+          false);
     }
   }
 }
