@@ -16,7 +16,6 @@
 #define ERROR                       "오류: "
 #define HELP                        "도움말: "
 #define SYNTAX_ERROR                "아래 수정사항을 적용해보세요."
-#define CHECK_THIS                  "아래 조건에 충족하는지 확인해보세요."
 #define RECHECKING                  "다음과 같은 오류가 없는지 확인해보세요."
 
 // UNKNOWN_COMMAND
