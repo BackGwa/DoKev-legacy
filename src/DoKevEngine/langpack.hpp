@@ -17,6 +17,17 @@
 #define HELP                        "도움말: "
 #define SYNTAX_ERROR                "아래 수정사항을 적용해보세요."
 #define CHECK_THIS                  "아래 조건에 충족하는지 확인해보세요."
+#define RECHECKING                  "다음과 같은 오류가 없는지 확인해보세요."
+
+// UNKNOWN_COMMAND
+#define UNKNOWN_COMMAND_TITLE       "알 수 없는 명령어입니다."
+#define UNKNOWN_COMMAND_MESSAGE     "이러한 명령은 지원하지 않음"
+#define UNKNOWN_COMMAND_INDEX       2
+
+std::vector<std::pair<std::string, std::string>> UNKNOWN_COMMAND_SUGGESTION_CONTENT = {
+  {"지원되지 않는 명령어", "다음 명령이 지원되는지 확인해보세요."},
+  {"명령어에 오타 포함", "실행하려는 명령에 오타가 없는지 확인해보세요."}
+};
 
 // BLANK_PATH
 #define BLANK_PATH_TITLE            "경로가 입력되지 않았습니다."
@@ -25,6 +36,15 @@
 
 std::vector<std::pair<std::string, std::string>> BLANK_PATH_SUGGESTION_CONTENT = {
   {"경로 미입력", "컴파일 대상 소스 코드의 경로가 필요합니다."}
+};
+
+// BLANK_CODE
+#define BLANK_CODE_TITLE            "코드가 입력되지 않았습니다."
+#define BLANK_CODE_MESSAGE          "이 곳에서 추가 인자를 받지 못 함"
+#define BLANK_CODE_INDEX            1
+
+std::vector<std::pair<std::string, std::string>> BLANK_CODE_SUGGESTION_CONTENT = {
+  {"코드 미입력", "실행하려는 코드가 비어있지 않아야합니다."}
 };
 
 // UNKNOWN_OPTION
@@ -45,9 +65,9 @@ std::vector<std::pair<std::string, std::string>> UNKNOWN_OPTION_SUGGESTION_CONTE
 #define UNKNOWN_PATH_INDEX          3
 
 std::vector<std::pair<std::string, std::string>> UNKNOWN_PATH_SUGGESTION_CONTENT = {
-  {"파일 여부", "경로에 실제로 파일이 있는지 확인해보세요."},
-  {"따옴표로 묶기", "경로에 띄어쓰기가 있다면, 경로를 따옴표로 묶어보세요."},
-  {"오타 포함", "경로나 파일 이름에 오타가 포함되어 있는지, 확인해보세요."}
+  {"파일 여부", "경로에 파일이 존재하는지 확인해보세요."},
+  {"따옴표 미사용", "경로에 띄어쓰기가 있다면, 경로를 따옴표로 묶어보세요."},
+  {"경로에 오타 포함", "경로나 파일 이름에 오타가 포함되어 있는지, 확인해보세요."}
 };
 
 // THROW
