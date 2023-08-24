@@ -1,6 +1,5 @@
 #pragma once
 
-#include <iostream>
 #include <string>
 
 #ifdef _WIN32
@@ -11,7 +10,7 @@
 
 using namespace std;
 
-bool filecheck(string path) {
+bool filecheck(const std::string& path) {
 #ifdef _WIN32
     return (_access(path.c_str(), 0) == 0);
 #else
@@ -19,6 +18,6 @@ bool filecheck(string path) {
 #endif
 }
 
-bool blankcheck(string argument) {
+bool blankcheck(const std::string& argument) {
     return argument.empty();
 }
