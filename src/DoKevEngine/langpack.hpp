@@ -78,3 +78,13 @@ std::vector<std::tuple<std::string, std::string, bool>> THROW_SUGGESTION_CONTENT
   {"NEXT()", "다음 함수로 대체해보세요.", true},
   {"THROW()", "다음 코드를 제거해보세요.", false}
 };
+
+// FILE_OPEN_ERROR
+#define FILE_OPEN_ERROR_TITLE       "파일을 여는 도중 오류가 발생하였습니다."
+#define FILE_OPEN_ERROR_MESSAGE     "파일을 읽을 수 없음"
+#define FILE_OPEN_ERROR_INDEX       2
+
+std::vector<std::pair<std::string, std::string>> FILE_OPEN_ERROR_CONTENT = {
+  {"파일 여부", "경로에 파일이 존재하는지 확인해보세요."},
+  {"읽기 가능 여부", "파일이 읽을 수 있는 상태인지 확인해보세요."}
+};
