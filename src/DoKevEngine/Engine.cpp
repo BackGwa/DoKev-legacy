@@ -65,7 +65,7 @@ void argv_isValid(int argc, char *argv[]) {
         UNKNOWN_PATH_SUGGESTION_CONTENT,
         UNKNOWN_PATH_INDEX);
     else
-      compile(argument);
+      compile(argument, TARGET, argument);
 
   else if (option == "-i")
    if (blankcheck(argument))
@@ -98,11 +98,6 @@ void argv_isValid(int argc, char *argv[]) {
 /* inerpreted : 코드를 인자로 받아 즉시 번역해 실행합니다. */
 void inerpreted(string code) {
   cout << "인터프리트 실행" << endl;
-}
-
-/* compile : 파일 경로를 인자로 받아 컴파일 후 실행합니다. */
-void compile(string file_path) {
-  cout << "컴파일 실행" << endl;
 }
 
 /* shell : DoKevEngine의 쉘 인터페이스를 실행합니다. */
