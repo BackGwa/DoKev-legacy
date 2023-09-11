@@ -71,15 +71,13 @@ string COMMENT(string line) {
 
 /* PRINT : 출력문인지, 검사하고 변경합니다. */
 string PRINT(string line) {
-    // 파서 정규식
     regex pattern("\"([^\"]*)\"|'([^']*)'|말해줘");
     smatch matches;
-
-    // 변경된 문자열 저장
     string result;
 
     // 문자열 처리
     auto it = line.cbegin();
+    
     while (regex_search(it, line.cend(), matches, pattern)) {
         result += matches.prefix();
         if (matches[0] == "말해줘")
