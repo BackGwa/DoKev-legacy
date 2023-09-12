@@ -14,3 +14,4 @@ src/compiler/Runner.csproj.user
 *.out
 .vscode/
 src/DoKevEngine/COMPILE_TEST.dkv
+src/DoKevEngine/bin/execute.py
