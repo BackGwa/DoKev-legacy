@@ -54,8 +54,8 @@ vector<string> split(string s, string divid) {
 
 /* BRACKET : 괄호의 유무를 검사합니다. */
 bool BRACKET(string line) {
-    std::regex pattern("[^\"']*\\(.*\\)[^\"']*");
-    return std::regex_search(line, pattern);
+    regex pattern("[^\"']*\\(.*\\)[^\"']*");
+    return regex_search(line, pattern);
 }
 
 /* COMMENT : 주석을 제거합니다. */
@@ -212,7 +212,7 @@ string VERB_TOKEN(string line) {
 }
 
 string PRINT_TOKEN(string line) {
-    regex pattern("\"([^\"]*)\"|'([^']*)'|말해|보여|말한|출력|말하");
+    regex pattern("\"([^\"]*)\"|'([^']*)'|말|보여|출력|말하");
     smatch matches;
     string result;
 
