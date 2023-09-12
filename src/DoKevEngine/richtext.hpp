@@ -94,8 +94,10 @@ void endword(int line, const string& code, const string& MESSAGE = "", const str
   cout << COLOR << BOLD;
 
   for (int i = 0; i < utf8_strlen(code); i++)
-    if (IsKorean(ToMultiByte(Substring(ToUnicode(code), i, 1)))) cout << "  ";
-    else cout << " ";
+    if (IsKorean(ToMultiByte(Substring(ToUnicode(code), i, 1))))
+      cout << "  ";
+    else
+      cout << " ";
 
   cout << "^";
 
@@ -106,19 +108,24 @@ void endword(int line, const string& code, const string& MESSAGE = "", const str
 /* highlighter : 특정 문자 및 코드를 하이라이팅 문자를 출력합니다. */
 void highlighter(int line, const string& code, const string& highlight, const string& MESSAGE = "", const string& COLOR = RED) {
   int hint;
-  if(highlight == "M")
-    if (code.contains("\"")) hint = findword(code, "\"");
-    else if (code.contains("\'")) hint = findword(code, "\'");
+  if(highlight == "M") {
+    if (code.contains("\""))
+      hint = findword(code, "\"");
 
-  else
-    hint = findword(code, highlight);
+    else if (code.contains("\'"))
+      hint = findword(code, "\'");
+  } else {
+      hint = findword(code, highlight);
+  }
   line_counter(line, false);
 
   cout << COLOR << BOLD;
   
   for (int i = 0; i < hint; i++)
-    if (IsKorean(ToMultiByte(Substring(ToUnicode(code), i, 1)))) cout << "  ";
-    else cout << " ";
+    if (IsKorean(ToMultiByte(Substring(ToUnicode(code), i, 1))))
+      cout << "  ";
+    else
+      cout << " ";
     
 
   for (int i = 0; i < utf8_strlen(highlight); i++)
