@@ -1,16 +1,17 @@
 #pragma once
 
-#include <cstdlib>
 #include <fstream>
-#include <vector>
-#include <string>
 #include <regex>
-#include <sstream>
-#include <filesystem>
-#include "debugger.hpp"
-#include "check.hpp"
 
-using namespace std;
+#include "check.hpp"
+#include "debugger.hpp"
+
+#include "Syntax/COMMENT.hpp"
+#include "Syntax/CODE_AREA.hpp"
+#include "Syntax/PARTICAL.hpp"
+#include "Syntax/VERB.hpp"
+
+#include "String/Valid.hpp"
 
 int line_number = 0;
 vector<string> codelist;
@@ -38,21 +39,6 @@ void openfile(string filepath, string TARGET, string MAKER) {
         }
         file.close();
     }
-}
-
-/* split : 문자열을 나눕니다. */
-vector<string> split(string s, string divid) {
-	vector<string> v;
-	int start = 0;
-	int d = s.find(divid);
-	while (d != -1){
-		v.push_back(s.substr(start, d - start));
-		start = d + 1;
-		d = s.find(divid, start);
-	} 
-	v.push_back(s.substr(start, d - start));
-
-	return v;
 }
 
 /* BRACKET : 괄호의 유무를 검사합니다. */
@@ -93,157 +79,7 @@ bool BRACKET(string line) {
     return LC == RC && LC >= 1;
 }
 
-bool VALID_SOV(const string line, const string syntax) {
-    return line.contains(syntax);
-}
-
-/* COMMENT : 주석을 제거합니다. */
-string COMMENT(string line) {
-    regex pattern("\"([^\"]*)\"|'([^']*)'|#");
-    smatch matches;
-    string result;
-
-    auto it = line.cbegin();
-
-    while (regex_search(it, line.cend(), matches, pattern)) {
-        const string match = matches[0];
-        result += matches.prefix();
-
-        if (match == "#") {
-            result += "";
-            return result;
-        } else {
-            result += matches[0];
-        }
-
-        it = matches[0].second;
-    }
-
-    result += string(it, line.cend());
-    return result;
-}
-
-/* PARTICAL : 조사인지, 검사하고 변경합니다. */
-string PARTICAL_TOKEN(string line) {
-    regex pattern("\"([^\"]*)\"|'([^']*)'|이라고 |라고 |을 |를 ");
-    smatch matches;
-    string result;
-
-    auto it = line.cbegin();
-
-    while (regex_search(it, line.cend(), matches, pattern)) {
-        const string match = matches[0];
-        result += matches.prefix();
-
-        if (match == "이라고 " || match == "라고 " || match == "을 " || match == "를 ")
-            result += "<-particle->";
-        else
-            result += matches[0];
-
-        it = matches[0].second;
-    }
-
-    result += string(it, line.cend());
-    return result;
-}
-
-/* CODE_AREA : 하나의 코드 영역인지, 확인합니다. */
-string CODE_AREA(string line) {
-    regex pattern("\"([^\"]*)\"|'([^']*)'|    ");
-    smatch matches;
-    string result;
-
-    auto it = line.cbegin();
-
-    while (regex_search(it, line.cend(), matches, pattern)) {
-        const string match = matches[0];
-        result += matches.prefix();
-
-        if (match == "    ")
-            result += "<-codearea->";
-        else
-            result += matches[0];
-
-        it = matches[0].second;
-    }
-
-    result += string(it, line.cend());
-    return result;
-}
-
-/* CODE_AREA_RETURN : 코드 영역 재구현합니다. */
-string CODE_AREA_RETURN(string line) {
-    regex pattern("\"([^\"]*)\"|'([^']*)'|<-codearea->");
-    smatch matches;
-    string result;
-    string add;
-
-    auto it = line.cbegin();
-
-    while (regex_search(it, line.cend(), matches, pattern)) {
-        const string match = matches[0];
-        result += matches.prefix();
-
-        if (match == "<-codearea->")
-            add += "    ";
-        else
-            result += matches[0];
-
-        it = matches[0].second;
-    }
-
-    result += string(it, line.cend());
-    return add;
-}
-
-/* CODE_AREA_REMOVE : 코드 영역을 제거합니다. */
-string CODE_AREA_REMOVE(string line) {
-    regex pattern("\"([^\"]*)\"|'([^']*)'|<-codearea->");
-    smatch matches;
-    string result;
-
-    auto it = line.cbegin();
-
-    while (regex_search(it, line.cend(), matches, pattern)) {
-        const string match = matches[0];
-        result += matches.prefix();
-
-        if (match == "<-codearea->")
-            result += "";
-        else
-            result += matches[0];
-
-        it = matches[0].second;
-    }
-
-    result += string(it, line.cend());
-    return result;
-}
-
-/* VERB : 동사인지, 검사하고 변경합니다. */
-string VERB_TOKEN(string line) {
-    regex pattern("\"([^\"]*)\"|'([^']*)'|해줘|줘|하고|해주고|주고|고|해");
-    smatch matches;
-    string result;
-
-    auto it = line.cbegin();
-
-    while (regex_search(it, line.cend(), matches, pattern)) {
-        const string match = matches[0];
-        result += matches.prefix();
-
-        if (match == "해줘" || match == "줘" || match == "하고" || match == "해주고" || match == "주고" || match == "고" || match == "해")
-            result += "<-verb->";
-        else
-            result += matches[0];
-
-        it = matches[0].second;
-    }
-
-    result += string(it, line.cend());
-    return result;
-}
-
+/* PRINT_TOKEN : 출력문 토큰 확인 */
 string PRINT_TOKEN(string line) {
     regex pattern("\"([^\"]*)\"|'([^']*)'|말|보여|출력");
     smatch matches;
@@ -297,7 +133,7 @@ string PRINT(string line) {
                     NOT_CONTAIN_VERB_INDEX);
 
     // 문법에 맞는지 확인
-    if (!VALID_SOV(line, "<-particle-><-print-><-verb->"))
+    if (!valid(line, "<-particle-><-print-><-verb->"))
         SyntaxError(line_number + 1,
                     UNVALID_SOV_TITLE,
                     UNVALID_SOV_MESSAGE,
