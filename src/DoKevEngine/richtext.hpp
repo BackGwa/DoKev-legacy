@@ -25,7 +25,7 @@ void line_counter(int line, bool number_show = true, bool newline = false) {
   if (number_show)
     cout << line;
   else {
-    int blank = utf8_strlen(to_string(line));
+    int blank = Utf8_strlen(to_string(line));
     for (int i = 0; i < blank; i++)
       cout << " ";
   }
@@ -54,7 +54,7 @@ void endword(int line, const string& code, const string& MESSAGE = "", const str
 
   cout << COLOR << BOLD;
 
-  for (int i = 0; i < utf8_strlen(code); i++)
+  for (int i = 0; i < Utf8_strlen(code); i++)
     if (IsKorean(ToMultiByte(Substring(ToUnicode(code), i, 1))))
       cout << "  ";
     else
@@ -89,7 +89,7 @@ void highlighter(int line, const string& code, const string& highlight, const st
       cout << " ";
     
 
-  for (int i = 0; i < utf8_strlen(highlight); i++)
+  for (int i = 0; i < Utf8_strlen(highlight); i++)
     cout << "^";
 
   cout << " " << MESSAGE;

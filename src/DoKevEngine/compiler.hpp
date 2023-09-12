@@ -7,7 +7,7 @@
 #include "debugger.hpp"
 
 #include "Syntax/COMMENT.hpp"
-#include "Syntax/CODE_AREA.hpp"
+#include "Syntax/CODEAREA.hpp"
 #include "Syntax/PARTICAL.hpp"
 #include "Syntax/VERB.hpp"
 
@@ -133,7 +133,7 @@ string PRINT(string line) {
                     NOT_CONTAIN_VERB_INDEX);
 
     // 문법에 맞는지 확인
-    if (!valid(line, "<-particle-><-print-><-verb->"))
+    if (!Valid(line, "<-particle-><-print-><-verb->"))
         SyntaxError(line_number + 1,
                     UNVALID_SOV_TITLE,
                     UNVALID_SOV_MESSAGE,
@@ -143,7 +143,7 @@ string PRINT(string line) {
                     UNVALID_SOV_INDEX);
 
     // 조사를 기준으로 코드를 나눔
-    vector<string> token_split = split(line, "<-particle->");
+    vector<string> token_split = Split(line, "<-particle->");
 
     // 괄호가 있는지 검사
     string result;
