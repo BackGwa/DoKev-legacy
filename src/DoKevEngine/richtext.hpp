@@ -78,8 +78,10 @@ void highlighter(int line, const string& code, const string& highlight, const st
 
   cout << COLOR << BOLD;
   
-  for (int i = 0; i < hint; i++)
-    cout << " ";
+  for (int i = 0; i < hint; i++) {
+    if(IsKorean(code.substr(i, 1))) cout << "  ";
+    else cout << " ";
+  }
   for (int i = 0; i < utf8_strlen(highlight); i++)
     cout << "^";
 
