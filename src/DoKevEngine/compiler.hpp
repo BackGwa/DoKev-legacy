@@ -291,7 +291,7 @@ string PRINT(string line) {
 }
 
 void execute_code(vector<string> execute_list) {
-    
+
     // 파일 및 디렉토리 없을 시 생성
     if (!filecheck("bin/execute.py")) {
         bool iscreated = filesystem::create_directory("bin");
@@ -348,6 +348,7 @@ void parsing(int index, string line, bool shell = false) {
     } else {
         codelist.push_back(line);
         execute_code(codelist);
+        codelist.clear();
     }
 }
 
