@@ -1,10 +1,7 @@
 #pragma once
 
-#include <iostream>
 #include "langpack.hpp"
 #include "richtext.hpp"
-
-using namespace std;
 
 /* BLANK_REMOVE : 불필요하게 많은 공백을 제거합니다. */
 string BLANK_REMOVE(string line) {

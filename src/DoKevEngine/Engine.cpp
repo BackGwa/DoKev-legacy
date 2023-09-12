@@ -3,14 +3,12 @@
 #define BUILD "달갗낟"
 
 #include <iostream>
-#include <string>
+
 #include "langpack.hpp"
 #include "shell.hpp"
 #include "compiler.hpp"
 #include "debugger.hpp"
 #include "check.hpp"
-
-using namespace std;
 
 /* 함수 선언 */
 void argv_isValid(int argc, char *argv[]);
