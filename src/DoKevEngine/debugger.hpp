@@ -113,7 +113,7 @@ void SyntaxWarning(int LINE,
                   string HIGHLIGHT
                   ) {
 
-  cout << YELLOW << BOLD << WARN << RESET << BOLD << TITLE << endl;
+  cout << endl << YELLOW << BOLD << WARN << RESET << BOLD << TITLE << endl;
   line_counter(LINE, false, true);
   line_counter(LINE);
   cout << BLANK_REMOVE(TARGET) << endl;
