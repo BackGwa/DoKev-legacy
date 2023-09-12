@@ -89,6 +89,26 @@ std::vector<std::pair<std::string, std::string>> FILE_OPEN_ERROR_SUGGESTION_CONT
   {"읽기 가능 여부", "파일이 읽을 수 있는 상태인지 확인해보세요."}
 };
 
+// FILE_WRITE_ERROR
+#define FILE_WRITE_ERROR_TITLE       "쓰기를 실패하였습니다."
+#define FILE_WRITE_ERROR_MESSAGE     "접근 실패"
+#define FILE_WRITE_ERROR_INDEX       3
+
+std::vector<std::pair<std::string, std::string>> FILE_WRITE_ERROR_SUGGESTION_CONTENT = {
+  {"컴파일러 권한", "컴파일러가 파일을 생성 할 수 있는지, 확인해보세요."},
+  {"파일 참조 여부", "다른 프로세스가 파일에 접근하고 있는지, 확인해보세요."},
+  {"쓰기 가능 여부", "파일이 읽기 전용 상태는 아닌지, 확인해보세요."}
+};
+
+// DIR_CREATE_ERROR
+#define DIR_CREATE_ERROR_TITLE       "디렉토리 생성에 실패하였습니다."
+#define DIR_CREATE_ERROR_MESSAGE     "접근 실패"
+#define DIR_CREATE_ERROR_INDEX       1
+
+std::vector<std::pair<std::string, std::string>> DIR_CREATE_ERROR_SUGGESTION_CONTENT = {
+  {"컴파일러 권한", "컴파일러가 디렉토리를 생성 할 수 있는지, 확인해보세요."}
+};
+
 // NOT_CONTAIN_PARTICLE
 #define NOT_CONTAIN_PARTICLE_TITLE       "조사가 존재하지 않습니다."
 #define NOT_CONTAIN_PARTICLE_MESSAGE     "조사가 존재해야함"
@@ -108,5 +128,5 @@ std::vector<std::tuple<std::string, std::string, bool>> NOT_CONTAIN_VERB_SUGGEST
 };
 
 // CONTAIN_BRACKET
-#define CONTAIN_BRACKET_TITLE       "괄호는 포함하는 것이 좋습니다."
+#define CONTAIN_BRACKET_TITLE       "괄호를 포함하는 것이 좋습니다."
 #define CONTAIN_BRACKET_MESSAGE     "괄호가 권장됨"
