@@ -9,7 +9,6 @@
 #include "compiler.hpp"
 #include "debugger.hpp"
 #include "check.hpp"
-#include "tester.hpp"
 
 using namespace std;
 
@@ -80,9 +79,6 @@ void argv_isValid(int argc, char *argv[]) {
         BLANK_CODE_INDEX);
     else
       inerpreted(argument);
-
-  else if (option == "-t")
-    tester();
   else
     // UNKNOWN_OPTION 오류 출력
     StandardError(0,
@@ -97,7 +93,7 @@ void argv_isValid(int argc, char *argv[]) {
 
 /* inerpreted : 코드를 인자로 받아 즉시 번역해 실행합니다. */
 void inerpreted(string code) {
-  cout << "인터프리트 실행" << endl;
+  cout << parsing(0, code, true) << endl;
 }
 
 /* shell : DoKevEngine의 쉘 인터페이스를 실행합니다. */
