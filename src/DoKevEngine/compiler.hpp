@@ -57,39 +57,38 @@ vector<string> split(string s, string divid) {
 
 /* BRACKET : 괄호의 유무를 검사합니다. */
 bool BRACKET(string line) {
-    regex pattern("[^\"']*\\(.*\\)[^\"']*");
-    return regex_search(line, pattern);
+   return true;
+}
+
+/* BRACKET_S : 괄호의 여닫힘이 완벽한지, 검사합니다. */
+bool BRACKET_S(string line) {
+
+    return true;
 }
 
 /* COMMENT : 주석을 제거합니다. */
 string COMMENT(string line) {
+    regex pattern("\"([^\"]*)\"|'([^']*)'|#");
+    smatch matches;
     string result;
-    bool insideString = false;
 
-    for (size_t i = 0; i < line.length(); ++i) {
-        char currentChar = line[i];
+    auto it = line.cbegin();
+    
+    while (regex_search(it, line.cend(), matches, pattern)) {
+        const string match = matches[0];
+        result += matches.prefix();
 
-        if (!insideString) {
-            // 주석 시작 확인 & '#' 이후의 문자 모두 무시
-            if (currentChar == '#')
-                while (i < line.length() && line[i] != '\n') ++i;
-
-            // 문자열 시작 확인
-            else if (currentChar == '"' || currentChar == '\'') {
-                insideString = true;
-                result += currentChar;
-            }
-            
-            else result += currentChar;
-
+        if (match == "#") {
+            result += "";
+            return result;
         } else {
-            // 종료 따옴표 찾기
-            result += currentChar;
-            if (currentChar == '"' || currentChar == '\'')
-                insideString = false;
+            result += matches[0];
         }
+
+        it = matches[0].second;
     }
 
+    result += string(it, line.cend());
     return result;
 }
 
