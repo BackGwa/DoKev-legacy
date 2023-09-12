@@ -93,7 +93,7 @@ void argv_isValid(int argc, char *argv[]) {
 
 /* inerpreted : 코드를 인자로 받아 즉시 번역해 실행합니다. */
 void inerpreted(string code) {
-  cout << parsing(0, code, true) << endl;
+  parsing(0, code, true);
 }
 
 /* shell : DoKevEngine의 쉘 인터페이스를 실행합니다. */

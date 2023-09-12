@@ -16,7 +16,13 @@ void Shell_open() {
   while(true) {
     cout << BOLD << "⟩⟩⟩ " << RESET;
     cin.getline(command, 128);
-    cout << parsing(line, command, true) << endl;
+
+    string str_command(command);
+
+    // 쉘 인터페이스 exit() 방지
+    if(str_command.contains("exit()")) exit(0);
+    
+    parsing(line, command, true);
     line++;
   }
 }
