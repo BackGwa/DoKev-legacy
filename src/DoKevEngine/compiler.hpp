@@ -250,7 +250,7 @@ string PRINT(string line) {
             NOT_CONTAIN_PARTICLE_TITLE,
             NOT_CONTAIN_PARTICLE_MESSAGE,
             before_code,
-            "\"",
+            "M",
             NOT_CONTAIN_PARTICLE_SUGGESTION_CONTENT,
             NOT_CONTAIN_PARTICLE_INDEX
         );
@@ -275,6 +275,13 @@ string PRINT(string line) {
         result = "print" + CODE_AREA_REMOVE(token_split[0]);
     } else {
         result = "print(" + CODE_AREA_REMOVE(token_split[0]) + ")";
+
+        SyntaxWarning(line_number + 1,
+            CONTAIN_BRACKET_TITLE,
+            CONTAIN_BRACKET_MESSAGE,
+            before_code,
+            "M"
+        );
     }
 
     return CODE_AREA_RETURN(token_split[0]) + result;
@@ -304,6 +311,8 @@ void compile(string file_path, string TARGET, string MAKER) {
         line_number++;
     }
 
+    // 변환된 코드 전체 변환
+    cout << "COMPILE RESULTS: " << endl;
     for (const string& line : codelist) {
         cout << line << endl;
     }
