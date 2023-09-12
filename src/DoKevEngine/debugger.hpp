@@ -6,6 +6,30 @@
 
 using namespace std;
 
+/* BLANK_REMOVE : 불필요하게 많은 공백을 제거합니다. */
+string BLANK_REMOVE(string line) {
+    regex pattern("\"([^\"]*)\"|'([^']*)'|  ");
+    smatch matches;
+    string result;
+
+    auto it = line.cbegin();
+    
+    while (regex_search(it, line.cend(), matches, pattern)) {
+        const string match = matches[0];
+        result += matches.prefix();
+
+        if (match == "  ")
+            result += "";
+        else
+            result += matches[0];
+
+        it = matches[0].second;
+    }
+
+    result += string(it, line.cend());
+    return result;
+}
+
 /* StandardError : 표준 오류에 대한 내용을 출력합니다. */
 void StandardError(int LINE,
                   string TITLE,
@@ -21,9 +45,9 @@ void StandardError(int LINE,
   cout << endl << RED << BOLD << ERROR << RESET << BOLD << TITLE << RESET << endl;
   line_counter(LINE, false, true);
   line_counter(LINE);
-  cout << TARGET << endl;
+  cout << BLANK_REMOVE(TARGET) << endl;
 
-  highlighter(LINE, TARGET, HIGHLIGHT, MESSAGE);
+  highlighter(LINE, BLANK_REMOVE(TARGET), HIGHLIGHT, MESSAGE);
 
   separator(MESSAGE);
 
@@ -52,12 +76,12 @@ void SyntaxError(int LINE,
   cout << endl << RED << BOLD << ERROR << RESET << BOLD << TITLE << endl;
   line_counter(LINE, false, true);
   line_counter(LINE);
-  cout << TARGET << endl;
+  cout << BLANK_REMOVE(TARGET) << endl;
 
   if(HIGHLIGHT == "EOW")
-    highlighter(LINE, TARGET + " ", " ", MESSAGE);
+    endword(LINE, BLANK_REMOVE(TARGET), MESSAGE);
   else
-    highlighter(LINE, TARGET, HIGHLIGHT, MESSAGE);
+    highlighter(LINE, BLANK_REMOVE(TARGET), HIGHLIGHT, MESSAGE);
 
   separator(MESSAGE);
 
