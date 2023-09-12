@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <regex>
+#include <sstream>
 #include "debugger.hpp"
 
 using namespace std;
@@ -34,6 +35,27 @@ void openfile(string filepath, string TARGET, string MAKER) {
         }
         file.close();
     }
+}
+
+/* split : 문자열을 나눕니다. */
+vector<string> split(string s, string divid) {
+	vector<string> v;
+	int start = 0;
+	int d = s.find(divid);
+	while (d != -1){
+		v.push_back(s.substr(start, d - start));
+		start = d + 1;
+		d = s.find(divid, start);
+	} 
+	v.push_back(s.substr(start, d - start));
+
+	return v;
+}
+
+/* BRACKET : 괄호의 유무를 검사합니다. */
+bool BRACKET(string line) {
+    std::regex pattern("[^\"']*\\(.*\\)[^\"']*");
+    return std::regex_search(line, pattern);
 }
 
 /* COMMENT : 주석을 제거합니다. */
@@ -81,7 +103,80 @@ string PARTICAL_TOKEN(string line) {
         result += matches.prefix();
 
         if (match == "이라고 " || match == "라고 " || match == "을 " || match == "를 " )
-            result += "->[particle]->";
+            result += "<-particle->";
+        else
+            result += matches[0];
+
+        it = matches[0].second;
+    }
+
+    result += string(it, line.cend());
+    return result;
+}
+
+/* CODE_AREA : 하나의 코드 영역인지, 확인합니다. */
+string CODE_AREA(string line) {
+    regex pattern("\"([^\"]*)\"|'([^']*)'|    ");
+    smatch matches;
+    string result;
+
+    auto it = line.cbegin();
+    
+    while (regex_search(it, line.cend(), matches, pattern)) {
+        const string match = matches[0];
+        result += matches.prefix();
+
+        if (match == "    ")
+            result += "<-codearea->";
+        else
+            result += matches[0];
+
+        it = matches[0].second;
+    }
+
+    result += string(it, line.cend());
+    return result;
+}
+
+/* CODE_AREA_RETURN : 코드 영역 재구현합니다. */
+string CODE_AREA_RETURN(string line) {
+    regex pattern("\"([^\"]*)\"|'([^']*)'|<-codearea->");
+    smatch matches;
+    string result;
+    string add;
+
+    auto it = line.cbegin();
+    
+    while (regex_search(it, line.cend(), matches, pattern)) {
+        const string match = matches[0];
+        result += matches.prefix();
+
+        if (match == "<-codearea->")
+            add += "    ";
+        else
+            result += matches[0];
+
+        it = matches[0].second;
+    }
+
+    result += string(it, line.cend());
+    return add;
+}
+
+/* CODE_AREA_REMOVE : 코드 영역을 제거합니다. */
+string CODE_AREA_REMOVE(string line) {
+    regex pattern("\"([^\"]*)\"|'([^']*)'|<-codearea->");
+    smatch matches;
+    string result;
+
+    auto it = line.cbegin();
+    
+    while (regex_search(it, line.cend(), matches, pattern)) {
+        const string match = matches[0];
+        result += matches.prefix();
+
+        if (match == "<-codearea->")
+            result += "";
         else
             result += matches[0];
 
@@ -105,7 +200,7 @@ string VERB_TOKEN(string line) {
         result += matches.prefix();
 
         if (match == "해줘" || match == "줘" || match == "하고" || match == "해주고" || match == "주고" || match == "고" || match == "해")
-            result += "[verb]";
+            result += "<-verb->";
         else
             result += matches[0];
 
@@ -128,7 +223,7 @@ string PRINT_TOKEN(string line) {
         result += matches.prefix();
 
         if (match == "말해" || match == "보여" || match == "말한" || match == "출력" || match == "말하" )
-            result += "[print]->";
+            result += "<-print->";
         else
             result += matches[0];
         it = matches[0].second;
@@ -145,12 +240,12 @@ string PRINT(string line) {
     line = PRINT_TOKEN(line);
 
     // 출력문이 아니면, 파서 종료
-    if(!line.contains("[print]->")) {
+    if(!line.contains("<-print->")) {
         return line;
     }
 
     // 조사가 없으면, 오류 발생
-    if(!line.contains("->[particle]->"))
+    if(!line.contains("<-particle->"))
         SyntaxError(line_number + 1,
             NOT_CONTAIN_PARTICLE_TITLE,
             NOT_CONTAIN_PARTICLE_MESSAGE,
@@ -161,7 +256,7 @@ string PRINT(string line) {
         );
 
     // 동사가 없으면, 오류 발생
-    if(!line.contains("[verb]"))
+    if(!line.contains("<-verb->"))
         SyntaxError(line_number + 1,
             NOT_CONTAIN_VERB_TITLE,
             NOT_CONTAIN_VERB_MESSAGE,
@@ -171,17 +266,26 @@ string PRINT(string line) {
             NOT_CONTAIN_VERB_INDEX
         );
 
-    return line;
+    // 조사를 기준으로 코드를 나눔
+    vector<string> token_split = split(line, "<-particle->");
+
+    // 괄호가 있는지 검사
+    string result;
+    if (BRACKET(CODE_AREA_REMOVE(token_split[0]))) {
+        result = "print" + CODE_AREA_REMOVE(token_split[0]);
+    } else {
+        result = "print(" + CODE_AREA_REMOVE(token_split[0]) + ")";
+    }
+
+    return CODE_AREA_RETURN(token_split[0]) + result;
 }
 
 /* parsing : 코드를 확인, 변경하고, 검사합니다. */
 string parsing(int index, string line, bool shell = false) {
 
-    // 원본 코드
-    before_code = line;
-
-    // 주석 제거 처리
-    line = COMMENT(line);
+    // 전처리를 한 후 코드 저장
+    before_code = COMMENT(line);
+    line = CODE_AREA(before_code);
 
     // 출력문 처리
     line = PRINT(line);
