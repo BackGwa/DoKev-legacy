@@ -54,8 +54,7 @@ std::vector<std::pair<std::string, std::string>> BLANK_CODE_SUGGESTION_CONTENT =
 
 std::vector<std::pair<std::string, std::string>> UNKNOWN_OPTION_SUGGESTION_CONTENT = {
   {"-c <파일_경로>", "경로의 파일을 컴파일한 후, 실행합니다."},
-  {"-i <실행_코드>", "실행 코드를 번역 후, 실행합니다."},
-  {"-t", "컴파일러가 정상 작동하는지 확인합니다."}
+  {"-i <실행_코드>", "실행 코드를 번역 후, 실행합니다."}
 };
 
 // UNKNOWN_PATH
