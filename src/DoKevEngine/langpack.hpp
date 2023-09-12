@@ -84,7 +84,27 @@ std::vector<std::tuple<std::string, std::string, bool>> THROW_SUGGESTION_CONTENT
 #define FILE_OPEN_ERROR_MESSAGE     "파일을 읽을 수 없음"
 #define FILE_OPEN_ERROR_INDEX       2
 
-std::vector<std::pair<std::string, std::string>> FILE_OPEN_ERROR_CONTENT = {
+std::vector<std::pair<std::string, std::string>> FILE_OPEN_ERROR_SUGGESTION_CONTENT = {
   {"파일 여부", "경로에 파일이 존재하는지 확인해보세요."},
   {"읽기 가능 여부", "파일이 읽을 수 있는 상태인지 확인해보세요."}
+};
+
+// NOT_CONTAIN_PARTICLE
+#define NOT_CONTAIN_PARTICLE_TITLE       "조사가 존재하지 않습니다."
+#define NOT_CONTAIN_PARTICLE_MESSAGE     "조사가 존재해야함"
+#define NOT_CONTAIN_PARTICLE_INDEX       2
+
+std::vector<std::tuple<std::string, std::string, bool>> NOT_CONTAIN_PARTICLE_SUGGESTION_CONTENT = {
+  {"(값)이라고 말해줘", "조사를 넣어 코드를 작성해보세요.", true},
+  {"(값)을 말해줘", "조사를 넣어 코드를 작성해보세요.", true}
+};
+
+// NOT_CONTAIN_VERB
+#define NOT_CONTAIN_VERB_TITLE       "동사가 존재하지 않습니다."
+#define NOT_CONTAIN_VERB_MESSAGE     "동사가 존재해야함"
+#define NOT_CONTAIN_VERB_INDEX       2
+
+std::vector<std::tuple<std::string, std::string, bool>> NOT_CONTAIN_VERB_SUGGESTION_CONTENT = {
+  {"(값)이라고 말해줘", "동사를 넣어 코드를 작성해보세요.", true},
+  {"(값)을 말해줘", "동사를 넣어 코드를 작성해보세요.", true}
 };
