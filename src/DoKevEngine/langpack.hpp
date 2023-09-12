@@ -59,16 +59,6 @@ std::vector<std::pair<std::string, std::string>> UNKNOWN_PATH_SUGGESTION_CONTENT
   {"경로에 오타 포함", "경로나 파일 이름에 오타가 포함되어 있는지, 확인해보세요."}
 };
 
-// THROW
-#define THROW_TITLE                 "코드가 중단되었습니다."
-#define THROW_MESSAGE               "중단점 호출됨"
-#define THROW_INDEX                 2
-
-std::vector<std::tuple<std::string, std::string, bool>> THROW_SUGGESTION_CONTENT = {
-  {"NEXT()", "다음 함수로 대체해보세요.", true},
-  {"THROW()", "다음 코드를 제거해보세요.", false}
-};
-
 // UNVALID_SOV
 #define UNVALID_SOV_TITLE       "이러한 문법은 허용되지 않습니다."
 #define UNVALID_SOV_MESSAGE     "문법적 오류"
