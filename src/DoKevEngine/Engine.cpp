@@ -14,7 +14,7 @@ using namespace std;
 
 /* 함수 선언 */
 void argv_isValid(int argc, char *argv[]);
-void inerpreted(string Code);
+void interpreted(string Code);
 void shell();
 
 /* main : DoKevEngine의 시작점입니다. */
@@ -30,68 +30,45 @@ int main(int argc, char *argv[]) {
 /* argv_isValid : 옵션 및 인자를 확인합니다. */
 void argv_isValid(int argc, char *argv[]) {
 
-  // 전체 경로 및 인자 가져오기
-  string TARGET = "";
-  for (int i = 0; i < argc; i++) {
+  string TARGET;
+  for (int i = 0; i < argc; i++)
     TARGET = TARGET + " " + argv[i];
-  }
 
-  string option = argv[1];      // 옵션 가져오기
-  string argument = "";         // 인자 초기값
-  if (argc >= 3)
-    argument = argv[2];         // 인자 설정
+  const string option = argv[1];
+  const string argument = (argc >= 3) ? argv[2] : "";
 
-  if (option == "-c")
-    if (blankcheck(argument))
+  if (option == "-c") {
+    if (blankcheck(argument)) {
       // BLANK_PATH 오류 출력
-      StandardError(0,
-        BLANK_PATH_TITLE,
-        BLANK_PATH_MESSAGE,
-        TARGET,
-        option,
-        RECHECKING,
-        BLANK_PATH_SUGGESTION_CONTENT,
-        BLANK_PATH_INDEX);
-    else if (!filecheck(argument))
-      // UNKNOWN_PATH 오류 출력
-      StandardError(0,
-        UNKNOWN_PATH_TITLE,
-        UNKNOWN_PATH_MESSAGE,
-        TARGET,
-        argument,
-        RECHECKING,
-        UNKNOWN_PATH_SUGGESTION_CONTENT,
-        UNKNOWN_PATH_INDEX);
-    else
-      compile(argument, TARGET, argument);
+      StandardError(0, BLANK_PATH_TITLE, BLANK_PATH_MESSAGE, TARGET, option, RECHECKING,
+                    BLANK_PATH_SUGGESTION_CONTENT, BLANK_PATH_INDEX);
 
-  else if (option == "-i")
-   if (blankcheck(argument))
+    } else if (!filecheck(argument)) {
+      // UNKNOWN_PATH 오류 출력
+      StandardError(0, UNKNOWN_PATH_TITLE, UNKNOWN_PATH_MESSAGE, TARGET, argument, RECHECKING,
+                    UNKNOWN_PATH_SUGGESTION_CONTENT, UNKNOWN_PATH_INDEX);
+                    
+    } else {
+      compile(argument, TARGET, argument);
+    }
+  } else if (option == "-i") {
+    if (blankcheck(argument)) {
       // BLANK_CODE 오류 출력
-      StandardError(0,
-        BLANK_CODE_TITLE,
-        BLANK_CODE_MESSAGE,
-        TARGET,
-        option,
-        RECHECKING,
-        BLANK_CODE_SUGGESTION_CONTENT,
-        BLANK_CODE_INDEX);
-    else
-      inerpreted(argument);
-  else
+      StandardError(0, BLANK_CODE_TITLE, BLANK_CODE_MESSAGE, TARGET, option, RECHECKING,
+                    BLANK_CODE_SUGGESTION_CONTENT, BLANK_CODE_INDEX);
+                    
+    } else {
+      interpreted(argument);
+    }
+  } else {
     // UNKNOWN_OPTION 오류 출력
-    StandardError(0,
-      UNKNOWN_OPTION_TITLE,
-      UNKNOWN_OPTION_MESSAGE,
-      TARGET,
-      option,
-      UNKNOWN_OPTION_SUGGESTION,
-      UNKNOWN_OPTION_SUGGESTION_CONTENT,
-      UNKNOWN_OPTION_INDEX);
+    StandardError(0, UNKNOWN_OPTION_TITLE, UNKNOWN_OPTION_MESSAGE, TARGET, option,
+                  UNKNOWN_OPTION_SUGGESTION, UNKNOWN_OPTION_SUGGESTION_CONTENT, UNKNOWN_OPTION_INDEX);
+  }
 }
 
-/* inerpreted : 코드를 인자로 받아 즉시 번역해 실행합니다. */
-void inerpreted(string code) {
+/* interpreted : 코드를 인자로 받아 즉시 번역해 실행합니다. */
+void interpreted(string code) {
   parsing(0, code, true);
 }
 
