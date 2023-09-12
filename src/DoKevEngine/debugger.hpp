@@ -80,6 +80,8 @@ void SyntaxError(int LINE,
 
   if(HIGHLIGHT == "EOW")
     endword(LINE, BLANK_REMOVE(TARGET), MESSAGE);
+  else if(HIGHLIGHT == "M")
+    highlighter(LINE, BLANK_REMOVE(TARGET), "M", MESSAGE);
   else
     highlighter(LINE, BLANK_REMOVE(TARGET), HIGHLIGHT, MESSAGE);
 
@@ -101,4 +103,27 @@ void SyntaxError(int LINE,
   }
 
   exit(0);
+}
+
+/* SyntaxWarning : 코드의 문법적 경고를 출력합니다. */
+void SyntaxWarning(int LINE,
+                  string TITLE,
+                  string MESSAGE,
+                  string TARGET,
+                  string HIGHLIGHT
+                  ) {
+
+  cout << YELLOW << BOLD << WARN << RESET << BOLD << TITLE << endl;
+  line_counter(LINE, false, true);
+  line_counter(LINE);
+  cout << BLANK_REMOVE(TARGET) << endl;
+
+  if(HIGHLIGHT == "EOW")
+    endword(LINE, BLANK_REMOVE(TARGET), MESSAGE);
+  else if(HIGHLIGHT == "ALL")
+    highlighter(LINE, BLANK_REMOVE(TARGET), BLANK_REMOVE(TARGET), MESSAGE);
+  else
+    highlighter(LINE, BLANK_REMOVE(TARGET), HIGHLIGHT, MESSAGE);
+
+  separator(MESSAGE);
 }
