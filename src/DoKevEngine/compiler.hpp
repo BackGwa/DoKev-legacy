@@ -175,7 +175,10 @@ string PRINT(string line) {
 }
 
 /* parsing : 코드를 확인, 변경하고, 검사합니다. */
-void parsing(int index, string line) {
+string parsing(int index, string line, bool shell = false) {
+
+    // 원본 코드
+    before_code = line;
 
     // 주석 제거 처리
     line = COMMENT(line);
@@ -184,7 +187,8 @@ void parsing(int index, string line) {
     line = PRINT(line);
 
     // 코드 변경
-    codelist[index] = line;
+    if(!shell) codelist[index] = line;
+    return line;
 }
 
 /* compile : 파일을 입력받아 컴파일합니다.*/
@@ -192,7 +196,6 @@ void compile(string file_path, string TARGET, string MAKER) {
     openfile(file_path, TARGET, MAKER);
 
     for (const string& line : codelist) {
-        before_code = line;
         parsing(line_number, line);
         line_number++;
     }
