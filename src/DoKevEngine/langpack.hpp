@@ -14,6 +14,7 @@
 
 // DEBUG
 #define ERROR                       "오류: "
+#define WARN                        "경고: "
 #define HELP                        "도움말: "
 #define SYNTAX_ERROR                "아래 수정사항을 적용해보세요."
 #define RECHECKING                  "다음과 같은 오류가 없는지 확인해보세요."
@@ -91,19 +92,21 @@ std::vector<std::pair<std::string, std::string>> FILE_OPEN_ERROR_SUGGESTION_CONT
 // NOT_CONTAIN_PARTICLE
 #define NOT_CONTAIN_PARTICLE_TITLE       "조사가 존재하지 않습니다."
 #define NOT_CONTAIN_PARTICLE_MESSAGE     "조사가 존재해야함"
-#define NOT_CONTAIN_PARTICLE_INDEX       2
+#define NOT_CONTAIN_PARTICLE_INDEX       1
 
 std::vector<std::tuple<std::string, std::string, bool>> NOT_CONTAIN_PARTICLE_SUGGESTION_CONTENT = {
-  {"(값)이라고 말해줘", "조사를 넣어 코드를 작성해보세요.", true},
-  {"(값)을 말해줘", "조사를 넣어 코드를 작성해보세요.", true}
+  {"(<값>)을 말해줘", "조사를 넣어 코드를 작성해보세요.", true}
 };
 
 // NOT_CONTAIN_VERB
 #define NOT_CONTAIN_VERB_TITLE       "동사가 존재하지 않습니다."
 #define NOT_CONTAIN_VERB_MESSAGE     "동사가 존재해야함"
-#define NOT_CONTAIN_VERB_INDEX       2
+#define NOT_CONTAIN_VERB_INDEX       1
 
 std::vector<std::tuple<std::string, std::string, bool>> NOT_CONTAIN_VERB_SUGGESTION_CONTENT = {
-  {"(값)이라고 말해줘", "동사를 넣어 코드를 작성해보세요.", true},
-  {"(값)을 말해줘", "동사를 넣어 코드를 작성해보세요.", true}
+  {"(<값>)을 말해줘", "동사를 넣어 코드를 작성해보세요.", true}
 };
+
+// CONTAIN_BRACKET
+#define CONTAIN_BRACKET_TITLE       "괄호는 포함하는 것이 좋습니다."
+#define CONTAIN_BRACKET_MESSAGE     "괄호가 권장됨"
