@@ -1,16 +1,19 @@
 #pragma once
 
+#include <cstdlib>
 #include <fstream>
 #include <vector>
 #include <string>
 #include <regex>
 #include <sstream>
+#include <filesystem>
 #include "debugger.hpp"
+#include "check.hpp"
 
 using namespace std;
 
 int line_number = 0;
-vector<std::string> codelist;
+vector<string> codelist;
 string before_code;
 
 /* openfile : 파일을 읽어 codelist 전역 변수에 저장합니다. */
@@ -212,7 +215,7 @@ string VERB_TOKEN(string line) {
 }
 
 string PRINT_TOKEN(string line) {
-    regex pattern("\"([^\"]*)\"|'([^']*)'|말|보여|출력|말하");
+    regex pattern("\"([^\"]*)\"|'([^']*)'|말|보여|출력");
     smatch matches;
     string result;
 
@@ -222,7 +225,7 @@ string PRINT_TOKEN(string line) {
         const string match = matches[0];
         result += matches.prefix();
 
-        if (match == "말해" || match == "보여" || match == "말한" || match == "출력" || match == "말하" )
+        if (match == "말" || match == "보여" || match == "출력")
             result += "<-print->";
         else
             result += matches[0];
@@ -287,8 +290,47 @@ string PRINT(string line) {
     return CODE_AREA_RETURN(token_split[0]) + result;
 }
 
+void execute_code(vector<string> execute_list) {
+    
+    // 파일 및 디렉토리 없을 시 생성
+    if (!filecheck("bin/execute.py")) {
+        bool iscreated = filesystem::create_directory("bin");
+        if (!iscreated) {
+            StandardError(0,
+                DIR_CREATE_ERROR_TITLE,
+                DIR_CREATE_ERROR_MESSAGE,
+                filesystem::current_path(),
+                filesystem::current_path(),
+                RECHECKING,
+                DIR_CREATE_ERROR_SUGGESTION_CONTENT,
+                DIR_CREATE_ERROR_INDEX);
+        }
+    }
+
+    // 파일 경로 설정
+    ofstream file("bin/execute.py");
+
+    // 파일을 열어서 쓰고 Python 인터프리터로 실행
+    if(file.is_open() || !file.fail()) {
+        for (const string& line : execute_list)
+            file << line << endl;
+		file.close();
+
+        system("python3 -d bin/execute.py");
+	} else {
+        StandardError(0,
+            FILE_WRITE_ERROR_TITLE ,
+            FILE_WRITE_ERROR_MESSAGE,
+            filesystem::current_path(),
+            filesystem::current_path(),
+            RECHECKING,
+            FILE_WRITE_ERROR_SUGGESTION_CONTENT,
+            FILE_WRITE_ERROR_INDEX);
+	}
+}
+
 /* parsing : 코드를 확인, 변경하고, 검사합니다. */
-string parsing(int index, string line, bool shell = false) {
+void parsing(int index, string line, bool shell = false) {
 
     // 전처리를 한 후 코드 저장
     before_code = COMMENT(line);
@@ -297,9 +339,16 @@ string parsing(int index, string line, bool shell = false) {
     // 출력문 처리
     line = PRINT(line);
 
+    // 찌꺼기 탭 문자 변경
+    line = CODE_AREA_RETURN(line) + CODE_AREA_REMOVE(line);
+
     // 코드 변경
-    if(!shell) codelist[index] = line;
-    return line;
+    if(!shell) {
+        codelist[index] = line;
+    } else {
+        codelist.push_back(line);
+        execute_code(codelist);
+    }
 }
 
 /* compile : 파일을 입력받아 컴파일합니다.*/
@@ -311,9 +360,5 @@ void compile(string file_path, string TARGET, string MAKER) {
         line_number++;
     }
 
-    // 변환된 코드 전체 변환
-    cout << "COMPILE RESULTS: " << endl;
-    for (const string& line : codelist) {
-        cout << line << endl;
-    }
+    execute_code(codelist);
 }
