@@ -15,7 +15,6 @@ using namespace std;
 /* 함수 선언 */
 void argv_isValid(int argc, char *argv[]);
 void inerpreted(string Code);
-void compile(string FilePath);
 void shell();
 
 /* main : DoKevEngine의 시작점입니다. */
