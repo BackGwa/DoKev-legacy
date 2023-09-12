@@ -79,6 +79,16 @@ std::vector<std::tuple<std::string, std::string, bool>> THROW_SUGGESTION_CONTENT
   {"THROW()", "다음 코드를 제거해보세요.", false}
 };
 
+// UNVALID_SOV
+#define UNVALID_SOV_TITLE       "이러한 문법은 허용되지 않습니다."
+#define UNVALID_SOV_MESSAGE     "문법적 오류"
+#define UNVALID_SOV_INDEX       2
+
+std::vector<std::tuple<std::string, std::string, bool>> UNVALID_SOV_SUGGESTION_CONTENT = {
+  {"SOV형 사용", "일부 함수는 SOV형으로 작성해야합니다.", true},
+  {"단어초과 확인", "추가적인 단어 및 행동이 삽입되어 있는지 확인하세요.", false}
+};
+
 // FILE_OPEN_ERROR
 #define FILE_OPEN_ERROR_TITLE       "파일을 여는 도중 오류가 발생하였습니다."
 #define FILE_OPEN_ERROR_MESSAGE     "파일을 읽을 수 없음"
@@ -130,3 +140,21 @@ std::vector<std::tuple<std::string, std::string, bool>> NOT_CONTAIN_VERB_SUGGEST
 // CONTAIN_BRACKET
 #define CONTAIN_BRACKET_TITLE       "괄호를 포함하는 것이 좋습니다."
 #define CONTAIN_BRACKET_MESSAGE     "괄호가 권장됨"
+
+// CLOSE_LEFT_BRACKET
+#define CLOSE_LEFT_BRACKET_TITLE       "괄호가 닫히지 않았습니다."
+#define CLOSE_LEFT_BRACKET_MESSAGE     "닫는 괄호가 없음"
+#define CLOSE_LEFT_BRACKET_INDEX       1
+
+std::vector<std::tuple<std::string, std::string, bool>> CLOSE_LEFT_BRACKET_SUGGESTION_CONTENT = {
+  {"()", "다음과 같이 괄호는 닫혀야합니다.", true}
+};
+
+// CLOSE_RIGHT_BRACKET
+#define CLOSE_RIGHT_BRACKET_TITLE       "괄호가 열리지 않았습니다."
+#define CLOSE_RIGHT_BRACKET_MESSAGE     "여는 괄호가 없음"
+#define CLOSE_RIGHT_BRACKET_INDEX       1
+
+std::vector<std::tuple<std::string, std::string, bool>> CLOSE_RIGHT_BRACKET_SUGGESTION_CONTENT = {
+  {"()", "다음과 같이 괄호는 열려야합니다.", true}
+};
