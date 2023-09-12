@@ -54,7 +54,10 @@ void SyntaxError(int LINE,
   line_counter(LINE);
   cout << TARGET << endl;
 
-  highlighter(LINE, TARGET, HIGHLIGHT, MESSAGE);
+  if(HIGHLIGHT == "EOW")
+    highlighter(LINE, TARGET + " ", " ", MESSAGE);
+  else
+    highlighter(LINE, TARGET, HIGHLIGHT, MESSAGE);
 
   separator(MESSAGE);
 
