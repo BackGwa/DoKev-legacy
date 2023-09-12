@@ -19,16 +19,6 @@
 #define SYNTAX_ERROR                "아래 수정사항을 적용해보세요."
 #define RECHECKING                  "다음과 같은 오류가 없는지 확인해보세요."
 
-// UNKNOWN_COMMAND
-#define UNKNOWN_COMMAND_TITLE       "알 수 없는 명령어입니다."
-#define UNKNOWN_COMMAND_MESSAGE     "이러한 명령은 지원하지 않음"
-#define UNKNOWN_COMMAND_INDEX       2
-
-std::vector<std::pair<std::string, std::string>> UNKNOWN_COMMAND_SUGGESTION_CONTENT = {
-  {"지원되지 않는 명령어", "다음 명령이 지원되는지 확인해보세요."},
-  {"명령어에 오타 포함", "실행하려는 명령에 오타가 없는지 확인해보세요."}
-};
-
 // BLANK_PATH
 #define BLANK_PATH_TITLE            "경로가 입력되지 않았습니다."
 #define BLANK_PATH_MESSAGE          "이 곳에서 추가 인자를 받지 못 함"
