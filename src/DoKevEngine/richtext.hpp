@@ -1,9 +1,11 @@
 #pragma once
 
-#include <locale>
-#include <codecvt>
-
-using namespace std;
+#include "String/Split.hpp"
+#include "String/Utf8_strlen.hpp"
+#include "String/ToUnicode.hpp"
+#include "String/Substring.hpp"
+#include "String/ToMultiByte.hpp"
+#include "String/Findword.hpp"
 
 /* 색상 정의 */
 #define RED     "\x1B[91m"
@@ -16,48 +18,6 @@ using namespace std;
 /* 폰트 정의 */
 #define BOLD    "\x1B[1m"
 #define UDLINE  "\x1B[9m"
-
-/* utf8_strlen : 문자열 길이를 정상적으로 반환합니다. */
-int utf8_strlen(const string &str) {
-    int len = 0;
-    for (size_t i = 0; i < str.length(); ) {
-        if ((str[i] & 0xC0) != 0x80) len++;
-        i++;
-    }
-    return len;
-}
-
-/* ToUnicode : 입력받은 string 문자열을 wstring 문자열로 변환합니다. */
-wstring ToUnicode(const string &str) {
-    wstring_convert<codecvt_utf8<wchar_t>> converter;
-    return converter.from_bytes(str);
-}
-
-/* Substring : 유니코드 문자를 자릅니다. */
-wstring Substring(const wstring& str, size_t startIdx, size_t length) {
-    if (startIdx < str.length()) {
-        return str.substr(startIdx, length);
-    } else {
-        return L" ";
-    }
-}
-
-/* ToMultiByte : 입력받은 wstring 문자열을 string 문자열로 변환합니다. */
-string ToMultiByte(const std::wstring& input) {
-    // 로캘을 사용하여 wstring을 변환합니다.
-    std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
-    return converter.to_bytes(input);
-}
-
-/* findword : 전체 문자열에서 특정 문자열을 찾아 인덱스를 반환합니다. */
-int findword(const string code, const string word) {
-
-    size_t found = ToUnicode(code).rfind(ToUnicode(word));
-    if (found != wstring::npos) {
-        return static_cast<int>(found);
-    }
-    return -1;
-}
 
 /* line_counter : 코드 라인 문자열을 출력합니다. */
 void line_counter(int line, bool number_show = true, bool newline = false) {
@@ -111,12 +71,12 @@ void highlighter(int line, const string& code, const string& highlight, const st
   int hint;
   if(highlight == "M") {
     if (code.contains("\""))
-      hint = findword(code, "\"");
+      hint = Findword(code, "\"");
 
     else if (code.contains("\'"))
-      hint = findword(code, "\'");
+      hint = Findword(code, "\'");
   } else {
-      hint = findword(code, highlight);
+      hint = Findword(code, highlight);
   }
   line_counter(line, false);
 
