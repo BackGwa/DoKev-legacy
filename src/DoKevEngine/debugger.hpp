@@ -29,15 +29,12 @@ string BLANK_REMOVE(string line) {
 
 /* StandardError : 표준 오류에 대한 내용을 출력합니다. */
 void StandardError(int LINE,
-                  string TITLE,
-                  string MESSAGE,
-                  string TARGET,
-                  string HIGHLIGHT,
+                  string TITLE, string MESSAGE,
+                  string TARGET, string HIGHLIGHT,
                   string SUGGESTION,
                   const std::vector<std::pair<std::string, std::string> >& SUGGESTION_CONTENT,
                   int len = 1,
-                  bool breaks = true
-                  ) {
+                  bool breaks = true) {
 
   cout << endl << RED << BOLD << ERROR << RESET << BOLD << TITLE << RESET << endl;
   line_counter(LINE, false, true);
@@ -62,13 +59,10 @@ void StandardError(int LINE,
 
 /* SyntaxError : 코드의 문법적 에러를 출력합니다. */
 void SyntaxError(int LINE,
-                string TITLE,
-                string MESSAGE,
-                string TARGET,
-                string HIGHLIGHT,
+                string TITLE, string MESSAGE,
+                string TARGET, string HIGHLIGHT,
                 const std::vector<std::tuple<std::string, std::string, bool>>& SUGGESTION_CONTENT,
-                int len = 1
-                ) {
+                int len = 1) {
 
   cout << endl << RED << BOLD << ERROR << RESET << BOLD << TITLE << endl;
   line_counter(LINE, false, true);
@@ -104,11 +98,8 @@ void SyntaxError(int LINE,
 
 /* SyntaxWarning : 코드의 문법적 경고를 출력합니다. */
 void SyntaxWarning(int LINE,
-                  string TITLE,
-                  string MESSAGE,
-                  string TARGET,
-                  string HIGHLIGHT
-                  ) {
+                  string TITLE, string MESSAGE,
+                  string TARGET, string HIGHLIGHT) {
 
   cout << endl << YELLOW << BOLD << WARN << RESET << BOLD << TITLE << endl;
   line_counter(LINE, false, true);
