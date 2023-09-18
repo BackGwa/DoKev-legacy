@@ -1,6 +1,6 @@
 #pragma once
 
-/* VERB : 동사인지, 검사하고 변경합니다. */
+/* VERB_TOKEN : 동사인지, 검사하고 변경합니다. */
 string VERB_TOKEN(string line) {
     regex pattern("\"([^\"]*)\"|'([^']*)'|해줘|줘|하고|해주고|주고|고|해");
     smatch matches;
