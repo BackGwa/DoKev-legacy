@@ -10,6 +10,7 @@
 #include "Syntax/CODEAREA.hpp"
 #include "Syntax/PARTICAL.hpp"
 #include "Syntax/VERB.hpp"
+#include "Syntax/QUERYSTRING.hpp"
 
 #include "String/Valid.hpp"
 
@@ -18,7 +19,7 @@ vector<string> codelist;
 string before_code;
 
 /* openfile : 파일을 읽어 codelist 전역 변수에 저장합니다. */
-void openfile(string filepath, string TARGET, string MAKER) {
+void openfile(string filepath, string TARGET) {
     ifstream file(filepath);
     
     // 파일 읽기 실패 시 오류 출력
@@ -27,7 +28,7 @@ void openfile(string filepath, string TARGET, string MAKER) {
             FILE_OPEN_ERROR_TITLE ,
             FILE_OPEN_ERROR_MESSAGE,
             TARGET,
-            MAKER,
+            filepath,
             RECHECKING,
             FILE_OPEN_ERROR_SUGGESTION_CONTENT,
             FILE_OPEN_ERROR_INDEX);
@@ -202,17 +203,27 @@ void execute_code(vector<string> execute_list) {
 }
 
 /* parsing : 코드를 확인, 변경하고, 검사합니다. */
-void parsing(int index, string line, bool shell = false) {
+void parsing(const int index, string line, const bool shell = false) {
 
-    // 전처리를 한 후 코드 저장
+    // 주석 제거
     before_code = COMMENT(line);
-    line = CODE_AREA(before_code);
+
+    // 대입연산 조사 처리
+    line = ASSIGNMENT_OPERATOR(before_code);
+
+    // 코드 블럭 제거
+    line = CODE_AREA(line);
 
     // 출력문 처리
     line = PRINT(line);
 
+    // 쿼리스트링 처리
+    line = QUERY_STRING(line);
+
     // 찌꺼기 탭 문자 변경
-    line = CODE_AREA_RETURN(line) + CODE_AREA_REMOVE(line);
+    // line = CODE_AREA_RETURN(line) + CODE_AREA_REMOVE(line);
+    line = CODE_AREA_REMOVE(line);
+
 
     // 코드 변경
     if (!shell)
@@ -225,8 +236,8 @@ void parsing(int index, string line, bool shell = false) {
 }
 
 /* compile : 파일을 입력받아 컴파일합니다.*/
-void compile(string file_path, string TARGET, string MAKER) {
-    openfile(file_path, TARGET, MAKER);
+void compile(const string file_path, const string TARGET) {
+    openfile(file_path, TARGET);
 
     for (const string &line : codelist) {
         parsing(line_number, line);
