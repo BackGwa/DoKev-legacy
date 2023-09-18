@@ -47,7 +47,7 @@ void argv_isValid(int argc, char *argv[]) {
                     UNKNOWN_PATH_SUGGESTION_CONTENT, UNKNOWN_PATH_INDEX);
                     
     } else {
-      compile(argument, TARGET, argument);
+      compile(argument, TARGET);
     }
   } else if (option == "-i") {
     if (blankcheck(argument)) {
