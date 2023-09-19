@@ -157,7 +157,7 @@ std::vector<std::tuple<std::string, std::string, bool>> VARIABLE_OPERATOR_OVERFL
 
 // VARIABLE_SUPPORT_POSERR
 #define VARIABLE_SUPPORT_POSERR_TITLE       "변수에서 문장 보정자는 선언 끝에 와야합니다."
-#define VARIABLE_SUPPORT_POSERR_MESSAGE     "이 곳에 도달해야함"
+#define VARIABLE_SUPPORT_POSERR_MESSAGE     "이 곳에는 문장 보정자만 도달 할 수 있음"
 #define VARIABLE_SUPPORT_POSERR_INDEX       1
 
 std::vector<std::tuple<std::string, std::string, bool>> VARIABLE_SUPPORT_POSERR_SUGGESTION_CONTENT = {
