@@ -144,7 +144,7 @@ string IS_VARIABLE(string line) {
         T[1].replace(T[1].find(T_Token), T_Token.length(), "");
         T[1] = BlankRemove(T[1]);
  
-        if(T[1] > 0) {
+        if(T[1].length() > 0) {
             SyntaxError(line_number + 1,
                     VARIABLE_SUPPORT_POSERR_TITLE,
                     VARIABLE_SUPPORT_POSERR_MESSAGE,
