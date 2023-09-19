@@ -71,8 +71,6 @@ void SyntaxError(int LINE,
 
   if(HIGHLIGHT == "EOW")
     endword(LINE, BLANK_REMOVE(TARGET), MESSAGE);
-  else if(HIGHLIGHT == "M")
-    highlighter(LINE, BLANK_REMOVE(TARGET), "M", MESSAGE);
   else
     highlighter(LINE, BLANK_REMOVE(TARGET), HIGHLIGHT, MESSAGE);
 
