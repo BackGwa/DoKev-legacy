@@ -26,7 +26,7 @@ string ASSIGNMENT_OPERATOR(string line) {
     return result;
 }
 
-/* VARIABLE_SUPPORT : 변수를 생성할 때, 선택적인 단어 보정을 토큰화합니다. */
+/* VARIABLE_SUPPORT : 변수를 생성할 때, 선택적인 문장 보정자를 토큰화합니다. */
 string VARIABLE_SUPPORT(string line) {
     regex pattern("\"([^\"]*)\"|'([^']*)'|이야|야");
     smatch matches;
@@ -74,7 +74,7 @@ string REMOVE_VARIABLE_TOKEN(string line) {
     return result;
 }
 
-/* REMOVE_SUPPORT_TOKEN : 변수의 단어 보정 토큰을 삭제합니다. */
+/* REMOVE_SUPPORT_TOKEN : 변수의 문장 보정자 토큰을 삭제합니다. */
 string REMOVE_SUPPORT_TOKEN(string line) {
     regex pattern("\"([^\"]*)\"|'([^']*)'|<-variable_support->");
     smatch matches;
