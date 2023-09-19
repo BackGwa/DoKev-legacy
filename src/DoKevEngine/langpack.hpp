@@ -138,10 +138,28 @@ std::vector<std::tuple<std::string, std::string, bool>> CLOSE_RIGHT_BRACKET_SUGG
 };
 
 // VARIABLE_DEFINE_OVERFLOW
-#define VARIABLE_DEFINE_OVERFLOW_TITLE       "변수에서 단어 보정은 한 번만 사용할 수 있습니다."
-#define VARIABLE_DEFINE_OVERFLOW_MESSAGE     "이 곳에서만 한 번만 사용해야함"
+#define VARIABLE_DEFINE_OVERFLOW_TITLE       "변수에서 문장 보정자는 한 번만 사용할 수 있습니다."
+#define VARIABLE_DEFINE_OVERFLOW_MESSAGE     "이 곳에서만 사용해야함"
 #define VARIABLE_DEFINE_OVERFLOW_INDEX       1
 
 std::vector<std::tuple<std::string, std::string, bool>> VARIABLE_DEFINE_OVERFLOW_SUGGESTION_CONTENT = {
-  {"<변수_이름>은 <값>이야", "변수에서의 단어 보정은 위와 같이 사용해야합니다.", true}
+  {"<변수_이름>은 <값>이야", "변수에서의 문장 보정자는 위와 같이 사용해야합니다.", true}
+};
+
+// VARIABLE_OPERATOR_OVERFLOW
+#define VARIABLE_OPERATOR_OVERFLOW_TITLE       "대입 연산자는 두 번 이상 사용할 수 없습니다."
+#define VARIABLE_OPERATOR_OVERFLOW_MESSAGE     "이 선언문은 허용되지 않음"
+#define VARIABLE_OPERATOR_OVERFLOW_INDEX       1
+
+std::vector<std::tuple<std::string, std::string, bool>> VARIABLE_OPERATOR_OVERFLOW_SUGGESTION_CONTENT = {
+  {"<변수_이름>은 <값>이야", "변수는 위와 같이 대입 연산자를 한 번만 사용해야합니다.", true}
+};
+
+// VARIABLE_SUPPORT_POSERR
+#define VARIABLE_SUPPORT_POSERR_TITLE       "변수에서 문장 보정자는 선언 끝에 와야합니다."
+#define VARIABLE_SUPPORT_POSERR_MESSAGE     "이 곳에 도달해야함"
+#define VARIABLE_SUPPORT_POSERR_INDEX       1
+
+std::vector<std::tuple<std::string, std::string, bool>> VARIABLE_SUPPORT_POSERR_SUGGESTION_CONTENT = {
+  {"<변수_이름>은 <값>이야", "변수에서의 문장 보정자는 위와 같이 사용해야합니다.", true}
 };
