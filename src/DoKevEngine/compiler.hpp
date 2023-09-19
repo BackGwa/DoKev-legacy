@@ -14,6 +14,7 @@
 #include "Syntax/VARIABLE.hpp"
 
 #include "String/Valid.hpp"
+#include "String/BlankRemove.hpp"
 
 int line_number = 0;
 vector<string> codelist;
@@ -111,11 +112,23 @@ string IS_VARIABLE(string line) {
     // 변수에 대입 중인지 확인
     if(line.contains("<-assignment_operator->")) {
 
-        // 도움 문자가 있다면, 처리
+        // 대입 연산을 중복으로 사용하면, 오류 처리
+        vector<string> T = Split(line, "<-assignment_operator->");
+         if(T.size() > 2) {
+            SyntaxError(line_number + 1,
+                    VARIABLE_OPERATOR_OVERFLOW_TITLE,
+                    VARIABLE_OPERATOR_OVERFLOW_MESSAGE,
+                    before_code,
+                    "EOW",
+                    VARIABLE_OPERATOR_OVERFLOW_SUGGESTION_CONTENT,
+                    VARIABLE_OPERATOR_OVERFLOW_INDEX);
+         }
+
+        // 문장 보정자가 있다면, 처리하기
         line = VARIABLE_SUPPORT(line);
 
-        // 도움 문자를 중복으로 쓰면 오류 처리
-        vector<string> T = Split(line, "<-variable_support->");
+        // 문장 보정자를 중복으로 쓰면 오류 처리
+        T = Split(line, "<-variable_support->");
         if(T.size() > 2) {
             SyntaxError(line_number + 1,
                     VARIABLE_DEFINE_OVERFLOW_TITLE,
@@ -126,9 +139,22 @@ string IS_VARIABLE(string line) {
                     VARIABLE_DEFINE_OVERFLOW_INDEX);
         }
 
-        // 도움 문자가 문자열 끝에 도달하지 않으면, 오류 처리
+        // 문장 보정자가 문자열 끝에 도달하지 않으면, 오류 처리
+        string T_Token = "-variable_support->";
+        T[1].replace(T[1].find(T_Token), T_Token.length(), "");
+        T[1] = BlankRemove(T[1]);
+ 
+        if(T[1] > 0) {
+            SyntaxError(line_number + 1,
+                    VARIABLE_SUPPORT_POSERR_TITLE,
+                    VARIABLE_SUPPORT_POSERR_MESSAGE,
+                    before_code,
+                    "EOW",
+                    VARIABLE_SUPPORT_POSERR_SUGGESTION_CONTENT,
+                    VARIABLE_SUPPORT_POSERR_INDEX);
+        }
 
-        // 도움 문자 토큰 삭제
+        // 문장 보정자 토큰 삭제
         line = REMOVE_SUPPORT_TOKEN(line);
 
         // 대입 연산자 토큰 삭제
