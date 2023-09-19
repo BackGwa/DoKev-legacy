@@ -11,6 +11,7 @@
 #include "Syntax/PARTICAL.hpp"
 #include "Syntax/VERB.hpp"
 #include "Syntax/QUERYSTRING.hpp"
+#include "Syntax/VARIABLE.hpp"
 
 #include "String/Valid.hpp"
 
@@ -101,6 +102,40 @@ string PRINT_TOKEN(string line) {
 
     result += string(it, line.cend());
     return result;
+}
+
+
+/* IS_VARIABLE : 변수를 생성하는데, 오류를 검사하고, 처리합니다. */
+string IS_VARIABLE(string line) {
+
+    // 변수에 대입 중인지 확인
+    if(line.contains("<-assignment_operator->")) {
+
+        // 도움 문자가 있다면, 처리
+        line = VARIABLE_SUPPORT(line);
+
+        // 도움 문자를 중복으로 쓰면 오류 처리
+        vector<string> T = Split(line, "<-variable_support->");
+        if(T.size() > 2) {
+            SyntaxError(line_number + 1,
+                    VARIABLE_DEFINE_OVERFLOW_TITLE,
+                    VARIABLE_DEFINE_OVERFLOW_MESSAGE,
+                    before_code,
+                    "EOW",
+                    VARIABLE_DEFINE_OVERFLOW_SUGGESTION_CONTENT,
+                    VARIABLE_DEFINE_OVERFLOW_INDEX);
+        }
+
+        // 도움 문자가 문자열 끝에 도달하지 않으면, 오류 처리
+
+        // 도움 문자 토큰 삭제
+        line = REMOVE_SUPPORT_TOKEN(line);
+
+        // 대입 연산자 토큰 삭제
+        line = REMOVE_VARIABLE_TOKEN(line);
+    }
+
+    return line;
 }
 
 /* PRINT : 출력문인지, 검사하고 변경합니다. */
@@ -210,6 +245,9 @@ void parsing(const int index, string line, const bool shell = false) {
 
     // 대입연산 조사 처리
     line = ASSIGNMENT_OPERATOR(before_code);
+
+    // 대입연산 처리된 변수 확인
+    line = IS_VARIABLE(line);
 
     // 코드 블럭 제거
     line = CODE_AREA(line);
