@@ -136,3 +136,12 @@ std::vector<std::tuple<std::string, std::string, bool>> CLOSE_LEFT_BRACKET_SUGGE
 std::vector<std::tuple<std::string, std::string, bool>> CLOSE_RIGHT_BRACKET_SUGGESTION_CONTENT = {
   {"()", "다음과 같이 괄호는 열려야합니다.", true}
 };
+
+// VARIABLE_DEFINE_OVERFLOW
+#define VARIABLE_DEFINE_OVERFLOW_TITLE       "변수 보정 단어는 한 번만 사용할 수 있습니다."
+#define VARIABLE_DEFINE_OVERFLOW_MESSAGE     "이 곳에서만 한 번만 사용해야함"
+#define VARIABLE_DEFINE_OVERFLOW_INDEX       1
+
+std::vector<std::tuple<std::string, std::string, bool>> VARIABLE_DEFINE_OVERFLOW_SUGGESTION_CONTENT = {
+  {"<변수_이름>은 <값>이야", "보정 문자는 위와 같이 사용해야합니다.", true}
+};
