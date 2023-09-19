@@ -15,6 +15,7 @@
 
 #include "String/Valid.hpp"
 #include "String/BlankRemove.hpp"
+#include "String/QuotesChecker.hpp"
 
 int line_number = 0;
 vector<string> codelist;
@@ -268,6 +269,17 @@ void parsing(const int index, string line, const bool shell = false) {
 
     // 주석 제거
     before_code = COMMENT(line);
+
+    // 문자열 검사
+    if(!QuotesChecker(line)) {
+        SyntaxError(line_number + 1,
+                QUOTES_UNMATCHED_TITLE,
+                QUOTES_UNMATCHED_MESSAGE,
+                before_code,
+                "M",
+                QUOTES_UNMATCHED_SUGGESTION_CONTENT,
+                QUOTES_UNMATCHED_INDEX);
+    }
 
     // 대입연산 조사 처리
     line = ASSIGNMENT_OPERATOR(before_code);

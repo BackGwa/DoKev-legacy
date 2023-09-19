@@ -163,3 +163,13 @@ std::vector<std::tuple<std::string, std::string, bool>> VARIABLE_OPERATOR_OVERFL
 std::vector<std::tuple<std::string, std::string, bool>> VARIABLE_SUPPORT_POSERR_SUGGESTION_CONTENT = {
   {"<변수_이름>은 <값>이야", "변수에서의 문장 보정자는 위와 같이 사용해야합니다.", true}
 };
+
+// QUOTES_UNMATCHED
+#define QUOTES_UNMATCHED_TITLE       "문자열은 아래처럼 성립될 수 없습니다."
+#define QUOTES_UNMATCHED_MESSAGE     "문자열로 구분될 수 없음"
+#define QUOTES_UNMATCHED_INDEX       2
+
+std::vector<std::tuple<std::string, std::string, bool>> QUOTES_UNMATCHED_SUGGESTION_CONTENT = {
+  {"\"문자\"", "위와 같이, 문자열을 시작하고, 마무리하세요.", true},
+  {"\'문자\'", "위와 같이, 문자열을 시작하고, 마무리하세요.", true},
+};
