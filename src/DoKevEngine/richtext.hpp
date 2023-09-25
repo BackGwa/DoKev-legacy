@@ -7,6 +7,7 @@
 #include "String/ToMultiByte.hpp"
 #include "String/Findword.hpp"
 #include "String/Valid.hpp"
+#include "String/IsKorean.hpp"
 
 /* 색상 정의 */
 #define RED     "\x1B[91m"
@@ -41,12 +42,6 @@ void separator(string MESSAGE) {
   for (int i = 0; i < MESSAGE.length() * 2; i++)
     cout << " ";
   cout << RESET << endl << endl;
-}
-
-/* IsKorean : 입력 된 문자열이 한글인지 아닌지 확인합니다. */
-bool IsKorean(const string& str) {
-    regex korean("[가-힣]+");
-    return regex_search(str, korean);
 }
 
 /* endword : 문자 끝에 하이라이팅 표시를 출력합니다. */
