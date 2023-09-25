@@ -142,8 +142,10 @@ string IS_VARIABLE(string line) {
 
         // 문장 보정자가 문자열 끝에 도달하지 않으면, 오류 처리
         string T_Token = "-variable_support->";
-        T[1].replace(T[1].find(T_Token), T_Token.length(), "");
-        T[1] = BlankRemove(T[1]);
+        if(T.size() == 2) {
+            T[1].replace(T[1].find(T_Token), T_Token.length(), "");
+            T[1] = BlankRemove(T[1]);
+        }
  
         if(T[1].length() > 0) {
             SyntaxError(line_number + 1,
@@ -157,6 +159,26 @@ string IS_VARIABLE(string line) {
 
         // 문장 보정자 토큰 삭제
         line = REMOVE_SUPPORT_TOKEN(line);
+
+        // 대입 할 값이 있는지 확인
+        T = Split(line, "<-assignment_operator->");
+
+        T_Token = "-assignment_operator->";
+
+        T[1].replace(T[1].find(T_Token), T_Token.length(), "");
+        T[1] = BlankRemove(T[1]);
+        
+        // 변수에 대입할 값이 없다면, 오류 처리
+        if(T[1].length() <= 0) {
+            SyntaxError(line_number + 1,
+                    VARIABLE_NULL_TITLE,
+                    VARIABLE_NULL_MESSAGE,
+                    before_code,
+                    "EOW",
+                    VARIABLE_NULL_SUGGESTION_CONTENT,
+                    VARIABLE_NULL_INDEX,
+                    T[0]);
+        }
 
         // 대입 연산자 토큰 삭제
         line = REMOVE_VARIABLE_TOKEN(line);
