@@ -164,6 +164,15 @@ std::vector<std::tuple<std::string, std::string, bool>> VARIABLE_SUPPORT_POSERR_
   {"<변수_이름>은 <값>이야", "변수에서의 문장 보정자는 위와 같이 사용해야합니다.", true}
 };
 
+// VARIABLE_NULL
+#define VARIABLE_NULL_TITLE       "변수에 어떠한 값도 선언되지 않았습니다."
+#define VARIABLE_NULL_MESSAGE     "값이 선언되어야함"
+#define VARIABLE_NULL_INDEX       1
+
+std::vector<std::tuple<std::string, std::string, bool>> VARIABLE_NULL_SUGGESTION_CONTENT = {
+  {"$1은 <값>이야", "변수는 위와 같이 선언해야합니다.", true}
+};
+
 // QUOTES_UNMATCHED
 #define QUOTES_UNMATCHED_TITLE       "문자열은 아래처럼 성립될 수 없습니다."
 #define QUOTES_UNMATCHED_MESSAGE     "문자열로 구분될 수 없음"
