@@ -176,8 +176,7 @@ string IS_VARIABLE(string line) {
                     before_code,
                     "EOW",
                     VARIABLE_NULL_SUGGESTION_CONTENT,
-                    VARIABLE_NULL_INDEX,
-                    T[0]);
+                    VARIABLE_NULL_INDEX);
         }
 
         // 대입 연산자 토큰 삭제

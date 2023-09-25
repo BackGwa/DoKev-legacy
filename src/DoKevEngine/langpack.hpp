@@ -170,7 +170,7 @@ std::vector<std::tuple<std::string, std::string, bool>> VARIABLE_SUPPORT_POSERR_
 #define VARIABLE_NULL_INDEX       1
 
 std::vector<std::tuple<std::string, std::string, bool>> VARIABLE_NULL_SUGGESTION_CONTENT = {
-  {"$1은 <값>이야", "변수는 위와 같이 선언해야합니다.", true}
+  {"<변수_이름>은 <값>이야", "변수는 위와 같이 선언해야합니다.", true}
 };
 
 // QUOTES_UNMATCHED
