@@ -1,6 +1,7 @@
 #pragma once
 
 #include <fstream>
+#include <filesystem>
 #include <regex>
 
 #include "check.hpp"
@@ -17,9 +18,13 @@
 #include "String/BlankRemove.hpp"
 #include "String/QuotesChecker.hpp"
 
+#include "FileManage/CurrentPath.hpp"
+#include "FileManage/CreateDirectory.hpp"
+
 int line_number = 0;
 vector<string> codelist;
 string before_code;
+
 
 /* openfile : 파일을 읽어 codelist 전역 변수에 저장합니다. */
 void openfile(string filepath, string TARGET) {
@@ -250,13 +255,13 @@ void execute_code(vector<string> execute_list) {
 
     // 파일 및 디렉토리 없을 시 생성
     if (!filecheck("bin/execute.py")) {
-        bool iscreated = filesystem::create_directory("bin");
+        bool iscreated = CreateDirectory();
         if (!iscreated) {
             StandardError(0,
                             DIR_CREATE_ERROR_TITLE,
                             DIR_CREATE_ERROR_MESSAGE,
-                            filesystem::current_path(),
-                            filesystem::current_path(),
+                            CurrentPath(),
+                            CurrentPath(),
                             RECHECKING,
                             DIR_CREATE_ERROR_SUGGESTION_CONTENT,
                             DIR_CREATE_ERROR_INDEX);
@@ -277,8 +282,8 @@ void execute_code(vector<string> execute_list) {
         StandardError(0,
                         FILE_WRITE_ERROR_TITLE,
                         FILE_WRITE_ERROR_MESSAGE,
-                        filesystem::current_path(),
-                        filesystem::current_path(),
+                        CurrentPath(),
+                        CurrentPath(),
                         RECHECKING,
                         FILE_WRITE_ERROR_SUGGESTION_CONTENT,
                         FILE_WRITE_ERROR_INDEX);
