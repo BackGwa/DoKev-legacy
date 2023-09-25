@@ -6,6 +6,7 @@
 #include "String/Substring.hpp"
 #include "String/ToMultiByte.hpp"
 #include "String/Findword.hpp"
+#include "String/Valid.hpp"
 
 /* 색상 정의 */
 #define RED     "\x1B[91m"
@@ -70,10 +71,10 @@ void endword(int line, const string& code, const string& MESSAGE = "", const str
 void highlighter(int line, const string& code, const string& highlight, const string& MESSAGE = "", const string& COLOR = RED) {
   int hint;
   if(highlight == "M") {
-    if (code.contains("\""))
+    if (Valid(code, "\""))
       hint = Findword(code, "\"");
 
-    else if (code.contains("\'"))
+    else if (Valid(code, "\'"))
       hint = Findword(code, "\'");
   } else {
       hint = Findword(code, highlight);

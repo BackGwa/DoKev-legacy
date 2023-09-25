@@ -16,7 +16,7 @@ void Shell_open() {
     string str_command(command);
 
     // 쉘 인터페이스 exit() 방지
-    if(str_command.contains("exit()")) exit(0);
+    if(Valid(str_command, "exit()")) exit(0);
     
     parsing(line, command, true);
     line++;

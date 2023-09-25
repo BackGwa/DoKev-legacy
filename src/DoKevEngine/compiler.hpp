@@ -111,7 +111,7 @@ string PRINT_TOKEN(string line) {
 string IS_VARIABLE(string line) {
 
     // 변수에 대입 중인지 확인
-    if(line.contains("<-assignment_operator->")) {
+    if(Valid(line, "<-assignment_operator->")) {
 
         // 대입 연산을 중복으로 사용하면, 오류 처리
         vector<string> T = Split(line, "<-assignment_operator->");
@@ -172,11 +172,11 @@ string PRINT(string line) {
     line = PRINT_TOKEN(line);
 
     // 출력문이 아니면, 파서 종료
-    if (!line.contains("<-print->"))
+    if (!Valid(line, "<-print->"))
         return line;
 
     // 조사가 없으면, 오류 발생
-    if (!line.contains("<-particle->"))
+    if (!Valid(line, "<-particle->"))
         SyntaxError(line_number + 1,
                     NOT_CONTAIN_PARTICLE_TITLE,
                     NOT_CONTAIN_PARTICLE_MESSAGE,
@@ -186,7 +186,7 @@ string PRINT(string line) {
                     NOT_CONTAIN_PARTICLE_INDEX);
 
     // 동사가 없으면, 오류 발생
-    if (!line.contains("<-verb->"))
+    if (!Valid(line, "<-verb->"))
         SyntaxError(line_number + 1,
                     NOT_CONTAIN_VERB_TITLE,
                     NOT_CONTAIN_VERB_MESSAGE,
