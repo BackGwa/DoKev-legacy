@@ -62,7 +62,9 @@ void SyntaxError(int LINE,
                 string TITLE, string MESSAGE,
                 string TARGET, string HIGHLIGHT,
                 const std::vector<std::tuple<std::string, std::string, bool>>& SUGGESTION_CONTENT,
-                int len = 1) {
+                int len = 1,
+                string QUERY1 = "",
+                string QUERY2 = "") {
 
   cout << endl << RED << BOLD << ERROR << RESET << BOLD << TITLE << endl;
   line_counter(LINE, false, true);
@@ -79,13 +81,20 @@ void SyntaxError(int LINE,
   cout << CYAN << BOLD << HELP << RESET << BOLD << SYNTAX_ERROR << RESET << endl;
 
   for (int i = 0; i < len; i++) {
-    const string SUGGESTION_CODE = get<0>(SUGGESTION_CONTENT[i]);
+    string SUGGESTION_CODE = get<0>(SUGGESTION_CONTENT[i]);
     const string SUGGESTION_CODE_MESSAGE = get<1>(SUGGESTION_CONTENT[i]);
     const string SAFE = (get<2>(SUGGESTION_CONTENT[i]) ? GREEN : RED);
 
     if (i != 0) cout << endl;
     line_counter(LINE, false, true);
     line_counter(LINE);
+
+    if(QUERY1 != "")
+      SUGGESTION_CODE.replace(SUGGESTION_CODE.find("$1"), 2, QUERY1);
+
+    if(QUERY2 != "")
+      SUGGESTION_CODE.replace(SUGGESTION_CODE.find("$2"), 2, QUERY2);
+
     cout << SUGGESTION_CODE << endl;
     line_counter(LINE, false);
     cout << SAFE << BOLD << "~ " << SUGGESTION_CODE_MESSAGE << RESET << endl;
