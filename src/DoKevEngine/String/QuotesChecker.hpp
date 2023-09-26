@@ -6,11 +6,8 @@ bool QuotesChecker(const std::string& code) {
     int doubleQuoteCount = 0;
 
     for (char c : code) {
-        if (c == '\'') {
-            singleQuoteCount++;
-        } else if (c == '"') {
-            doubleQuoteCount++;
-        }
+        if (c == '\'')      singleQuoteCount++;
+        else if (c == '"')  doubleQuoteCount++;
     }
 
     return (singleQuoteCount % 2 == 0) && (doubleQuoteCount % 2 == 0);
