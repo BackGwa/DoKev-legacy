@@ -3,14 +3,24 @@
 
 ### 최신 릴리즈 : `DoKev RC 7.01`
 
-### 브랜치 릴리즈 : `DoKev RC 8`
+### 브랜치 릴리즈 : `DoKev Final 7`
 
-### 소스 코드 : `C++ DoKev Canary Release`
+### 소스 코드 : `C++ DoKev Canary Release 2`
 
 ---
 <br>
 
-## C++ DoKev Canary Release
+## C++ DoKev Canary Release 2
+* 전반적인 안정화 작업이 진행되었습니다.
+
+* Windows 및 Linux 빌드에서의 오류를 해결하였습니다.
+
+* 변수 디버거를 향상 시켰습니다.
+
+
+<br>
+
+## C++ DoKev Canary Release 1
 * 컴파일러 언어가 C#에서 C++로 이전되었습니다.
 
 * 정교한 디버거 메시지가 추가되었습니다.
