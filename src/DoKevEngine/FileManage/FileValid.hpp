@@ -7,7 +7,7 @@
 #endif
 
 /* FileValid : 파일이 유효한지, 확인합니다. */
-bool FileValid(const string& path) {
+bool FileValid(const std::string& path) {
 #ifdef _WIN32
     return (_access(path.c_str(), 0) == 0);
 #else
