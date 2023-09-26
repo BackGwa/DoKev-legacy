@@ -150,7 +150,7 @@ string IS_VARIABLE(string line) {
         string T_Token = "-variable_support->";
         if(T.size() == 2) {
             T[1].replace(T[1].find(T_Token), T_Token.length(), "");
-            T[1] = BlankRemove(T[1]);
+            BlankRemove(T[1]);
         }
  
         if(T[1].length() > 0) {
@@ -172,7 +172,7 @@ string IS_VARIABLE(string line) {
         T_Token = "-assignment_operator->";
 
         T[1].replace(T[1].find(T_Token), T_Token.length(), "");
-        T[1] = BlankRemove(T[1]);
+        BlankRemove(T[1]);
         
         // 변수에 대입할 값이 없다면, 오류 처리
         if(T[1].length() <= 0) {
