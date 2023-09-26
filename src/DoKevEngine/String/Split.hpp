@@ -1,10 +1,8 @@
 #pragma once
 
-using namespace std;
-
 /* Split : 문자열을 나눕니다. */
-vector<string> Split(string s, string divid) {
-	vector<string> v;
+std::vector<std::string> Split(const std::string s, const std::string divid) {
+	std::vector<std::string> v;
 	int start = 0;
 	int d = s.find(divid);
 	while (d != -1){
