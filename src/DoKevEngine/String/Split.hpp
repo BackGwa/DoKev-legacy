@@ -1,5 +1,7 @@
 #pragma once
 
+using namespace std;
+
 /* Split : 문자열을 나눕니다. */
 vector<string> Split(string s, string divid) {
 	vector<string> v;

@@ -4,7 +4,6 @@
 #include <filesystem>
 #include <regex>
 
-#include "check.hpp"
 #include "debugger.hpp"
 
 #include "Syntax/COMMENT.hpp"
@@ -14,17 +13,19 @@
 #include "Syntax/QUERYSTRING.hpp"
 #include "Syntax/VARIABLE.hpp"
 
-#include "String/Valid.hpp"
 #include "String/BlankRemove.hpp"
 #include "String/QuotesChecker.hpp"
 
 #include "FileManage/CurrentPath.hpp"
 #include "FileManage/CreateDirectory.hpp"
 
+#include "Check/Valid.hpp"
+
+#include "FileManage/FileValid.hpp"
+
 int line_number = 0;
 vector<string> codelist;
 string before_code;
-
 
 /* openfile : 파일을 읽어 codelist 전역 변수에 저장합니다. */
 void openfile(string filepath, string TARGET) {
@@ -254,7 +255,7 @@ string PRINT(string line) {
 void execute_code(vector<string> execute_list) {
 
     // 파일 및 디렉토리 없을 시 생성
-    if (!filecheck("bin/execute.py")) {
+    if (!FileValid("bin/execute.py")) {
         bool iscreated = CreateDirectory();
         if (!iscreated) {
             StandardError(0,

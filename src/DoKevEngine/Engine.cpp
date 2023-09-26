@@ -8,7 +8,10 @@
 #include "shell.hpp"
 #include "compiler.hpp"
 #include "debugger.hpp"
-#include "check.hpp"
+
+#include "Check/IsBlank.hpp"
+
+#include "FileManage/FileValid.hpp"
 
 /* 함수 선언 */
 void argv_isValid(int argc, char *argv[]);
@@ -36,12 +39,12 @@ void argv_isValid(int argc, char *argv[]) {
   const string argument = (argc >= 3) ? argv[2] : "";
 
   if (option == "-c") {
-    if (blankcheck(argument)) {
+    if (IsBlank(argument)) {
       // BLANK_PATH 오류 출력
       StandardError(0, BLANK_PATH_TITLE, BLANK_PATH_MESSAGE, TARGET, option, RECHECKING,
                     BLANK_PATH_SUGGESTION_CONTENT, BLANK_PATH_INDEX);
 
-    } else if (!filecheck(argument)) {
+    } else if (!FileValid(argument)) {
       // UNKNOWN_PATH 오류 출력
       StandardError(0, UNKNOWN_PATH_TITLE, UNKNOWN_PATH_MESSAGE, TARGET, argument, RECHECKING,
                     UNKNOWN_PATH_SUGGESTION_CONTENT, UNKNOWN_PATH_INDEX);
@@ -50,7 +53,7 @@ void argv_isValid(int argc, char *argv[]) {
       compile(argument, TARGET);
     }
   } else if (option == "-i") {
-    if (blankcheck(argument)) {
+    if (IsBlank(argument)) {
       // BLANK_CODE 오류 출력
       StandardError(0, BLANK_CODE_TITLE, BLANK_CODE_MESSAGE, TARGET, option, RECHECKING,
                     BLANK_CODE_SUGGESTION_CONTENT, BLANK_CODE_INDEX);

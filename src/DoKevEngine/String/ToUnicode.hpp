@@ -1,5 +1,8 @@
 #pragma once
+
 #include <codecvt>
+
+using namespace std;
 
 /* ToUnicode : 입력받은 string 문자열을 wstring 문자열로 변환합니다. */
 wstring ToUnicode(const string &str) {

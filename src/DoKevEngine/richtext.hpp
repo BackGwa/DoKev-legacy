@@ -6,8 +6,9 @@
 #include "String/Substring.hpp"
 #include "String/ToMultiByte.hpp"
 #include "String/Findword.hpp"
-#include "String/Valid.hpp"
-#include "String/IsKorean.hpp"
+
+#include "Check/Valid.hpp"
+#include "Check/IsKorean.hpp"
 
 /* 색상 정의 */
 #define RED     "\x1B[91m"
