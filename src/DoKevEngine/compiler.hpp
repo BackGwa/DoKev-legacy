@@ -324,8 +324,8 @@ void parsing(const int index, string line, const bool shell = false) {
     line = QUERY_STRING(line);
 
     // 찌꺼기 탭 문자 변경
-    // line = CODE_AREA_RETURN(line) + CODE_AREA_REMOVE(line);
-    line = CODE_AREA_REMOVE(line);
+    line = CODE_AREA_RETURN(line) + CODE_AREA_REMOVE(line);
+    // line = CODE_AREA_REMOVE(line);
 
 
     // 코드 변경
