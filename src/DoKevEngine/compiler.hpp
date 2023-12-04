@@ -91,7 +91,7 @@ bool BRACKET(string line) {
 
 /* PRINT_TOKEN : 출력문 토큰 확인 */
 string PRINT_TOKEN(string line) {
-    regex pattern("\"([^\"]*)\"|'([^']*)'|말|보여|출력");
+    regex pattern("\"([^\"]*)\"|'([^']*)'|말|출력");
     smatch matches;
     string result;
 
@@ -101,7 +101,7 @@ string PRINT_TOKEN(string line) {
         const string match = matches[0];
         result += matches.prefix();
 
-        if (match == "말" || match == "보여" || match == "출력")
+        if (match == "말" || match == "출력")
             result += "<-print->";
         else
             result += matches[0];
