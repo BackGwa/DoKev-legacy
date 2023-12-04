@@ -5,9 +5,22 @@
 
 ### 브랜치 릴리즈 : `DoKev Final 7`
 
-### 소스 코드 : `C++ DoKev Canary Release 2`
+### 소스 코드 : `C++ DoKev Canary Release 3`
 
 ---
+<br>
+
+## C++ DoKev Canary Release 3
+* 조건문 (IF, ELSE)가 구현되었습니다.
+
+* 코드 블럭 이슈를 수정하였습니다.
+
+* 일부 함수의 시인성을 위해, 네이밍을 축약했습니다.
+
+* 도움말 기능에 관한, 내용을 제거했습니다.
+
+* 일부 사용되지 않거나, 빈도가 낮은 동사를 제거했습니다.
+
 <br>
 
 ## C++ DoKev Canary Release 2
