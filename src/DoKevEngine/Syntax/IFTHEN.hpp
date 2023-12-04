@@ -178,11 +178,12 @@ string IF_PARSING(string line) {
 
 /* IFTHEN : 조건문을 검사하고 변경합니다. */
 string IFTHEN(string line) {
-    regex pattern("\"([^\"]*)\"|'([^']*)'|크다면|작다면|같다면|같지않다면");
+    regex pattern("\"([^\"]*)\"|'([^']*)'|크다면|작다면|같다면|같지않다면|전부 아니라면|전부 아니면|그게 아니라면|그게 아니면");
     smatch matches;
     string result;
 
     auto it = line.cbegin();
+    bool else_tree = false;
 
     while (regex_search(it, line.cend(), matches, pattern)) {
         const string match = matches[0];
@@ -196,15 +197,19 @@ string IFTHEN(string line) {
             result += "<-equal-then->";
         else if (match == "같지않다면")
             result += "<-not-equal-then->";
-        else
+        else if (match == "전부 아니라면" || match == "전부 아니면" || match == "그게 아니라면" || match == "그게 아니면") {
+            result += "else:";
+            else_tree = true;
+        } else {
             result += matches[0];
+        }
 
         it = matches[0].second;
     }
 
     result += string(it, line.cend());
 
-    if (result != line) {
+    if ((result != line) && !else_tree) {
         result = IF_TARGET(result);
         result = IF_AND(result);
         result = IF_OR(result);
