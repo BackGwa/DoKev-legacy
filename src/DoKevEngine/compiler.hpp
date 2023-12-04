@@ -12,6 +12,7 @@
 #include "Syntax/VERB.hpp"
 #include "Syntax/QUERYSTRING.hpp"
 #include "Syntax/VARIABLE.hpp"
+#include "Syntax/IFTHEN.hpp"
 
 #include "String/BlankRemove.hpp"
 #include "String/QuotesChecker.hpp"
@@ -322,6 +323,9 @@ void parsing(const int index, string line, const bool shell = false) {
 
     // 쿼리스트링 처리
     line = QUERY_STRING(line);
+
+    // IF 테스트
+    line = IFTHEN(line);
 
     // 찌꺼기 탭 문자 변경
     line = CODE_AREA_RETURN(line) + CODE_AREA_REMOVE(line);
