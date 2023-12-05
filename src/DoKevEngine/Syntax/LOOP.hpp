@@ -1,5 +1,10 @@
 #pragma once
 
+/* WHILE_TREE : 반복문을 처리합니다. */
+string WHILE_TREE(string line) {
+    return "while (" + Split(line, "<-than-while->")[0] + "):";
+}
+
 /* LOOP : 반복문을 검사하고 변경합니다. */
 string LOOP(string line) {
     regex pattern("\"([^\"]*)\"|'([^']*)'|인 동안");
@@ -25,7 +30,7 @@ string LOOP(string line) {
     result += string(it, line.cend());
 
     if (while_tree)
-        result = "while (" + Split(result, "<-than-while->")[0] + "):";
+        result = WHILE_TREE(result);
     
     return result;
 }

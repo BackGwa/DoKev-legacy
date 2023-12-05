@@ -175,11 +175,9 @@ string IF_PARSING(string line) {
     return "if (" + result + "):";
 }
 
+/* IF_TREE : 일반 조건문을 처리합니다. */
 string IF_TREE(string line) {
-    const vector<string> T = Split(line, "<-then-if->");
-    const string condition = T[0];
-    
-    return "if (" + condition + "):";
+    return "if (" + Split(line, "<-then-if->")[0] + "):";
 }
 
 /* IFTHEN : 조건문을 검사하고 변경합니다. */
