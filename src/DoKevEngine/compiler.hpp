@@ -327,7 +327,7 @@ void parsing(const int index, string line, const bool shell = false) {
     line = QUERY_STRING(line);
 
     // 조건문 처리
-    line = IFTHEN(line);
+    line = IFTHEN(line, line_number, before_code);
     
     // 반복문 처리
     line = LOOP(line);

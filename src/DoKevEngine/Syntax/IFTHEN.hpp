@@ -3,7 +3,7 @@
 #include "../String/BlankRemove.hpp"
 
 /* IF_TARGRT : 조건문의 값 대상을 토큰화합니다. */
-string IF_TARGET(string line) {
+string IF_TARGET(string line, int line_number, string before_code) {
     regex pattern("\"([^\"]*)\"|'([^']*)'|이랑 |랑 |가 |보다 |와 |과 |이 ");
     smatch matches;
     string result;
@@ -25,6 +25,17 @@ string IF_TARGET(string line) {
 
         it = matches[0].second;
     }
+
+    if (Findword(result, "<-first-value->") == -1 ||
+        Findword(result, "<-second-value->") == -1 ) {
+            SyntaxError(line_number + 1,
+                        IF_VALUE_UNVALID_TITLE,
+                        IF_VALUE_UNVALID_MESSAGE,
+                        before_code,
+                        "면",
+                        IF_VALUE_UNVALID_SUGGESTION_CONTENT,
+                        IF_VALUE_UNVALID_INDEX);
+        }
 
     result += string(it, line.cend());
 
@@ -92,7 +103,7 @@ string IF_AND(string line) {
 }
 
 /* IF_PARSING : 조건문을 파싱하여 변경합니다. */
-string IF_PARSING(string line) {
+string IF_PARSING(string line, int line_number, string before_code) {
     string result = "";
     
     vector<string> T = Split(line, "->");
@@ -167,6 +178,17 @@ string IF_PARSING(string line) {
             else if (condition == "-not-equal-then")
                 condition = first + " != " + second;
 
+            else
+                SyntaxError(line_number + 1,
+                            IF_UNKNOWN_CONITION_TITLE,
+                            IF_UNKNOWN_CONITION_MESSAGE,
+                            before_code,
+                            "면",
+                            IF_UNKNOWN_CONITION_SUGGESTION_CONTENT,
+                            IF_UNKNOWN_CONITION_INDEX,
+                            first,
+                            second);
+
             result += condition;
         }
 
@@ -181,7 +203,7 @@ string IF_TREE(string line) {
 }
 
 /* IFTHEN : 조건문을 검사하고 변경합니다. */
-string IFTHEN(string line) {
+string IFTHEN(string line, int line_number, string before_code) {
     regex pattern("\"([^\"]*)\"|'([^']*)'|이라면|크다면|작다면|같다면|같지않다면|전부 아니라면|전부 아니면|그게 아니라면|그게 아니면");
     smatch matches;
     string result;
@@ -221,10 +243,10 @@ string IFTHEN(string line) {
     if (if_tree) {
         result = IF_TREE(result);
     } else if ((result != line) && !else_tree) {
-        result = IF_TARGET(result);
+        result = IF_TARGET(result, line_number, before_code);
         result = IF_AND(result);
         result = IF_OR(result);
-        result = IF_PARSING(result);
+        result = IF_PARSING(result, line_number, before_code);
     }
     
     return result;

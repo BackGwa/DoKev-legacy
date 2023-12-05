@@ -183,3 +183,23 @@ std::vector<std::tuple<std::string, std::string, bool>> QUOTES_UNMATCHED_SUGGEST
   {"\"문자\"", "위와 같이, 문자열을 시작하고, 마무리하세요.", true},
   {"\'문자\'", "위와 같이, 문자열을 시작하고, 마무리하세요.", true},
 };
+
+// IF_VALUE_UNVALID
+#define IF_VALUE_UNVALID_TITLE       "비교할 값이 존재하지 않습니다."
+#define IF_VALUE_UNVALID_MESSAGE     "이 비교문에서 비교할 값이 없음"
+#define IF_VALUE_UNVALID_INDEX       2
+
+std::vector<std::tuple<std::string, std::string, bool>> IF_VALUE_UNVALID_SUGGESTION_CONTENT = {
+  {"<값>이랑 <값>가 같다면", "위와 같이, 비교문을 작성하세요.", true},
+  {"<값>보다 <값>가 크다면", "위와 같이, 비교문을 작성하세요.", true},
+};
+
+// IF_UNKNOWN_CONITION
+#define IF_UNKNOWN_CONITION_TITLE       "비교 조건문이 올바르지 않습니다."
+#define IF_UNKNOWN_CONITION_MESSAGE     "이러한 비교는 불가능함"
+#define IF_UNKNOWN_CONITION_INDEX       2
+
+std::vector<std::tuple<std::string, std::string, bool>> IF_UNKNOWN_CONITION_SUGGESTION_CONTENT = {
+  {"$1이랑 $2가 같다면", "위와 같이, 비교문을 작성하세요.", true},
+  {"$1보다 $2가 크다면", "위와 같이, 비교문을 작성하세요.", true},
+};
