@@ -17,6 +17,7 @@
 #include "Syntax/LOOP.hpp"
 #include "Syntax/FOREACH.hpp"
 #include "Syntax/OPERATOR.hpp"
+#include "Syntax/CAST.hpp"
 
 #include "String/BlankRemove.hpp"
 #include "String/QuotesChecker.hpp"
@@ -324,6 +325,9 @@ void parsing(const int index, string line, const bool shell = false) {
 
     // 코드 블럭 제거
     line = CODE_AREA(line);
+
+    // 형변환 처리
+    line = CAST(line);
 
     // 출력문 처리
     line = PRINT(line);
