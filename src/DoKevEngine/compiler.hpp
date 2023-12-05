@@ -330,7 +330,7 @@ void parsing(const int index, string line, const bool shell = false) {
     line = IFTHEN(line, line_number, before_code);
     
     // 반복문 처리
-    line = LOOP(line);
+    line = LOOP(line, line_number, before_code);
 
     // 불 변수 처리
     line = BOOL(line);

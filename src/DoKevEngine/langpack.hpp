@@ -203,3 +203,7 @@ std::vector<std::tuple<std::string, std::string, bool>> IF_UNKNOWN_CONITION_SUGG
   {"$1이랑 $2가 같다면", "위와 같이, 비교문을 작성하세요.", true},
   {"$1보다 $2가 크다면", "위와 같이, 비교문을 작성하세요.", true},
 };
+
+// WHILE_SYNTAX_WARNING
+#define WHILE_SYNTAX_WARNING_TITLE       "띄어쓰기를 하는 것이 좋습니다."
+#define WHILE_SYNTAX_WARNING_MESSAGE     "띄어쓰기가 필요함"
