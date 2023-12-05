@@ -16,6 +16,7 @@
 #include "Syntax/BOOL.hpp"
 #include "Syntax/LOOP.hpp"
 #include "Syntax/FOREACH.hpp"
+#include "Syntax/OPERATOR.hpp"
 
 #include "String/BlankRemove.hpp"
 #include "String/QuotesChecker.hpp"
@@ -312,8 +313,11 @@ void parsing(const int index, string line, const bool shell = false) {
                 QUOTES_UNMATCHED_INDEX);
     }
 
+    // 연산자 처리
+    line = OPERATOR(before_code);
+
     // 대입연산 조사 처리
-    line = ASSIGNMENT_OPERATOR(before_code);
+    line = ASSIGNMENT_OPERATOR(line);
 
     // 대입연산 처리된 변수 확인
     line = IS_VARIABLE(line);
