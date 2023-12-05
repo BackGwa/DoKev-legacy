@@ -207,3 +207,30 @@ std::vector<std::tuple<std::string, std::string, bool>> IF_UNKNOWN_CONITION_SUGG
 // WHILE_SYNTAX_WARNING
 #define WHILE_SYNTAX_WARNING_TITLE       "띄어쓰기를 하는 것이 좋습니다."
 #define WHILE_SYNTAX_WARNING_MESSAGE     "띄어쓰기가 필요함"
+
+// FOR_EACH_NON_PARTICLE
+#define FOR_EACH_NON_PARTICLE_TITLE       "조사가 존재하지 않습니다."
+#define FOR_EACH_NON_PARTICLE_MESSAGE     "조사가 위치해야함"
+#define FOR_EACH_NON_PARTICLE_INDEX       1
+
+std::vector<std::tuple<std::string, std::string, bool>> FOR_EACH_NON_PARTICLE_SUGGESTION_CONTENT = {
+  {"<리스트>를 각각 <요소>로 해서", "위와 같이, 요소 반복문을 작성하세요.", true}
+};
+
+// FOR_EACH_NON_ITEM
+#define FOR_EACH_NON_ITEM_TITLE       "요소 반복문이 올바르지 않습니다!"
+#define FOR_EACH_NON_ITEM_MESSAGE     "리스트를 가르키지 않음"
+#define FOR_EACH_NON_ITEM_INDEX       1
+
+std::vector<std::tuple<std::string, std::string, bool>> FOR_EACH_NON_ITEM_SUGGESTION_CONTENT = {
+  {"<리스트>를 각각 <요소>로 해서", "위와 같이, 요소 반복문을 작성하세요.", true}
+};
+
+// FOR_EACH_ONLY_ITEM
+#define FOR_EACH_ONLY_ITEM_TITLE       "요소 반복문이 올바르지 않습니다!"
+#define FOR_EACH_ONLY_ITEM_MESSAGE     "요소 반복문이 닫히지 않음"
+#define FOR_EACH_ONLY_ITEM_INDEX       1
+
+std::vector<std::tuple<std::string, std::string, bool>> FOR_EACH_ONLY_ITEM_SUGGESTION_CONTENT = {
+  {"<리스트>를 각각 <요소>로 해서", "위와 같이, 요소 반복문을 작성하세요.", true}
+};
