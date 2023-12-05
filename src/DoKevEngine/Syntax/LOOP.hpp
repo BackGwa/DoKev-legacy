@@ -29,7 +29,7 @@ string LOOP(string line, int line_number, string before_code) {
                         "인동안");
             result += "<-than-while->";
             while_tree = true;
-        } else if (match == "빠져나와" || mmatch == "빠져나오자" || match == "빠져나와줘") {
+        } else if (match == "빠져나와" || match == "빠져나오자" || match == "빠져나와줘") {
             result += "break";
         } else if (match == "계속해" || match == "계속해줘") {
             result += "continue";
