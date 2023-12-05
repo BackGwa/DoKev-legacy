@@ -14,6 +14,7 @@
 #include "Syntax/VARIABLE.hpp"
 #include "Syntax/IFTHEN.hpp"
 #include "Syntax/BOOL.hpp"
+#include "Syntax/LOOP.hpp"
 
 #include "String/BlankRemove.hpp"
 #include "String/QuotesChecker.hpp"
@@ -327,6 +328,9 @@ void parsing(const int index, string line, const bool shell = false) {
 
     // 조건문 처리
     line = IFTHEN(line);
+    
+    // 반복문 처리
+    line = LOOP(line);
 
     // 불 변수 처리
     line = BOOL(line);
