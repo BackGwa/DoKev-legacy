@@ -7,7 +7,7 @@ string WHILE_TREE(string line) {
 
 /* LOOP : 반복문을 검사하고 변경합니다. */
 string LOOP(string line, int line_number, string before_code) {
-    regex pattern("\"([^\"]*)\"|'([^']*)'|인 동안|인동안|빠져나와|빠져나오자|빠져나와줘|계속해|계속해줘");
+    regex pattern("\"([^\"]*)\"|'([^']*)'|인 동안|인동안|빠져나오자|빠져나와줘|빠져나와|계속해|계속해줘");
     smatch matches;
     string result;
 
@@ -29,7 +29,7 @@ string LOOP(string line, int line_number, string before_code) {
                         "인동안");
             result += "<-than-while->";
             while_tree = true;
-        } else if (match == "빠져나와" || match == "빠져나오자" || match == "빠져나와줘") {
+        } else if (match == "빠져나오자" || match == "빠져나와줘" || match == "빠져나와") {
             result += "break";
         } else if (match == "계속해" || match == "계속해줘") {
             result += "continue";
