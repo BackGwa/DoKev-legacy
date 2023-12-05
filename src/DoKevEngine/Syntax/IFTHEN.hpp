@@ -171,25 +171,36 @@ string IF_PARSING(string line) {
         }
 
     }
+    
+    return "if (" + result + "):";
+}
 
-    result = "if (" + result + "):";
-    return result;
+string IF_TREE(string line) {
+    const vector<string> T = Split(line, "<-then-if->");
+    const string condition = T[0];
+    
+    return "if (" + condition + "):";
 }
 
 /* IFTHEN : 조건문을 검사하고 변경합니다. */
 string IFTHEN(string line) {
-    regex pattern("\"([^\"]*)\"|'([^']*)'|크다면|작다면|같다면|같지않다면|전부 아니라면|전부 아니면|그게 아니라면|그게 아니면");
+    regex pattern("\"([^\"]*)\"|'([^']*)'|이라면|크다면|작다면|같다면|같지않다면|전부 아니라면|전부 아니면|그게 아니라면|그게 아니면");
     smatch matches;
     string result;
 
     auto it = line.cbegin();
+    bool if_tree = false;
     bool else_tree = false;
 
     while (regex_search(it, line.cend(), matches, pattern)) {
         const string match = matches[0];
         result += matches.prefix();
 
-        if (match == "크다면")
+        if (match == "이라면") {
+            result += "<-then-if->";
+            if_tree = true;
+        }
+        else if (match == "크다면")
             result += "<-big-then->";
         else if (match == "작다면")
             result += "<-small-then->";
@@ -209,7 +220,9 @@ string IFTHEN(string line) {
 
     result += string(it, line.cend());
 
-    if ((result != line) && !else_tree) {
+    if (if_tree) {
+        result = IF_TREE(result);
+    } else if ((result != line) && !else_tree) {
         result = IF_TARGET(result);
         result = IF_AND(result);
         result = IF_OR(result);
