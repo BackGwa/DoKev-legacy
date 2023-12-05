@@ -18,6 +18,7 @@
 #include "Syntax/FOREACH.hpp"
 #include "Syntax/OPERATOR.hpp"
 #include "Syntax/CAST.hpp"
+#include "Syntax/STRING.hpp"
 
 #include "String/BlankRemove.hpp"
 #include "String/QuotesChecker.hpp"
@@ -328,6 +329,9 @@ void parsing(const int index, string line, const bool shell = false) {
 
     // 형변환 처리
     line = CAST(line);
+
+    // 리터럴 처리
+    line = STRING(line);
 
     // 출력문 처리
     line = PRINT(line);
