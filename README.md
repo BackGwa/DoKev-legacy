@@ -9,6 +9,15 @@ DoKev는 쉽고, 자연스러운 한글 프로그래밍 언어입니다!<br>
 
 </div>
 
+> [!CAUTION]
+> C#과 C++ 빌드 DoKev의 개발은 중단되었습니다.
+> 더 이상 코드가 관리되지 않으며, 일부 소스 코드는 legacy 브랜치로 이동되었습니다.
+
+> [!NOTE]
+> 현재 DoKev 엔진은 Kotlin으로 재작성하고 있습니다.
+
+
+
 <br>
 
 ## **문서**
@@ -21,19 +30,9 @@ DoKev는 쉽고, 자연스러운 한글 프로그래밍 언어입니다!<br>
 
 <br>
 
-<details>
-<summary>안내 사항</summary>
-
-> [WARNING]
-> C#과 C++ 빌드 DoKev의 개발은 중단되었습니다.
-> 더 이상 코드가 관리되지 않으며, 일부 소스 코드는 legacy 브랜치로 이동되었습니다.
-> 현재 DoKev 엔진을 Kotlin으로 재작성하고 있습니다.
-
-> [NOTE]
+> [!NOTE]
 >  현재 `Releases`에서 배포되고 있는 버전은 C#을 기반으로 하고 있으며,
 > 일부 문법과 호환되지 않습니다. C# 기반의 DoKev를 사용하고 싶다면, 해당 [문서](https://backgwa.notion.site/backgwa/DoKev-46bc63939be74aa28d3247ed2ec8d415)를 참고하세요!
-
-</details>
 
 <br>
 
