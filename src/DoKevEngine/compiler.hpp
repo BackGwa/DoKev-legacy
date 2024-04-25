@@ -19,6 +19,7 @@
 #include "Syntax/OPERATOR.hpp"
 #include "Syntax/CAST.hpp"
 #include "Syntax/STRING.hpp"
+#include "Syntax/INPUT.hpp"
 
 #include "String/BlankRemove.hpp"
 #include "String/QuotesChecker.hpp"
@@ -335,6 +336,9 @@ void parsing(const int index, string line, const bool shell = false) {
 
     // 출력문 처리
     line = PRINT(line);
+
+    // 입력문 처리
+    line = INPUT(line);
 
     // 쿼리스트링 처리
     line = QUERY_STRING(line);
