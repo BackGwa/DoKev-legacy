@@ -1,6 +1,6 @@
 #pragma once
 
-/* BOOL : 조사인지, 검사하고 변경합니다. */
+/* BOOL : 조건인지, 검사하고 변경합니다. */
 string BOOL(string line) {
     regex pattern("\"([^\"]*)\"|'([^']*)'|참|거짓");
     smatch matches;
