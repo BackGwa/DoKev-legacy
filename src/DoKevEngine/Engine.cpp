@@ -1,6 +1,6 @@
 
 #define VERSION "8"
-#define BUILD "달갗낟"
+#define BUILD "담감답"
 
 #include <iostream>
 
@@ -43,12 +43,10 @@ void argv_isValid(int argc, char *argv[]) {
       // BLANK_PATH 오류 출력
       StandardError(0, BLANK_PATH_TITLE, BLANK_PATH_MESSAGE, TARGET, option, RECHECKING,
                     BLANK_PATH_SUGGESTION_CONTENT, BLANK_PATH_INDEX);
-
     } else if (!FileValid(argument)) {
       // UNKNOWN_PATH 오류 출력
       StandardError(0, UNKNOWN_PATH_TITLE, UNKNOWN_PATH_MESSAGE, TARGET, argument, RECHECKING,
                     UNKNOWN_PATH_SUGGESTION_CONTENT, UNKNOWN_PATH_INDEX);
-                    
     } else {
       compile(argument, TARGET);
     }
@@ -57,7 +55,6 @@ void argv_isValid(int argc, char *argv[]) {
       // BLANK_CODE 오류 출력
       StandardError(0, BLANK_CODE_TITLE, BLANK_CODE_MESSAGE, TARGET, option, RECHECKING,
                     BLANK_CODE_SUGGESTION_CONTENT, BLANK_CODE_INDEX);
-                    
     } else {
       interpreted(argument);
     }
